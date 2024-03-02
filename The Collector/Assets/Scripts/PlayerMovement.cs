@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         if (_vInput > 0)
         {
             _jump = true;
+            _animator.SetBool("Jump", _jump);
         }
         if (Input.GetButtonDown("Crouch"))
         {
@@ -36,10 +37,18 @@ public class PlayerMovement : MonoBehaviour
         {
             _crouch = false;
         }
+        _animator.SetBool("Crouch", _crouch);
+
     }
     void FixedUpdate()
     {
         _characterController.Move(_hInput * Time.fixedDeltaTime, _crouch, _jump);
         _jump = false;
+    }
+
+    
+    public void OnLanding()
+    {
+        _animator.SetBool("Jump", false);
     }
 }
