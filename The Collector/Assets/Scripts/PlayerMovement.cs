@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private CharacterController _characterController;
     [SerializeField]
+    private Animator _animator;
+    [SerializeField]
     private float _runSpeed;
 
     private float _hInput;
@@ -19,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
     {
         _hInput = Input.GetAxisRaw("Horizontal") * _runSpeed;
         _vInput = Input.GetAxisRaw("Vertical");
+
+        _animator.SetFloat("Speed", Mathf.Abs(_hInput));
 
         if (_vInput > 0)
         {
