@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -216,6 +217,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc0c813ae1c15544856686b53b9fa16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 2086059201}
+  distance: 0
 --- !u!1 &1326077966
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,17 +762,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5850157041437612300, guid: 6d6e4175e0803b347941bcc6beedde40, type: 3}
   m_PrefabInstance: {fileID: 5253099257674012454}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2086059202 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9142479205421832293, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
+--- !u!4 &2086059201 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8683367986846363676, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
   m_PrefabInstance: {fileID: 3120619058056563844}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aed5d87d19607347bf4f8033dc141bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3120619058056563844
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -766,34 +775,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 2086059202}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnLanding
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PlayerMovement, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1063577975862870467, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
-      propertyPath: OnLandEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 3065490488674942633, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
       propertyPath: m_Name
       value: Player
@@ -804,11 +785,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8683367986846363676, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.248
       objectReference: {fileID: 0}
     - target: {fileID: 8683367986846363676, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.207
       objectReference: {fileID: 0}
     - target: {fileID: 8683367986846363676, guid: 60db68cb0348b394c886fb20b397e5af, type: 3}
       propertyPath: m_LocalPosition.z
