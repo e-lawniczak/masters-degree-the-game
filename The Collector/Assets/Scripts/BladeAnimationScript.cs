@@ -6,6 +6,6 @@ public class BladeAnimationScript : MonoBehaviour
 {
     public void OnAnimationEnd()
     {
-        this.GetComponentInParent<WeaponScript>().DisableTrigger();
+        //this.GetComponentInParent<WeaponScript>().DisableTrigger();
     }
 }

@@ -6,15 +6,12 @@ public class PlayerLogic : MonoBehaviour
 {
     public bool IsAlive { get { return _isAlive; } }
 
-    [SerializeField] private BoxCollider2D _boxCollider;
-    [SerializeField] private CircleCollider2D _circleCollider;
+    [SerializeField] private CapsuleCollider2D _collider;
     private bool _isAlive;
-    private List<Collider2D> _colliders;
     private List<LayerMask> _hazardLayers;
 
     private void Start()
     {
-        _colliders = new List<Collider2D> { _boxCollider, _circleCollider };
         _isAlive = true;
     }
 
@@ -28,9 +25,8 @@ public class PlayerLogic : MonoBehaviour
 
     private void CalculateDamage()
     {
-        foreach (var collider in _colliders)
         {
-            if (collider.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards, LayerVariables.Enemy)))
+            if (_collider.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards, LayerVariables.Enemy)))
             {
                 Debug.Log("dead");
                 //_isAlive = false; break;
