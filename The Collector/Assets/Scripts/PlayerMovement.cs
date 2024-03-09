@@ -5,12 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-    [SerializeField]
-    private CharacterController _characterController;
-    [SerializeField]
-    private Animator _animator;
-    [SerializeField]
-    private float _runSpeed;
+    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private PlayerLogic _logic;
+    [SerializeField] private float _runSpeed;
 
     private float _hInput;
     private float _vInput;
@@ -19,15 +16,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if(!_logic.IsAlive ) return;
         _hInput = Input.GetAxisRaw("Horizontal") * _runSpeed;
         _vInput = Input.GetAxisRaw("Vertical");
 
-        _animator.SetFloat("Speed", Mathf.Abs(_hInput));
+        //_animator.SetFloat("Speed", Mathf.Abs(_hInput));
 
-        if (_vInput > 0)
+        if (Input.GetButtonDown("Jump"))
         {
             _jump = true;
-            _animator.SetBool("Jump", _jump);
+            //_animator.SetBool("Jump", _jump);
         }
         if (Input.GetButtonDown("Crouch"))
         {
@@ -37,11 +35,12 @@ public class PlayerMovement : MonoBehaviour
         {
             _crouch = false;
         }
-        _animator.SetBool("Crouch", _crouch);
+        //_animator.SetBool("Crouch", _crouch);
 
     }
     void FixedUpdate()
     {
+      
         _characterController.Move(_hInput * Time.fixedDeltaTime, _crouch, _jump);
         _jump = false;
     }
@@ -49,6 +48,6 @@ public class PlayerMovement : MonoBehaviour
     
     public void OnLanding()
     {
-        _animator.SetBool("Jump", false);
+        //_animator.SetBool("Jump", false);
     }
 }
