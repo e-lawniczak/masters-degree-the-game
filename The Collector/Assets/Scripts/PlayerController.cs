@@ -134,6 +134,14 @@ public class CharacterController : MonoBehaviour
     }
 
 
+    public void BumpOnObstacle()
+    {
+        m_Rigidbody2D.totalForce = new Vector2(0f, 0f);
+        m_Rigidbody2D.AddForce(new Vector2 (0f, m_JumpForce * 1.2f));
+        m_Grounded = true;
+    }
+
+
     private void Flip()
     {
         // Switch the way the player is labelled as facing.

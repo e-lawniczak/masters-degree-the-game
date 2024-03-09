@@ -22,16 +22,16 @@ public class PlayerMovement : MonoBehaviour
 
         //_animator.SetFloat("Speed", Mathf.Abs(_hInput));
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown(InputButtons.Jump))
         {
             _jump = true;
             //_animator.SetBool("Jump", _jump);
         }
-        if (Input.GetButtonDown("Crouch"))
+        if (Input.GetButtonDown(InputButtons.Crouch))
         {
             _crouch = true;
         }
-        else if (Input.GetButtonUp("Crouch"))
+        else if (Input.GetButtonUp(InputButtons.Crouch))
         {
             _crouch = false;
         }

@@ -11,7 +11,7 @@ TagManager:
   - 
   - Water
   - UI
-  - Enviorment
+  - Environment
   - Player
   - Hazards
   - Enemies
@@ -43,4 +43,13 @@ TagManager:
     locked: 0
   - name: Hazards
     uniqueID: 3185788821
+    locked: 0
+  - name: Enemies
+    uniqueID: 4014159527
+    locked: 0
+  - name: Player
+    uniqueID: 2086919017
+    locked: 0
+  - name: Environment
+    uniqueID: 2333253201
     locked: 0

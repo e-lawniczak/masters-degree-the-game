@@ -30,10 +30,10 @@ public class PlayerLogic : MonoBehaviour
     {
         foreach (var collider in _colliders)
         {
-            if (collider.IsTouchingLayers(LayerMask.GetMask("Hazards", "Enemy")))
+            if (collider.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards, LayerVariables.Enemy)))
             {
                 Debug.Log("dead");
-                _isAlive = false; break;
+                //_isAlive = false; break;
             }
         }
     }
