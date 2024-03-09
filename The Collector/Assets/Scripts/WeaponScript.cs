@@ -14,6 +14,7 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private GameObject blade;
 
     private PlayerLogic playerLogic;
+    private bool _canAttackDown;
     private void Start()
     {
         playerLogic = this.GetComponentInParent<PlayerLogic>();
@@ -28,6 +29,7 @@ public class WeaponScript : MonoBehaviour
 
         float isPlayerFlipped = playerTransform.localScale.x < 0 ? -1 : 1;
         float angle = yAxis < 0 ? -90 * isPlayerFlipped : yAxis > 0 ? 90 * isPlayerFlipped : 0;
+        angle  = yAxis < 0 && !_canAttackDown ? 0 : angle;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
 
@@ -45,6 +47,7 @@ public class WeaponScript : MonoBehaviour
 
     internal void PerformAnimation(bool attackOnX, bool attackUp, bool attackDown)
     {
+        _canAttackDown = attackDown;
         Attack();
     }
 }

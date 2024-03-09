@@ -21,60 +21,61 @@ public class PlayerController : MonoBehaviour
     private PlayerStateList pState;
 
     [Header("X Axis Movement")]
-    [SerializeField] float walkSpeed = 6f;
+    [SerializeField] private float walkSpeed = 6f;
 
     [Space(5)]
 
     [Header("Y Axis Movement")]
-    [SerializeField] float jumpSpeed = 5f;
-    [SerializeField] float fallSpeed = 5f;
-    [SerializeField] float jumpSteps = 10f;
-    [SerializeField] float jumpThreshold = 4f;
+    [SerializeField] private float jumpSpeed = 5f;
+    [SerializeField] private float fallSpeed = 5f;
+    [SerializeField] private float jumpSteps = 10f;
+    [SerializeField] private float jumpThreshold = 4f;
     [Space(5)]
 
     [Header("Attacking")]
-    [SerializeField] float timeBetweenAttack = 0.2f;
-    [SerializeField] Transform attackTransform; // this should be a transform childed to the player but to the right of them, where they attack from.
-    [SerializeField] float attackRadius = 0.7f;
-    [SerializeField] Transform downAttackTransform;//This should be a transform childed below the player, for the down attack.
-    [SerializeField] float downAttackRadius = 0.7f;
-    [SerializeField] Transform upAttackTransform;//Same as above but for the up attack.
-    [SerializeField] float upAttackRadius = 0.7f;
-    [SerializeField] LayerMask attackableLayer;
+    [SerializeField] private float timeBetweenAttack = 0.2f;
+    [SerializeField] private Transform attackTransform; // this should be a transform childed to the player but to the right of them, where they attack from.
+    [SerializeField] private float attackRadius = 0.7f;
+    [SerializeField] private Transform downAttackTransform;//This should be a transform childed below the player, for the down attack.
+    [SerializeField] private float downAttackRadius = 0.7f;
+    [SerializeField] private Transform upAttackTransform;//Same as above but for the up attack.
+    [SerializeField] private float upAttackRadius = 0.7f;
+    [SerializeField] private LayerMask attackableLayer;
     [Space(5)]
 
     [Header("Recoil")]
-    [SerializeField] int recoilXSteps = 3;
-    [SerializeField] int recoilYSteps = 5;
-    [SerializeField] float recoilXSpeed = 5;
-    [SerializeField] float recoilYSpeed = 5;
+    [SerializeField] private int recoilXSteps = 3;
+    [SerializeField] private int recoilYSteps = 5;
+    [SerializeField] private float recoilXSpeed = 5;
+    [SerializeField] private float recoilYSpeed = 5;
     [Space(5)]
 
     [Header("Ground Checking")]
-    [SerializeField] Transform groundTransform; //This is supposed to be a transform childed to the player just under their collider.
-    [SerializeField] float groundCheckY = 0.2f; //How far on the Y axis the groundcheck Raycast goes.
-    [SerializeField] float groundCheckX = 1;//Same as above but for X.
-    [SerializeField] LayerMask groundLayer;
+    [SerializeField] private Transform groundTransform; //This is supposed to be a transform childed to the player just under their collider.
+    [SerializeField] private float groundCheckY = 0.2f; //How far on the Y axis the groundcheck Raycast goes.
+    [SerializeField] private float groundCheckX = 1;//Same as above but for X.
+    [SerializeField] private LayerMask groundLayer;
     [Space(5)]
 
     [Header("Roof Checking")]
-    [SerializeField] Transform roofTransform; //This is supposed to be a transform childed to the player just above their collider.
-    [SerializeField] float roofCheckY = 0.2f;
-    [SerializeField] float roofCheckX = 1; // You probably want this to be the same as groundCheckX
+    [SerializeField] private Transform roofTransform; //This is supposed to be a transform childed to the player just above their collider.
+    [SerializeField] private float roofCheckY = 0.2f;
+    [SerializeField] private float roofCheckX = 1; // You probably want this to be the same as groundCheckX
     [Space(5)]
 
 
-    float timeSinceAttack;
-    float xAxis;
-    float yAxis;
-    float gravity;
-    int stepsXRecoiled;
-    int stepsYRecoiled;
-    int stepsJumped = 0;
+    private float timeSinceAttack;
+    private float xAxis;
+    private float yAxis;
+    private float gravity;
+    private int stepsXRecoiled;
+    private int stepsYRecoiled;
+    private int stepsJumped = 0;
 
     Rigidbody2D rb;
-    [SerializeField] Animator anim;
-    [SerializeField] GameObject weapon;
+    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject weapon;
+    private PlayerLogic playerLogic;
 
     // Use this for initialization
     void Start()
@@ -87,6 +88,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!playerLogic.IsAlive) return;
         GetInputs();
         Flip();
         Walk(xAxis);
@@ -96,6 +98,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!playerLogic.IsAlive) return;
+
         if (pState.recoilingX == true && stepsXRecoiled < recoilXSteps)
         {
             stepsXRecoiled++;
@@ -186,6 +190,7 @@ public class PlayerController : MonoBehaviour
             bool attackOnX = yAxis == 0 || yAxis < 0 && Grounded();
             bool attackUp = yAxis > 0;
             bool attackDown = yAxis < 0 && !Grounded();
+            // TODO: da siê lepiej te ify 
             if (attackOnX)
             {
                 //anim.SetTrigger("1");
