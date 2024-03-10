@@ -20,5 +20,5 @@ public class PlayerStateList : MonoBehaviour
     //public bool atBench;
     public bool atNPC;
     public bool usingNPC;
-
+    internal bool jumpedOnSpikes;
 }

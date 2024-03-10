@@ -12,11 +12,18 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject blade;
+    [SerializeField] private int weaponDamage = 1;
 
     private PlayerLogic playerLogic;
     private bool _canAttackDown;
+    private Vector3 initialPos;
+    private float yAxis;
+    private float xAxis;
+    private int isPlayerFlipped;
+
     private void Start()
     {
+        initialPos = transform.localPosition;
         playerLogic = this.GetComponentInParent<PlayerLogic>();
     }
     // Update is called once per frame
@@ -24,24 +31,25 @@ public class WeaponScript : MonoBehaviour
     {
         if (!playerLogic.IsAlive) return;
 
-        float yAxis = Input.GetAxis("Vertical");
-        float xAxis = Input.GetAxis("Horizontal");
+        yAxis = Input.GetAxis("Vertical");
+        xAxis = Input.GetAxis("Horizontal");
 
-        float isPlayerFlipped = playerTransform.localScale.x < 0 ? -1 : 1;
+        isPlayerFlipped = playerTransform.localScale.x < 0 ? -1 : 1;
         float angle = yAxis < 0 ? -90 * isPlayerFlipped : yAxis > 0 ? 90 * isPlayerFlipped : 0;
-        angle  = yAxis < 0 && !_canAttackDown ? 0 : angle;
+        angle = yAxis < 0 && !_canAttackDown ? 0 : angle;
+        float transformAnimation = angle == -90 ? -0.5f : 0;
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
-
-        //if (Input.GetButtonDown(InputButtons.Swing))
-        //{
-        //    Attack();
-        //}
     }
 
     private void Attack()
     {
         blade.GetComponent<SpriteRenderer>().enabled = true;
+        if (_canAttackDown && yAxis < 0)
+        {
+            transform.localPosition += new Vector3(-0.47f, 0.8f, 0);
+
+        }
         animator.SetTrigger(AnimationVariables.AttackTrigger);
     }
 
@@ -49,5 +57,16 @@ public class WeaponScript : MonoBehaviour
     {
         _canAttackDown = attackDown;
         Attack();
+    }
+
+    internal int GetDamage()
+    {
+        return weaponDamage;
+    }
+
+    internal void ResetTransform()
+    {
+        Debug.Log("resetting");
+        transform.localPosition = initialPos;
     }
 }

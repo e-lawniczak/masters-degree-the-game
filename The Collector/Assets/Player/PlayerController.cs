@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -35,11 +36,11 @@ public class PlayerController : MonoBehaviour
     [Header("Attacking")]
     [SerializeField] private float timeBetweenAttack = 0.2f;
     [SerializeField] private Transform attackTransform; // this should be a transform childed to the player but to the right of them, where they attack from.
-    [SerializeField] private float attackRadius = 0.7f;
+    [SerializeField] private float attackRadius = 1f;
     [SerializeField] private Transform downAttackTransform;//This should be a transform childed below the player, for the down attack.
-    [SerializeField] private float downAttackRadius = 0.7f;
+    [SerializeField] private float downAttackRadius = 1f;
     [SerializeField] private Transform upAttackTransform;//Same as above but for the up attack.
-    [SerializeField] private float upAttackRadius = 0.7f;
+    [SerializeField] private float upAttackRadius = 1f;
     [SerializeField] private LayerMask attackableLayer;
     [Space(5)]
 
@@ -129,15 +130,16 @@ public class PlayerController : MonoBehaviour
     {
         if (pState.jumping)
         {
-
+            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 2 : jumpSpeed;
             if (stepsJumped < jumpSteps && !Roofed())
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+                rb.velocity = new Vector2(rb.velocity.x / 2, jSpeed);
                 stepsJumped++;
             }
             else
             {
                 StopJumpSlow();
+                pState.jumpedOnSpikes = false;
             }
         }
 
@@ -147,6 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -Mathf.Abs(fallSpeed), Mathf.Infinity));
         }
+
     }
 
     void Walk(float MoveDirection)
@@ -201,12 +204,20 @@ public class PlayerController : MonoBehaviour
                     pState.recoilingX = true;
                 else
                     pState.recoilingY = true;
+
+                if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj || o.name == LayerVariables.Enemy).ToArray().Length > 0 && attackDown)
+                {
+                    pState.jumpedOnSpikes = true;
+                }
             }
             for (int i = 0; i < objectsToHit.Length; i++)
             {
-               // onhit events
+                if (objectsToHit[i].GetComponent<BasicEnemy>() != null)
+                {
+                    objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                }
             }
-            
+
             weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
         }
     }
@@ -230,12 +241,12 @@ public class PlayerController : MonoBehaviour
             if (yAxis < 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, recoilYSpeed);
-                rb.gravityScale = 0;
+                //rb.gravityScale = 0;
             }
             else
             {
                 rb.velocity = new Vector2(rb.velocity.x, -recoilYSpeed);
-                rb.gravityScale = 0;
+                //rb.gravityScale = 0;
             }
 
         }
@@ -348,7 +359,7 @@ public class PlayerController : MonoBehaviour
         //anim.SetFloat("YVelocity", rb.velocity.y);
 
         //Jumping
-        if (Input.GetButtonDown(InputButtons.Jump) && Grounded())
+        if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.jumpedOnSpikes))
         {
             pState.jumping = true;
         }
