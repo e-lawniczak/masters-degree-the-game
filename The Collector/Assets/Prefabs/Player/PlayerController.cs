@@ -198,6 +198,7 @@ public class PlayerController : MonoBehaviour
             float attackRradius = attackOnX ? attackRadius : attackUp ? upAttackRadius : downAttackRadius;
 
             Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(attackPos, attackRradius, attackableLayer);
+            
             if (objectsToHit.Length > 0)
             {
                 if (attackOnX)
@@ -212,7 +213,7 @@ public class PlayerController : MonoBehaviour
             }
             for (int i = 0; i < objectsToHit.Length; i++)
             {
-                if (objectsToHit[i].GetComponent<BasicEnemy>() != null)
+                if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
                 }

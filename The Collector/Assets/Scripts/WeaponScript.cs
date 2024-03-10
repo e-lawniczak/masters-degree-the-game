@@ -47,7 +47,7 @@ public class WeaponScript : MonoBehaviour
         blade.GetComponent<SpriteRenderer>().enabled = true;
         if (_canAttackDown && yAxis < 0)
         {
-            transform.localPosition += new Vector3(-0.47f, 0.8f, 0);
+            transform.localPosition += new Vector3(0.2f, 0.8f, 0);
 
         }
         animator.SetTrigger(AnimationVariables.AttackTrigger);
@@ -66,7 +66,6 @@ public class WeaponScript : MonoBehaviour
 
     internal void ResetTransform()
     {
-        Debug.Log("resetting");
         transform.localPosition = initialPos;
     }
 }

@@ -5,15 +5,22 @@ using UnityEngine;
 public class FlipEnemy : MonoBehaviour
 {
     [SerializeField] private BasicEnemy go;
-    void Start()
-    {
-        
-    }
+  
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(LayerVariables.Environment))
+        Debug.Log(gameObject.name);
+        if (collision.gameObject.layer == LayerMask.NameToLayer(LayerVariables.Environment) && gameObject.name == "WallDetector")
         {
             go.Flip();
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log(gameObject.name);
+        if (collision.gameObject.layer == LayerMask.NameToLayer(LayerVariables.Environment) && gameObject.name == "GroundDetector")
+        {
+            go.Flip();
+        }
+    }
+
 }
