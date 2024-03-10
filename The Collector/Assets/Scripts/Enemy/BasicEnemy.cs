@@ -12,7 +12,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private float maxHp = 20;
     [SerializeField] private float speed = 3f;
 
-    [SerializeField] private float onHitRecoil = 50f;
+    [SerializeField] private float onHitRecoil = 35f;
 
     private Rigidbody2D rb;
     private CircleCollider2D bc;
