@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         pState = GetComponent<PlayerStateList>();
         rb = GetComponent<Rigidbody2D>();
+        playerLogic = GetComponent<PlayerLogic>();
         gravity = rb.gravityScale;
     }
 
@@ -190,64 +191,23 @@ public class PlayerController : MonoBehaviour
             bool attackOnX = yAxis == 0 || yAxis < 0 && Grounded();
             bool attackUp = yAxis > 0;
             bool attackDown = yAxis < 0 && !Grounded();
-            // TODO: da siê lepiej te ify 
-            if (attackOnX)
+            Vector3 attackPos = attackOnX ? attackTransform.position : attackUp ? upAttackTransform.position : downAttackTransform.position;
+            float attackRradius = attackOnX ? attackRadius : attackUp ? upAttackRadius : downAttackRadius;
+
+            Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(attackPos, attackRradius, attackableLayer);
+            if (objectsToHit.Length > 0)
             {
-                //anim.SetTrigger("1");
-                Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(attackTransform.position, attackRadius, attackableLayer);
-                if (objectsToHit.Length > 0)
-                {
+                if (attackOnX)
                     pState.recoilingX = true;
-                }
-                for (int i = 0; i < objectsToHit.Length; i++)
-                {
-                    //Here is where you would do whatever attacking does in your script.
-                    //In my case its passing the Hit method to an Enemy script attached to the other object(s).
-                }
-            }
-            //Attack Up
-            else if (attackUp)
-            {
-                //anim.SetTrigger("2");
-                Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(upAttackTransform.position, upAttackRadius, attackableLayer);
-                if (objectsToHit.Length > 0)
-                {
+                else
                     pState.recoilingY = true;
-                }
-                for (int i = 0; i < objectsToHit.Length; i++)
-                {
-                    //Here is where you would do whatever attacking does in your script.
-                    //In my case its passing the Hit method to an Enemy script attached to the other object(s).
-                }
             }
-            //Attack Down
-            else if (attackDown)
+            for (int i = 0; i < objectsToHit.Length; i++)
             {
-                //anim.SetTrigger("3");
-                Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(downAttackTransform.position, downAttackRadius, attackableLayer);
-                if (objectsToHit.Length > 0)
-                {
-                    pState.recoilingY = true;
-                }
-                for (int i = 0; i < objectsToHit.Length; i++)
-                {
-
-                    //Here I commented out the actual script I use, in case you wanted to see it.
-
-
-                    /*Instantiate(slashEffect1, objectsToHit[i].transform);
-                    if (!(objectsToHit[i].GetComponent<EnemyV1>() == null))
-                    {
-                        objectsToHit[i].GetComponent<EnemyV1>().Hit(damage, 0, -YForce);
-                    }
- 
-                    if (objectsToHit[i].tag == "Enemy")
-                    {
-                        Mana += ManaGain;
-                    }*/
-                }
+               // onhit events
             }
-            weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX,attackUp, attackDown);
+            
+            weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
         }
     }
 
