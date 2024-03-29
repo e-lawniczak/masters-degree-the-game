@@ -27,10 +27,10 @@ public class PlayerController : MonoBehaviour
     [Space(5)]
 
     [Header("Y Axis Movement")]
-    [SerializeField] private float jumpSpeed = 5f;
-    [SerializeField] private float fallSpeed = 5f;
-    [SerializeField] private float jumpSteps = 10f;
-    [SerializeField] private float jumpThreshold = 4f;
+    [SerializeField] private float jumpSpeed = 7f;
+    [SerializeField] private float fallSpeed = 500f;
+    [SerializeField] private float jumpSteps = 5f;
+    [SerializeField] private float jumpThreshold = 5f;
     [Space(5)]
 
     [Header("Attacking")]
@@ -72,6 +72,7 @@ public class PlayerController : MonoBehaviour
     private int stepsXRecoiled;
     private int stepsYRecoiled;
     private int stepsJumped = 0;
+    private int jumpMoveDivider = 1;
 
     Rigidbody2D rb;
     [SerializeField] private Animator anim;
@@ -130,10 +131,11 @@ public class PlayerController : MonoBehaviour
     {
         if (pState.jumping)
         {
-            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 2 : jumpSpeed;
+            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 4 : jumpSpeed;
             if (stepsJumped < jumpSteps && !Roofed())
             {
                 rb.velocity = new Vector2(rb.velocity.x / 2, jSpeed);
+                //rb.AddForce(new Vector2(0, jSpeed));
                 stepsJumped++;
             }
             else
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
             float attackRradius = attackOnX ? attackRadius : attackUp ? upAttackRadius : downAttackRadius;
 
             Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(attackPos, attackRradius, attackableLayer);
-            
+
             if (objectsToHit.Length > 0)
             {
                 if (attackOnX)
@@ -274,6 +276,7 @@ public class PlayerController : MonoBehaviour
         //Stops The player jump immediately, causing them to start falling as soon as the button is released.
         stepsJumped = 0;
         pState.jumping = false;
+        Debug.Log("jumpstop1");
         rb.velocity = new Vector2(rb.velocity.x, 0);
     }
 
@@ -281,7 +284,10 @@ public class PlayerController : MonoBehaviour
     {
         //stops the jump but lets the player hang in the air for awhile.
         stepsJumped = 0;
+        Debug.Log("jumpstop2");
         pState.jumping = false;
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed/2);
+
     }
 
     void StopRecoilX()
@@ -328,13 +334,14 @@ public class PlayerController : MonoBehaviour
         //WASD/Joystick
         yAxis = Input.GetAxis("Vertical");
         xAxis = Input.GetAxis("Horizontal");
+        float treshold = 0.1f;
 
         //This is essentially just sensitivity.
-        if (yAxis > 0.25)
+        if (yAxis > treshold)
         {
             yAxis = 1;
         }
-        else if (yAxis < -0.25)
+        else if (yAxis < -treshold)
         {
             yAxis = -1;
         }
@@ -343,11 +350,11 @@ public class PlayerController : MonoBehaviour
             yAxis = 0;
         }
 
-        if (xAxis > 0.25)
+        if (xAxis > treshold)
         {
             xAxis = 1;
         }
-        else if (xAxis < -0.25)
+        else if (xAxis < -treshold)
         {
             xAxis = -1;
         }
