@@ -9,7 +9,6 @@ public class coin_script : MonoBehaviour
     {
         if(collision.name == LayerVariables.Player)
         {
-            Debug.Log("Points up!");
             Destroy(this.gameObject);
         }
     }

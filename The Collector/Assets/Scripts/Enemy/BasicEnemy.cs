@@ -9,10 +9,10 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BasicEnemy : MonoBehaviour
 {
-    [SerializeField] private float maxHp = 20;
-    [SerializeField] private float speed = 3f;
+    [SerializeField] private float maxHp = 4;
+    [SerializeField] private float speed = 5f;
 
-    [SerializeField] private float onHitRecoil = 35f;
+    [SerializeField] private float onHitRecoil = 50f;
 
     private Rigidbody2D rb;
     private CircleCollider2D bc;
@@ -49,8 +49,11 @@ public class BasicEnemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log(collision.gameObject.name);
-        //Debug.Log(collision.collider.tag);
+        if (collision.rigidbody && collision.rigidbody.name == LayerVariables.Player)
+        {
+            var pl = collision.collider.GetComponent<PlayerLogic>();
+            pl.GetHitByEnemy(this.gameObject, this.transform.position);
+        }
     }
 
     void Move()

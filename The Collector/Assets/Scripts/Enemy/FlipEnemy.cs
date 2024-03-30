@@ -8,7 +8,6 @@ public class FlipEnemy : MonoBehaviour
   
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name);
         if (collision.gameObject.layer == LayerMask.NameToLayer(LayerVariables.Environment) && gameObject.name == "WallDetector")
         {
             go.Flip();
@@ -16,7 +15,6 @@ public class FlipEnemy : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(gameObject.name);
         if (collision.gameObject.layer == LayerMask.NameToLayer(LayerVariables.Environment) && gameObject.name == "GroundDetector")
         {
             go.Flip();

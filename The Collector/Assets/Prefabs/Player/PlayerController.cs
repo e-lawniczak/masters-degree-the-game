@@ -276,7 +276,6 @@ public class PlayerController : MonoBehaviour
         //Stops The player jump immediately, causing them to start falling as soon as the button is released.
         stepsJumped = 0;
         pState.jumping = false;
-        Debug.Log("jumpstop1");
         rb.velocity = new Vector2(rb.velocity.x, 0);
     }
 
@@ -284,7 +283,6 @@ public class PlayerController : MonoBehaviour
     {
         //stops the jump but lets the player hang in the air for awhile.
         stepsJumped = 0;
-        Debug.Log("jumpstop2");
         pState.jumping = false;
         rb.velocity = new Vector2(rb.velocity.x, jumpSpeed/2);
 

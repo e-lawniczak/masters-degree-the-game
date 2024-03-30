@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ec3b86d99956b4fb0986276ed10727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 20
-  speed: 3
-  onHitRecoil: 50
+  maxHp: 4
+  speed: 5
+  onHitRecoil: 35
 --- !u!1 &3029250487897114551
 GameObject:
   m_ObjectHideFlags: 0

@@ -477,6 +477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _collider: {fileID: 3524208384210356521}
+  _maxHp: 5
 --- !u!114 &8467248405860726394
 MonoBehaviour:
   m_ObjectHideFlags: 0
