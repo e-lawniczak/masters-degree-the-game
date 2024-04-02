@@ -73,6 +73,10 @@ public class PlayerController : MonoBehaviour
     private int stepsYRecoiled;
     private int stepsJumped = 0;
     private int jumpMoveDivider = 1;
+    private bool canDash = true;
+    private float timeSinceDash = 0;
+    private float dashCooldown = 1.5f;
+    private bool isTurnedLeft = true;
 
     Rigidbody2D rb;
     [SerializeField] private Animator anim;
@@ -97,6 +101,7 @@ public class PlayerController : MonoBehaviour
         Walk(xAxis);
         Recoil();
         Attack();
+        Dash();
     }
 
     void FixedUpdate()
@@ -152,6 +157,27 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -Mathf.Abs(fallSpeed), Mathf.Infinity));
         }
 
+    }
+    void Dash()
+    {
+        if (pState.dashing)
+        {
+            //rb.velocity = new Vector2(1000, 0);
+            var force =  50000f ;
+            rb.AddForce(new Vector2(isTurnedLeft ? force : -force, 0));
+            pState.dashing = false;
+            canDash = false;
+            Debug.Log("Dash");
+        }
+        if (!canDash)
+        {
+            timeSinceDash += Time.deltaTime;
+            if (timeSinceDash >= dashCooldown)
+            {
+                canDash = true;
+                timeSinceDash = 0;
+            }
+        }
     }
 
     void Walk(float MoveDirection)
@@ -264,10 +290,12 @@ public class PlayerController : MonoBehaviour
         if (xAxis > 0)
         {
             transform.localScale = new Vector2(1, transform.localScale.y);
+            isTurnedLeft = true;
         }
         else if (xAxis < 0)
         {
             transform.localScale = new Vector2(-1, transform.localScale.y);
+            isTurnedLeft = false;
         }
     }
 
@@ -284,7 +312,7 @@ public class PlayerController : MonoBehaviour
         //stops the jump but lets the player hang in the air for awhile.
         stepsJumped = 0;
         pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed/2);
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed / 2);
 
     }
 
@@ -377,6 +405,11 @@ public class PlayerController : MonoBehaviour
         else if (!Input.GetButton(InputButtons.Jump) && stepsJumped < jumpThreshold && pState.jumping)
         {
             StopJumpSlow();
+        }
+        
+        if (Input.GetButton(InputButtons.Dash) && canDash)
+        {
+            pState.dashing = true;
         }
     }
 

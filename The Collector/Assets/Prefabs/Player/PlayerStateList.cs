@@ -16,9 +16,8 @@ public class PlayerStateList : MonoBehaviour
     public bool recoilingY;
     public bool casting;
     public bool castReleased;
-    //public bool onBench;
-    //public bool atBench;
     public bool atNPC;
     public bool usingNPC;
-    internal bool jumpedOnSpikes;
+    public bool jumpedOnSpikes;
+    public bool dashing;
 }
