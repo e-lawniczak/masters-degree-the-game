@@ -14,7 +14,7 @@ public class PlayerLogic : MonoBehaviour
     private List<LayerMask> _hazardLayers;
     private int _hp;
     private bool _isInvincible;
-    private float _iframeTime = 1.5f;
+    private float _iframeTime = 2.5f;
     private float _count = 0f;
 
     private void Start()
@@ -61,9 +61,12 @@ public class PlayerLogic : MonoBehaviour
     }
     public void GetHitByEnemy(GameObject enemy, Vector3 enemyPos)
     {
-        DealDamage(1);
-        GiveIframes();
-        Recoil();
+        if (!_isInvincible)
+        {
+            GiveIframes();
+            DealDamage(1);
+            Recoil();
+        }
     }
     private void Die()
     {

@@ -12,6 +12,7 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] private float lockOnRadius = 15f;
     [SerializeField] private float lockOnWait = 0.3f;
     [SerializeField] private float timeToDie = 3f;
+    [SerializeField] private float lockOnOffset = 1f;
     [SerializeField] GameObject player;
 
 
@@ -24,6 +25,7 @@ public class FlyingEnemy : MonoBehaviour
     private bool isDying;
     private Vector2 playerPos;
     private Vector2? lockOnPos;
+    private float lockOnWaitOriginal;
 
 
     // Start is called before the first frame update
@@ -36,6 +38,7 @@ public class FlyingEnemy : MonoBehaviour
         isActive = false;
         isDying = false;
         lockOnPos = null;
+        lockOnWaitOriginal = lockOnWait;
         Flip();
     }
 
@@ -83,7 +86,7 @@ public class FlyingEnemy : MonoBehaviour
     void LockOn()
     {
         playerPos = player.GetComponent<Transform>().position;
-        var targetPos = new Vector2(playerPos.x, playerPos.y - 0.5f);
+        var targetPos = new Vector2(playerPos.x + (goingRight ? lockOnOffset : -lockOnOffset), playerPos.y - lockOnOffset);
         float dist = Vector2.Distance(transform.position, playerPos);
         if (dist < lockOnRadius && !lockOnPos.HasValue)
         {
@@ -127,6 +130,12 @@ public class FlyingEnemy : MonoBehaviour
         else
         {
             rb.velocity = Vector2.zero;
+        }
+
+        if (lockOnPos.HasValue && (Vector2)transform.position == lockOnPos.Value)
+        {
+            lockOnPos = null;
+            lockOnWait = lockOnWaitOriginal;
         }
     }
     void Die()

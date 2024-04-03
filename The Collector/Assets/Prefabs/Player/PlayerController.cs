@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour
     private bool isTurnedLeft = true;
 
     Rigidbody2D rb;
+    [Header("Other")]
+    [SerializeField] private float airMovementMod = 1.3f;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject weapon;
     private PlayerLogic playerLogic;
@@ -136,10 +138,10 @@ public class PlayerController : MonoBehaviour
     {
         if (pState.jumping)
         {
-            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 4 : jumpSpeed;
+            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 2 : jumpSpeed;
             if (stepsJumped < jumpSteps && !Roofed())
             {
-                rb.velocity = new Vector2(rb.velocity.x / 2, jSpeed);
+                rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jSpeed);
                 //rb.AddForce(new Vector2(0, jSpeed));
                 stepsJumped++;
             }
@@ -186,9 +188,12 @@ public class PlayerController : MonoBehaviour
         //float x = MoveDirection * walkSpeed;
         //Vector2 velocity = rb.velocity;
         //rigidbody2D.velocity = new Vector2(x, velocity.y);
+        float x = MoveDirection * walkSpeed;
+
+        x = Grounded() ? x : x / airMovementMod;
         if (!pState.recoilingX)
         {
-            rb.velocity = new Vector2(MoveDirection * walkSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(x, rb.velocity.y);
 
             if (Mathf.Abs(rb.velocity.x) > 0)
             {
@@ -308,15 +313,15 @@ public class PlayerController : MonoBehaviour
         //Stops The player jump immediately, causing them to start falling as soon as the button is released.
         stepsJumped = 0;
         pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x, 0);
+        rb.velocity = new Vector2(rb.velocity.x /airMovementMod, 0);
     }
 
     void StopJumpSlow()
     {
-        //stops the jump but lets the player hang in the air for awhile.
+        //stops the jump but lets the player hang in the air for a while.
         stepsJumped = 0;
         pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed / 2);
+        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jumpSpeed );
 
     }
 

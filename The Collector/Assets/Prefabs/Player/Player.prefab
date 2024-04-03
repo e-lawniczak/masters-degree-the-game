@@ -437,8 +437,8 @@ MonoBehaviour:
   walkSpeed: 6
   jumpSpeed: 7
   fallSpeed: 500
-  jumpSteps: 5
-  jumpThreshold: 5
+  jumpSteps: 6
+  jumpThreshold: 6
   timeBetweenAttack: 0.4
   attackTransform: {fileID: 5755872133179832661}
   attackRadius: 1
@@ -462,6 +462,7 @@ MonoBehaviour:
   roofTransform: {fileID: 854249052579826402}
   roofCheckY: 0.2
   roofCheckX: 1
+  airMovementMod: 1.3
   anim: {fileID: 5232845574351743334}
   weapon: {fileID: 1546066343600756088}
 --- !u!114 &3863789208912982613
@@ -501,6 +502,8 @@ MonoBehaviour:
   castReleased: 0
   atNPC: 0
   usingNPC: 0
+  jumpedOnSpikes: 0
+  dashing: 0
 --- !u!50 &4330915682362903335
 Rigidbody2D:
   serializedVersion: 4
