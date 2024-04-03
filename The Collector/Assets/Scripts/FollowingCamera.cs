@@ -10,11 +10,13 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField]
     private Transform _playerTransform;
     [SerializeField]
+    private float yOffset = 5f;
+    [SerializeField]
     private float distance = 0;
     void Update()
     {
      
 
-        transform.position = new Vector3(_playerTransform.position.x, _playerTransform.position.y, transform.position.z - distance);
+        transform.position = new Vector3(_playerTransform.position.x, _playerTransform.position.y+yOffset, transform.position.z - distance);
     }
 }

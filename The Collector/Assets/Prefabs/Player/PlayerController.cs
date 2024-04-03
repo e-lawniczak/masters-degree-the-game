@@ -245,6 +245,10 @@ public class PlayerController : MonoBehaviour
                 {
                     objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
                 }
+                if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                }
             }
 
             weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
