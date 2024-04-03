@@ -159,11 +159,11 @@ public class FlyingEnemy : MonoBehaviour
     {
         Die();
     }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lockOnRadius);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, activationRadius);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, lockOnRadius);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, activationRadius);
+    //}
 }
