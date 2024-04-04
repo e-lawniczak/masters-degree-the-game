@@ -65,7 +65,7 @@ Transform:
   m_Children:
   - {fileID: 5439599082091485648}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4127545533019520261
 SpriteRenderer:
@@ -108,7 +108,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 138f09558237010499f2123a2678e82c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: efc6754de4a4b3947a4b6828482459fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -317,5 +317,5 @@ MonoBehaviour:
   player: {fileID: 0}
   rightCannon: 0
   leftCannon: 0
-  upCannon: 1
-  downCannon: 0
+  upCannon: 0
+  downCannon: 1

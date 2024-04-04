@@ -43,7 +43,6 @@ public class CannonEnemy : MonoBehaviour
         {
             // fire
             canShoot = false;
-            Debug.Log(bulletSpawn.transform.position);
             GameObject b = Instantiate(bullet, bulletSpawn.transform.position, transform.rotation);
             b.GetComponent<BulletScript>().SetDirection(PickDirectionVector());
             b.GetComponent<BulletScript>().SetBulletSpeed(bulletSpeed);

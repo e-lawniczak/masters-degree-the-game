@@ -87,7 +87,7 @@ public class BasicEnemy : MonoBehaviour
         transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
         xAxis = -1 * xAxis;
     }
-    public void GetHit(int damage, Vector3 position)
+    public bool GetHit(int damage, Vector3 position)
     {
         hp -= damage;
         if (hp > 0)
@@ -95,7 +95,13 @@ public class BasicEnemy : MonoBehaviour
             recoiling = true;
             playerPos = position;
         }
-        if (hp <= 0) Die();
+        if (hp <= 0)
+        {
+            Die();
+            return true;
+        }
+        
+        return false;
     }
 
 }

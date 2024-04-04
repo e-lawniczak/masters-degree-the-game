@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static HelperFunctions;
 
 public class PlayerController : MonoBehaviour
 {
@@ -62,6 +63,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform roofTransform; //This is supposed to be a transform childed to the player just above their collider.
     [SerializeField] private float roofCheckY = 0.2f;
     [SerializeField] private float roofCheckX = 1; // You probably want this to be the same as groundCheckX
+    //[SerializeField] private GameEngine engine; 
     [Space(5)]
 
 
@@ -77,6 +79,8 @@ public class PlayerController : MonoBehaviour
     private float timeSinceDash = 0;
     private float dashCooldown = 1.5f;
     private bool isTurnedLeft = true;
+
+    public DashInfo DashInfo { get { return new DashInfo { dashCd = dashCooldown, currentCd = timeSinceDash, canDash = canDash }; } }
 
     Rigidbody2D rb;
     [Header("Other")]
@@ -248,11 +252,13 @@ public class PlayerController : MonoBehaviour
             {
                 if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
-                    objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    if(isDead) playerLogic.AddPoints(10);
                 }
                 if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
-                    objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    bool isDead = objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    if (isDead) playerLogic.AddPoints(10);
                 }
             }
 

@@ -9,6 +9,7 @@ public class coin_script : MonoBehaviour
     {
         if(collision.name == LayerVariables.Player)
         {
+            collision.gameObject.GetComponent<PlayerLogic>().AddPoints(25);
             Destroy(this.gameObject);
         }
     }

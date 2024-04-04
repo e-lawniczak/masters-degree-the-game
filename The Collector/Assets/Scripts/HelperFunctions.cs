@@ -22,4 +22,10 @@ public class HelperFunctions : MonoBehaviour
             return 0f;
         }
     }
+    public class DashInfo
+    {
+        public float dashCd { get; set; }
+        public float currentCd { get; set; }
+        public bool canDash { get; set; }
+    }
 }

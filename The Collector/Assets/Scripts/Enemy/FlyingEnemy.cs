@@ -155,9 +155,10 @@ public class FlyingEnemy : MonoBehaviour
 
         }
     }
-    public void GetHit(int damage, Vector3 position)
+    public bool GetHit(int damage, Vector3 position)
     {
         Die();
+        return true;
     }
     //void OnDrawGizmos()
     //{

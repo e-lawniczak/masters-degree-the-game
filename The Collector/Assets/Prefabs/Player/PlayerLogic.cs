@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using static HelperFunctions;
 
 public class PlayerLogic : MonoBehaviour
 {
     public bool IsAlive { get { return _isAlive; } }
 
     [SerializeField] private CapsuleCollider2D _collider;
+    [SerializeField] private GameEngine engine; 
     [SerializeField] private int _maxHp = 5;
     private Animator _animator;
     private Rigidbody2D rb;
@@ -16,6 +19,9 @@ public class PlayerLogic : MonoBehaviour
     private bool _isInvincible;
     private float _iframeTime = 2.5f;
     private float _count = 0f;
+    private int points;
+    private UnityEvent updateState;
+    private bool queueUpdate;
 
     private void Start()
     {
@@ -24,6 +30,9 @@ public class PlayerLogic : MonoBehaviour
         _isInvincible = false;
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        points = 0;
+        updateState = new UnityEvent();
+        queueUpdate = false;
     }
 
     void Update()
@@ -94,4 +103,27 @@ public class PlayerLogic : MonoBehaviour
     {
         return _hp;
     }
+    public DashInfo GetCanDash()
+    {
+        return GetComponent<PlayerController>().DashInfo;
+    }
+    public void AddPoints(int p = 1)
+    {
+        points += p;
+        queueUpdate = true;
+    }
+    public int GetPoints()
+    {
+        return points;
+    }
+    public bool GetQueueUpdate()
+    {
+        return queueUpdate;
+    }
+    public void SetQueueUpdate(bool v)
+    {
+        queueUpdate = v;
+    }
+
+
 }
