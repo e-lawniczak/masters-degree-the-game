@@ -421,18 +421,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 933823015}
-    - target: {fileID: 3344667337249235411, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
-      propertyPath: upCannon
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3344667337249235411, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
-      propertyPath: downCannon
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3344667337249235411, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
-      propertyPath: activationRadius
-      value: 10.95
-      objectReference: {fileID: 0}
     - target: {fileID: 4883712956505866487, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
       propertyPath: m_RootOrder
       value: 10
