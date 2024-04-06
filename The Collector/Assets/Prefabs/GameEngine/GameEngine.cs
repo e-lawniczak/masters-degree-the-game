@@ -22,12 +22,15 @@ public class GameEngine : MonoBehaviour
 
     void Update()
     {
+
+        if (playerLogic == null) return;
+        if (playerController == null) return;
         totalTime += Time.deltaTime;
-        if(playerLogic.GetPoints() >  totalPoints)
+        if (playerLogic.GetPoints() > totalPoints)
         {
             totalPoints = playerLogic.GetPoints();
         }
-        else if(playerLogic.GetPoints() == 0)
+        else if (playerLogic.GetPoints() == 0)
         {
             playerLogic.AddPoints(totalPoints);
         }
@@ -35,7 +38,7 @@ public class GameEngine : MonoBehaviour
     }
     private IEnumerator UpdateData()
     {
-        if(counter >= globalUpdateInterval)
+        if (counter >= globalUpdateInterval)
         {
             using (UnityWebRequest req = new UnityWebRequest("", "POST"))
             {
@@ -57,7 +60,7 @@ public class GameEngine : MonoBehaviour
         {
             counter += Time.deltaTime;
         }
-       
+
     }
     private IEnumerator FetchData()
     {
