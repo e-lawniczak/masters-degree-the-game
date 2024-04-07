@@ -5546,6 +5546,14 @@ PrefabInstance:
       propertyPath: engine
       value: 
       objectReference: {fileID: 822998501}
+    - target: {fileID: 6076400571600688586, guid: 9449ff9bd791d8348969e70aeb258bd0, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076400571600688586, guid: 9449ff9bd791d8348969e70aeb258bd0, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 6232171888980325083, guid: 9449ff9bd791d8348969e70aeb258bd0, type: 3}
       propertyPath: m_RootOrder
       value: 3

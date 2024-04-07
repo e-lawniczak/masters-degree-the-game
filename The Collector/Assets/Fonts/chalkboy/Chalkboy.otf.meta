@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c7152349004bb26418b989c506c4da06
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Chalkboy
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 05576c13d081c7a4fb4808476fe0a3e8, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
