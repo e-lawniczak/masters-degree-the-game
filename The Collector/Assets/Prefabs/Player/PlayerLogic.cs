@@ -84,7 +84,6 @@ public class PlayerLogic : MonoBehaviour
     public void Recoil(Vector2? recoildVec = null)
     {
         Vector2 recoil = recoildVec.HasValue ? recoildVec.Value : new Vector2(0, 1800f);
-        Debug.Log(recoil);
         rb.AddForce(recoil);
 
     }

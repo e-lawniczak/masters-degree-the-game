@@ -85,7 +85,7 @@ public class MenuHandlerScript : MonoBehaviour
     }
     public IEnumerator GetInitialPlayerData()
     {
-        UnityWebRequest req = UnityWebRequest.Get(apiUrl + "/api/users/getuserData/" + RuntimeVariables.PlayerId.ToString());
+        UnityWebRequest req = UnityWebRequest.Get(apiUrl + "/api/users/getUserData/" + RuntimeVariables.PlayerId.ToString());
         req.useHttpContinue = false;
         req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
         yield return req.SendWebRequest();
