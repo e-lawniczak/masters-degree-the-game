@@ -17,11 +17,13 @@ public class GameEngine : MonoBehaviour
 
     void Start()
     {
+        if (RuntimeVariables.PlayerId == -1 || RuntimeVariables.PlayerJwtToken == "") return;
         FetchData();
     }
 
     void Update()
     {
+        if (RuntimeVariables.PlayerId == -1 || RuntimeVariables.PlayerJwtToken == "") return;
 
         if (playerLogic == null) return;
         if (playerController == null) return;

@@ -23,7 +23,7 @@ public class PlayerUI : MonoBehaviour
 
         for (int i = 0; i < hps.Length; i++)
         {
-            hps[i].transform.position = new Vector3(hps[i].transform.position.x + 105, hps[i].transform.position.y, hps[i].transform.position.z);
+            hps[i].transform.position = new Vector3(hps[i].transform.position.x + 65, hps[i].transform.position.y, hps[i].transform.position.z);
         }
         dashImg.enabled = true;
         dashInfo = playerLogic.GetCanDash();

@@ -314,7 +314,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -183.86}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &263054070
@@ -338,7 +338,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: By logging in you agree to be a part of scientific experiment as well as
-    accept the Terms of Use
+    accept the Terms of Use.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}
   m_sharedMaterial: {fileID: -4674016763414241341, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}
@@ -1348,6 +1348,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   errorMsg: {fileID: 882625475}
+  UserName: {fileID: 1615393900}
+  Password: {fileID: 926779850}
+  Email: {fileID: 926935987}
+  gameEngine: {fileID: 0}
+  statsText: {fileID: 0}
+  buttonsToHide: {fileID: 831072712}
 --- !u!1 &686399955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1443,7 +1449,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &686399958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1457,7 +1463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8941177, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1726,7 +1732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8941177, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2000,7 +2006,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -116.2}
+  m_AnchoredPosition: {x: 0, y: -75}
   m_SizeDelta: {x: 650, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &882625475
@@ -2023,7 +2029,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: If your account does not exist it will be created
+  m_text: 'If your account does not exist it will be created. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}
   m_sharedMaterial: {fileID: -4674016763414241341, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}
@@ -2561,7 +2567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8941177, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
