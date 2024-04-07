@@ -173,7 +173,6 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(new Vector2(isTurnedLeft ? force : -force, 0));
             pState.dashing = false;
             canDash = false;
-            Debug.Log("Dash");
         }
         if (!canDash)
         {
