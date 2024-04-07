@@ -593,6 +593,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   errorMsg: {fileID: 0}
+  UserName: {fileID: 0}
+  Password: {fileID: 0}
+  Email: {fileID: 0}
+  gameEngine: {fileID: 0}
+  statsText: {fileID: 0}
+  buttonsToHide: {fileID: 0}
 --- !u!1 &705822395
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,7 +708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8941177, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
