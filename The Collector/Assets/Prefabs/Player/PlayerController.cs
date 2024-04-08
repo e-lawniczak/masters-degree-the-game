@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
         if (pState.dashing)
         {
             //rb.velocity = new Vector2(1000, 0);
-            var force =  50000f ;
+            var force = 50000f;
             rb.AddForce(new Vector2(isTurnedLeft ? force : -force, 0));
             pState.dashing = false;
             canDash = false;
@@ -252,12 +252,18 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
-                    if(isDead) playerLogic.AddPoints(10);
+                    if (isDead)
+                    {
+                        playerLogic.AddPoints(10);
+                    }
                 }
                 if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
-                    if (isDead) playerLogic.AddPoints(10);
+                    if (isDead)
+                    {
+                        playerLogic.AddPoints(10);
+                    }
                 }
             }
 
@@ -318,7 +324,7 @@ public class PlayerController : MonoBehaviour
         //Stops The player jump immediately, causing them to start falling as soon as the button is released.
         stepsJumped = 0;
         pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x /airMovementMod, 0);
+        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, 0);
     }
 
     void StopJumpSlow()
@@ -326,7 +332,7 @@ public class PlayerController : MonoBehaviour
         //stops the jump but lets the player hang in the air for a while.
         stepsJumped = 0;
         pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jumpSpeed );
+        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jumpSpeed);
 
     }
 
@@ -420,7 +426,7 @@ public class PlayerController : MonoBehaviour
         {
             StopJumpSlow();
         }
-        
+
         if (Input.GetButton(InputButtons.Dash) && canDash)
         {
             pState.dashing = true;

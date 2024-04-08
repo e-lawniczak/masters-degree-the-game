@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MenuScenes/Metrics.unity
     guid: e2c583fe2e5e5dc40966fc30d0f6302d
+  - enabled: 1
+    path: Assets/Scenes/MenuScenes/EndScreen.unity
+    guid: e132d93a625ead246a6329597b6f85bf
   m_configObjects: {}

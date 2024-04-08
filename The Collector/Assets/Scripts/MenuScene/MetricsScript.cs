@@ -26,7 +26,7 @@ public class MetricsScript : MonoBehaviour
     private TMP_Dropdown[] dropdowns;
 
     private Color errorColor = new Color(1f, (float)(121f / 255f), (float)(121f / 255f));
-    private readonly string apiUrl = "https://erykmgr.thinq.pl";
+    
     private string Error;
 
 
@@ -78,7 +78,7 @@ public class MetricsScript : MonoBehaviour
 
         if (flag)
         {
-            UnityWebRequest req = UnityWebRequest.Post(apiUrl + "/api/users/updateMetrics", JsonUtility.ToJson(requestObj), "application/json");
+            UnityWebRequest req = UnityWebRequest.Post(RuntimeVariables.apiUrl + "/api/users/updateMetrics", JsonUtility.ToJson(requestObj), "application/json");
             req.useHttpContinue = false;
             req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
             yield return req.SendWebRequest();

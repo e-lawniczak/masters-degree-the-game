@@ -9,6 +9,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class BasicEnemy : MonoBehaviour
 {
+    [SerializeField] private int enemyId;
     [SerializeField] private float maxHp = 4;
     [SerializeField] private float speed = 5f;
 
@@ -26,6 +27,11 @@ public class BasicEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
+        {
+            Destroy(this, 0.0f);
+            return;
+        }
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<CircleCollider2D>();
 
@@ -38,6 +44,11 @@ public class BasicEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
+        {
+            Destroy(this, 0.0f);
+            return;
+        }
         if (hp <= 0) return;
 
     }
@@ -52,6 +63,8 @@ public class BasicEnemy : MonoBehaviour
         if (collision.rigidbody && collision.rigidbody.name == LayerVariables.Player)
         {
             var pl = collision.collider.GetComponent<PlayerLogic>();
+            PlaytroughVariables.EnemiesDefeated += 1;
+            RuntimeVariables.CurrentLevelEnemiesDefeated+= 1;
             pl.GetHitByEnemy(this.gameObject, this.transform.position);
         }
     }
@@ -70,6 +83,7 @@ public class BasicEnemy : MonoBehaviour
     }
     void Die()
     {
+        RuntimeVariables.defeatedEnemies.Add(enemyId);
         Destroy(gameObject, 0.0f);
     }
 
@@ -102,6 +116,10 @@ public class BasicEnemy : MonoBehaviour
         }
         
         return false;
+    }
+    public int GetId()
+    {
+        return enemyId;
     }
 
 }

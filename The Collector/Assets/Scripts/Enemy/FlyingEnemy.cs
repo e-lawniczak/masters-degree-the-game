@@ -6,6 +6,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class FlyingEnemy : MonoBehaviour
 {
+    [SerializeField] private int enemyId;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float lockOnSpeed = 15f;
     [SerializeField] private float activationRadius = 25f;
@@ -31,6 +32,11 @@ public class FlyingEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
+        {
+            Destroy(this, 0.0f);
+            return;
+        }
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<PolygonCollider2D>();
         playerPos = player.GetComponent<Transform>().position;
@@ -45,6 +51,11 @@ public class FlyingEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
+        {
+            Destroy(this, 0.0f);
+            return;
+        }
         if (!isActive)
         {
             CheckForPlayer();
@@ -140,6 +151,9 @@ public class FlyingEnemy : MonoBehaviour
     }
     void Die()
     {
+        RuntimeVariables.defeatedEnemies.Add(enemyId);
+        PlaytroughVariables.EnemiesDefeated += 1;
+        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
         Destroy(gameObject, 0.0f);
     }
 
@@ -167,4 +181,8 @@ public class FlyingEnemy : MonoBehaviour
     //    Gizmos.color = Color.blue;
     //    Gizmos.DrawWireSphere(transform.position, activationRadius);
     //}
+    public int GetId()
+    {
+        return enemyId;
+    }
 }

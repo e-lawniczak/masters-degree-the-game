@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using static HelperFunctions;
 
 public class PlayerLogic : MonoBehaviour
@@ -30,7 +31,7 @@ public class PlayerLogic : MonoBehaviour
         _isInvincible = false;
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        points = 0;
+        points = PlaytroughVariables.TotalPoints.GetValueOrDefault(0);
         updateState = new UnityEvent();
         queueUpdate = false;
     }
@@ -79,7 +80,7 @@ public class PlayerLogic : MonoBehaviour
     }
     private void Die()
     {
-        Debug.Log("Dead");
+        //Destroy(this, 0.0f);
     }
     public void Recoil(Vector2? recoildVec = null)
     {
@@ -108,8 +109,8 @@ public class PlayerLogic : MonoBehaviour
     }
     public void AddPoints(int p = 1)
     {
-        points += p;
-        queueUpdate = true;
+        PlaytroughVariables.TotalPoints += p;
+        RuntimeVariables.CurrentLevelPoints += p;
     }
     public int GetPoints()
     {

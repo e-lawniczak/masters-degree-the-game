@@ -31,7 +31,6 @@ public class MenuHandlerScript : MonoBehaviour
     private LoginResponse Data = new LoginResponse();
     private StatResponse Stats = new StatResponse();
     private string Error = "";
-    private readonly string apiUrl = "https://erykmgr.thinq.pl";
 
     private void Start()
     {
@@ -74,13 +73,15 @@ public class MenuHandlerScript : MonoBehaviour
         {
             SceneManager.LoadScene(SceneNames.Metrics);
         }
-        else {
+        else
+        {
             SceneManager.LoadScene(SceneNames.Stats);
         }
     }
     public void SetStats()
     {
         if (Stats.userName != "" && Stats.userName != null)
+        {
             statsText.text = String.Format(
                 "User name: {0} \n" +
                 "Email: {1} \n" +
@@ -89,10 +90,12 @@ public class MenuHandlerScript : MonoBehaviour
                 "High score: {4} \n" +
                 "",
                  Stats.userName, Stats.email, Stats.attempts, Stats.deaths, Stats.highScore);
+            
+        }
     }
     public IEnumerator GetInitialPlayerData()
     {
-        UnityWebRequest req = UnityWebRequest.Get(apiUrl + "/api/users/getUserData/" + RuntimeVariables.PlayerId.ToString());
+        UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/users/getUserData/" + RuntimeVariables.PlayerId.ToString());
         req.useHttpContinue = false;
         req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
         yield return req.SendWebRequest();
@@ -110,10 +113,7 @@ public class MenuHandlerScript : MonoBehaviour
             SetStats();
         }
     }
-    public void StartGame()
-    {
-        SceneManager.LoadScene(SceneNames.Test);
-    }
+
     public void SetErrorMsg(string msg)
     {
         errorMsg.text = msg;
@@ -148,7 +148,7 @@ public class MenuHandlerScript : MonoBehaviour
                 Email = Email.text.Length == 0 ? "" : Email.text
             };
 
-            UnityWebRequest req = UnityWebRequest.Post(apiUrl + "/api/auth/credentials", JsonUtility.ToJson(obj), "application/json");
+            UnityWebRequest req = UnityWebRequest.Post(RuntimeVariables.apiUrl + "/api/auth/credentials", JsonUtility.ToJson(obj), "application/json");
             req.useHttpContinue = false;
             yield return req.SendWebRequest();
 
@@ -185,7 +185,7 @@ public class MenuHandlerScript : MonoBehaviour
         public string Message;
         public bool IsSuccess;
     }
-    
+
     [Serializable]
     private class StatResponse
     {
