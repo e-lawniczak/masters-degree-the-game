@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MenuScenes/Stats.unity
     guid: 0c79ccac63cc45d46b88fa2b414d0bd8
+  - enabled: 1
+    path: Assets/Scenes/MenuScenes/Metrics.unity
+    guid: e2c583fe2e5e5dc40966fc30d0f6302d
   m_configObjects: {}
