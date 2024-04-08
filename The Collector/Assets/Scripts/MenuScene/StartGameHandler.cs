@@ -179,7 +179,7 @@ public class StartGameHandler : MonoBehaviour
         PlaytroughVariables.LevelCoins_3 = _PlaytroughData.LevelCoins_3;
         PlaytroughVariables.LevelDeaths_3 = _PlaytroughData.LevelDeaths_3;
         PlaytroughVariables.LevelEndHp_3 = _PlaytroughData.LevelEndHp_3;
-        PlaytroughVariables.UserId = _PlaytroughData.UserId;
+        PlaytroughVariables.UserId = RuntimeVariables.PlayerId;
         PlaytroughVariables.StartTime = _PlaytroughData.StartTime;
         PlaytroughVariables.EndTime = _PlaytroughData.EndTime;
         PlaytroughVariables.LastUpdate = _PlaytroughData.LastUpdate;
