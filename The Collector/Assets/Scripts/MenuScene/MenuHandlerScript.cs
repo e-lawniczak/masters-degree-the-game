@@ -10,6 +10,7 @@ using System.Text;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Linq;
 
 public class MenuHandlerScript : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class MenuHandlerScript : MonoBehaviour
 
     private LoginResponse Data = new LoginResponse();
     private StatResponse Stats = new StatResponse();
-    private ErrorResponse Error = new ErrorResponse();
+    private string Error = "";
     private readonly string apiUrl = "https://erykmgr.thinq.pl";
 
     private void Start()
@@ -69,7 +70,13 @@ public class MenuHandlerScript : MonoBehaviour
         RuntimeVariables.PlayerJwtToken = Data.token;
         RuntimeVariables.PlayerId = Data.id;
         RuntimeVariables.PlayerEmail = Data.email;
-        SceneManager.LoadScene(SceneNames.Stats);
+        if (Data.isFirstLogin)
+        {
+            SceneManager.LoadScene(SceneNames.Metrics);
+        }
+        else {
+            SceneManager.LoadScene(SceneNames.Stats);
+        }
     }
     public void SetStats()
     {
@@ -94,7 +101,7 @@ public class MenuHandlerScript : MonoBehaviour
         if (req.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError(req.downloadHandler.text);
-            Error = JsonUtility.FromJson<ErrorResponse>(req.downloadHandler.text);
+            Error = req.downloadHandler.text;
             Debug.LogError(req.error);
         }
         else
@@ -126,6 +133,11 @@ public class MenuHandlerScript : MonoBehaviour
             SetErrorMsg("Password must be at least 8 characters long");
             flag = false;
         }
+        else if (UserName.text.Any(x => Char.IsWhiteSpace(x)))
+        {
+            SetErrorMsg("Please use only digits, letters and _");
+            flag = false;
+        }
 
         if (flag)
         {
@@ -142,9 +154,10 @@ public class MenuHandlerScript : MonoBehaviour
 
             if (req.result != UnityWebRequest.Result.Success)
             {
-                Error = JsonUtility.FromJson<ErrorResponse>(req.downloadHandler.text);
+                Debug.LogError(req.downloadHandler.text);
+                Error = req.downloadHandler.text;
                 Debug.LogError(req.error);
-                SetErrorMsg(Error.msg);
+                SetErrorMsg(Error);
             }
             else
             {
@@ -172,12 +185,7 @@ public class MenuHandlerScript : MonoBehaviour
         public string Message;
         public bool IsSuccess;
     }
-    [Serializable]
-    private class ErrorResponse
-    {
-        public string msg;
-        public string inner;
-    }
+    
     [Serializable]
     private class StatResponse
     {
