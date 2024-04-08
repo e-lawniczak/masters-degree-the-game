@@ -41,7 +41,7 @@ public class PlayerUI : MonoBehaviour
             hps[i].enabled = true;
         }
         pointsText.text = string.Format("Points: {0}", PlaytroughVariables.TotalPoints);
-        timeText.text = string.Format("{0}", PlaytroughVariables.TotalTime.GetValueOrDefault(0f).ToString("F3").Replace(',', '.'));
+        timeText.text = string.Format("{0}", PlaytroughVariables.TotalTime.ToString("F3").Replace(',', '.'));
     }
     private void FixedUpdate()
     {

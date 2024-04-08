@@ -52,15 +52,15 @@ public class GameEngine : MonoBehaviour
         }
         if (PlaytroughVariables.PlaytroughLoaded && !RuntimeVariables.GameStarted)
         {
-            RuntimeVariables.CurrentLevelPoints = PlaytroughVariables.TotalPoints.GetValueOrDefault(0);
-            RuntimeVariables.CurrentLevelTime = PlaytroughVariables.TotalTime.GetValueOrDefault(0);
-            RuntimeVariables.TotalPoints = PlaytroughVariables.TotalPoints.GetValueOrDefault(0);
-            RuntimeVariables.TotalTime = PlaytroughVariables.TotalTime.GetValueOrDefault(0);
+            RuntimeVariables.CurrentLevelPoints = PlaytroughVariables.TotalPoints;
+            RuntimeVariables.CurrentLevelTime = PlaytroughVariables.TotalTime;
+            RuntimeVariables.TotalPoints = PlaytroughVariables.TotalPoints;
+            RuntimeVariables.TotalTime = PlaytroughVariables.TotalTime;
 
-            RuntimeVariables.CurrentLevelPoints = RuntimeVariables.CurrentLevelPoints - PlaytroughVariables.LevelPoints_1.GetValueOrDefault(0) - PlaytroughVariables.LevelPoints_2.GetValueOrDefault(0);
-            RuntimeVariables.CurrentLevelTime = RuntimeVariables.CurrentLevelTime - PlaytroughVariables.LevelTime_1.GetValueOrDefault(0f) - PlaytroughVariables.LevelTime_2.GetValueOrDefault(0f);
-            RuntimeVariables.CurrentLevelCoins = PlaytroughVariables.CoinsCollected.GetValueOrDefault(0) - PlaytroughVariables.LevelCoins_1.GetValueOrDefault(0) - PlaytroughVariables.LevelCoins_2.GetValueOrDefault(0);
-            RuntimeVariables.CurrentLevelEnemiesDefeated = PlaytroughVariables.EnemiesDefeated.GetValueOrDefault(0) - PlaytroughVariables.LevelEnemies_1.GetValueOrDefault(0) - PlaytroughVariables.LevelEnemies_2.GetValueOrDefault(0);
+            RuntimeVariables.CurrentLevelPoints = RuntimeVariables.CurrentLevelPoints - PlaytroughVariables.LevelPoints_1 - PlaytroughVariables.LevelPoints_2;
+            RuntimeVariables.CurrentLevelTime = RuntimeVariables.CurrentLevelTime - PlaytroughVariables.LevelTime_1 - PlaytroughVariables.LevelTime_2;
+            RuntimeVariables.CurrentLevelCoins = PlaytroughVariables.CoinsCollected - PlaytroughVariables.LevelCoins_1 - PlaytroughVariables.LevelCoins_2;
+            RuntimeVariables.CurrentLevelEnemiesDefeated = PlaytroughVariables.EnemiesDefeated - PlaytroughVariables.LevelEnemies_1 - PlaytroughVariables.LevelEnemies_2;
         }
         if (!RuntimeVariables.GameStarted)
         {
@@ -81,7 +81,7 @@ public class GameEngine : MonoBehaviour
         AddTime();
         CheckIfPointsChanged();
         //CheckIfEnemiesChanged();
-        //UpdateInterval();
+        UpdateInterval();
 
 
     }
@@ -118,7 +118,7 @@ public class GameEngine : MonoBehaviour
 
     void CheckIfPlayerAlive()
     {
-        if (playerLogic.IsAlive)
+        if (!playerLogic.IsAlive)
         {
             StartCoroutine(UpdatePlaytrough());
             EndGame();
@@ -128,7 +128,7 @@ public class GameEngine : MonoBehaviour
     IEnumerator UpdatePlaytrough()
     {
         StartGameHandler.PlaytroughData obj = PreparePlaytroughUpdate();
-
+        Debug.Log(obj.LastUpdate);
         UnityWebRequest req = UnityWebRequest.Post(RuntimeVariables.apiUrl + "/api/playtrough/updatePlaytrough", JsonUtility.ToJson(obj), "application/json");
         req.useHttpContinue = false;
         req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
@@ -142,7 +142,7 @@ public class GameEngine : MonoBehaviour
         }
         else
         {
-
+            PlaytroughVariables.PlaytroughId = Convert.ToInt32(req.downloadHandler.text);
         }
     }
 

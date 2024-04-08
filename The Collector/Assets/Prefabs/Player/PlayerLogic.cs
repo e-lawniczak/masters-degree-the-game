@@ -31,7 +31,7 @@ public class PlayerLogic : MonoBehaviour
         _isInvincible = false;
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        points = PlaytroughVariables.TotalPoints.GetValueOrDefault(0);
+        points = PlaytroughVariables.TotalPoints;
         updateState = new UnityEvent();
         queueUpdate = false;
     }

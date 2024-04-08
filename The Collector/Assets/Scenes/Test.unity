@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3403953784391818442, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
+      propertyPath: coinId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4359463983211446317, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -240,6 +244,10 @@ PrefabInstance:
     - target: {fileID: 2982602076928519942, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_Name
       value: Coin (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403953784391818442, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
+      propertyPath: coinId
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4359463983211446317, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_RootOrder
@@ -490,6 +498,10 @@ PrefabInstance:
     - target: {fileID: 2982602076928519942, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_Name
       value: Coin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3403953784391818442, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
+      propertyPath: coinId
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4359463983211446317, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_RootOrder
@@ -5465,6 +5477,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053f43fa18e843742897c009754797c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinId: 0
 --- !u!1001 &1290740765877408784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5476,6 +5489,10 @@ PrefabInstance:
     - target: {fileID: 1023145403102885711, guid: 5769e973302922d4986c080e26ea8c17, type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 3580549791346675594, guid: 5769e973302922d4986c080e26ea8c17, type: 3}
+      propertyPath: enemyId
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9103667745228796409, guid: 5769e973302922d4986c080e26ea8c17, type: 3}
       propertyPath: m_RootOrder
@@ -5635,6 +5652,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 3403953784391818442, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
+      propertyPath: coinId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4359463983211446317, guid: c3d3e0da9baa40242b8805b06ff1e12f, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -5700,6 +5721,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 933823015}
+    - target: {fileID: 4367763578875332994, guid: 8f29e01d50a3e434c90aaa8f535ea6e3, type: 3}
+      propertyPath: enemyId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4367763578875332994, guid: 8f29e01d50a3e434c90aaa8f535ea6e3, type: 3}
       propertyPath: goingLeft
       value: 1

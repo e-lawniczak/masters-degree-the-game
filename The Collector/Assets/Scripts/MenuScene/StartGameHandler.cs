@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 
 public class StartGameHandler : MonoBehaviour
 {
+    public GameObject toHide;
     private StartGameData _StartGameData = null;
     private PlaytroughData _PlaytroughData = null;
     private CheckpointData _CheckpointData = null;
@@ -22,10 +23,16 @@ public class StartGameHandler : MonoBehaviour
     }
     public void StartGame()
     {
-        StartCoroutine(FetchInitialPlaytroughData());
+        StartCoroutine(StartGameAsync());
+    }
+    public IEnumerator StartGameAsync()
+    {
+        toHide.SetActive(false);
+        yield return StartCoroutine(FetchInitialPlaytroughData());
+        Debug.Log(_StartGameData);
         if (_StartGameData == null)
         {
-            return;
+            yield return null;
         }
         if (!_StartGameData.isControlGroup || !_StartGameData.currentPlaytrough.HasValue)
         {
@@ -33,15 +40,15 @@ public class StartGameHandler : MonoBehaviour
         }
         else
         {
-            StartCoroutine(FetchPlaytrough());
+            yield return StartCoroutine(FetchPlaytrough());
             if (_PlaytroughData == null)
             {
-                return;
+                yield return null;
             }
-            StartCoroutine(FetchCheckpoint());
+            yield return StartCoroutine(FetchCheckpoint());
             if (_CheckpointData == null)
             {
-                return;
+                yield return null;
             }
             StartFromCheckpoint();
         }
@@ -112,6 +119,7 @@ public class StartGameHandler : MonoBehaviour
         else
         {
             _PlaytroughData = JsonUtility.FromJson<PlaytroughData>(req.downloadHandler.text);
+
         }
     }
     IEnumerator FetchCheckpoint()
@@ -130,6 +138,7 @@ public class StartGameHandler : MonoBehaviour
         else
         {
             _CheckpointData = JsonUtility.FromJson<CheckpointData>(req.downloadHandler.text);
+
         }
     }
     private void AssignRuntimeVariables()
@@ -195,34 +204,34 @@ public class StartGameHandler : MonoBehaviour
     public class PlaytroughData
     {
         public int PlaytroughId;
-        public float? TotalTime;
-        public int? TotalPoints;
-        public int? CoinsCollected;
-        public int? EnemiesDefeated;
-        public int? PercentageProgress;
-        public int? Deaths;
+        public float TotalTime;
+        public int TotalPoints;
+        public int CoinsCollected;
+        public int EnemiesDefeated;
+        public int PercentageProgress;
+        public int Deaths;
         public float TotalEnemyProxTime;
         public float StandingStillTime;
         public int Score;
         public bool IsFinished;
-        public float? LevelTime_1;
-        public int? LevelPoints_1;
-        public int? LevelEnemies_1;
-        public int? LevelCoins_1;
-        public int? LevelDeaths_1;
-        public int? LevelEndHp_1;
-        public float? LevelTime_2;
-        public int? LevelPoints_2;
-        public int? LevelEnemies_2;
-        public int? LevelCoins_2;
-        public int? LevelDeaths_2;
-        public int? LevelEndHp_2;
-        public float? LevelTime_3;
-        public int? LevelPoints_3;
-        public int? LevelEnemies_3;
-        public int? LevelCoins_3;
-        public int? LevelDeaths_3;
-        public int? LevelEndHp_3;
+        public float LevelTime_1;
+        public int LevelPoints_1;
+        public int LevelEnemies_1;
+        public int LevelCoins_1;
+        public int LevelDeaths_1;
+        public int LevelEndHp_1;
+        public float LevelTime_2;
+        public int LevelPoints_2;
+        public int LevelEnemies_2;
+        public int LevelCoins_2;
+        public int LevelDeaths_2;
+        public int LevelEndHp_2;
+        public float LevelTime_3;
+        public int LevelPoints_3;
+        public int LevelEnemies_3;
+        public int LevelCoins_3;
+        public int LevelDeaths_3;
+        public int LevelEndHp_3;
         public int UserId;
         public DateTime StartTime;
         public DateTime? EndTime;

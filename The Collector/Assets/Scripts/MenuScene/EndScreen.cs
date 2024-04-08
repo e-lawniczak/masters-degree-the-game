@@ -33,7 +33,7 @@ public class EndScreen : MonoBehaviour
         string str = string.Empty;
         for (int i = 0; i < 10; i++)
         {
-            str += string.Format("{0}: {1}", "UserName", "1000");
+            str += string.Format("{0}: {1}\n", "UserName", "1000");
         }
         return str;
     }
