@@ -28,4 +28,11 @@ public class HelperFunctions : MonoBehaviour
         public float currentCd { get; set; }
         public bool canDash { get; set; }
     }
+    public static int CalculateFinalScore(int totalPoints, float totalTime)
+    {
+        int score = totalPoints * 3000;
+        score = (int)(score / totalTime);
+
+        return score;
+    }
 }

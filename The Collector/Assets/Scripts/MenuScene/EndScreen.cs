@@ -17,7 +17,7 @@ public class EndScreen : MonoBehaviour
         {
             title.text = "Congratulations!!!\n You won!";
         }
-        score.text = string.Format("Your score: {0}", ((PlaytroughVariables.TotalPoints * 1000f) / (PlaytroughVariables.TotalTime)));
+        score.text = string.Format("Your score: {0}", HelperFunctions.CalculateFinalScore(PlaytroughVariables.TotalPoints, PlaytroughVariables.TotalTime));
         highScore.text = string.Format("High score: {0}", RuntimeVariables.HighScore);
         var leaderboardsArray = GetLeaderboards();
         leaderBoards.text = string.Format("Leaderboards\n{0}", leaderboardsArray);
