@@ -151,9 +151,7 @@ public class FlyingEnemy : MonoBehaviour
     }
     void Die()
     {
-        RuntimeVariables.defeatedEnemies.Add(enemyId);
-        PlaytroughVariables.EnemiesDefeated += 1;
-        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
+     
         Destroy(gameObject, 0.0f);
     }
 
@@ -172,6 +170,9 @@ public class FlyingEnemy : MonoBehaviour
     public bool GetHit(int damage, Vector3 position)
     {
         Die();
+        RuntimeVariables.defeatedEnemies.Add(enemyId);
+        PlaytroughVariables.EnemiesDefeated += 1;
+        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
         return true;
     }
     //void OnDrawGizmos()
