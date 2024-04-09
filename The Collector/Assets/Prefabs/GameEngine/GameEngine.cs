@@ -40,7 +40,6 @@ public class GameEngine : MonoBehaviour
             return;
         }
 
-        RuntimeVariables.CurrentLevel = 1;
 
         if (CheckpointVariables.CheckpointLoaded && !RuntimeVariables.GameStarted)
         {
@@ -129,12 +128,12 @@ public class GameEngine : MonoBehaviour
     IEnumerator UpdatePlaytrough()
     {
         StartGameHandler.PlaytroughData obj = PreparePlaytroughUpdate();
-        Debug.Log(obj.EndTime);
+        Debug.Log(JsonUtility.ToJson(obj));
         UnityWebRequest req = UnityWebRequest.Post(RuntimeVariables.apiUrl + "/api/playtrough/updatePlaytrough", JsonUtility.ToJson(obj), "application/json");
         req.useHttpContinue = false;
         req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
         yield return req.SendWebRequest();
-
+        
 
         if (req.result != UnityWebRequest.Result.Success)
         {
@@ -182,10 +181,11 @@ public class GameEngine : MonoBehaviour
             LevelDeaths_3 = PlaytroughVariables.LevelDeaths_3,
             LevelEndHp_3 = PlaytroughVariables.LevelEndHp_3,
             UserId = RuntimeVariables.PlayerId,
-            StartTime = PlaytroughVariables.StartTime,
-            EndTime = RuntimeVariables.GameWon ? DateTime.UtcNow : !playerLogic.IsAlive ? DateTime.UtcNow : null,
-            LastUpdate = DateTime.UtcNow,
+            StartTime = PlaytroughVariables.StartTime.Ticks,
+            EndTime = RuntimeVariables.GameWon ? DateTime.UtcNow.Ticks : !playerLogic.IsAlive ? DateTime.UtcNow.Ticks : 0,
+            LastUpdate = DateTime.UtcNow.Ticks,
         };
+        
 
         switch (RuntimeVariables.CurrentLevel)
         {

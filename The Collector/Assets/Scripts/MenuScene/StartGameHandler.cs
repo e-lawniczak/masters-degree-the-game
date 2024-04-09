@@ -50,6 +50,7 @@ public class StartGameHandler : MonoBehaviour
             {
                 yield return null;
             }
+            RuntimeVariables.CurrentLevel = _CheckpointData.LevelNo;
             StartFromCheckpoint();
         }
     }
@@ -83,6 +84,7 @@ public class StartGameHandler : MonoBehaviour
     private void StartFromBegining()
     {
         Debug.Log("No save start");
+        RuntimeVariables.CurrentLevel = 1;
         SceneManager.LoadSceneAsync(SceneNames.Test);
     }
     IEnumerator FetchInitialPlaytroughData()
@@ -189,9 +191,9 @@ public class StartGameHandler : MonoBehaviour
         PlaytroughVariables.LevelDeaths_3 = _PlaytroughData.LevelDeaths_3;
         PlaytroughVariables.LevelEndHp_3 = _PlaytroughData.LevelEndHp_3;
         PlaytroughVariables.UserId = RuntimeVariables.PlayerId;
-        PlaytroughVariables.StartTime = _PlaytroughData.StartTime;
-        PlaytroughVariables.EndTime = _PlaytroughData.EndTime;
-        PlaytroughVariables.LastUpdate = _PlaytroughData.LastUpdate;
+        PlaytroughVariables.StartTime = new DateTime(_PlaytroughData.StartTime);
+        PlaytroughVariables.EndTime = _PlaytroughData.EndTime != 0 ? new DateTime(_PlaytroughData.EndTime) : null;
+        PlaytroughVariables.LastUpdate = _PlaytroughData.LastUpdate != 0 ? new DateTime(_PlaytroughData.LastUpdate) : null;
     }
     [Serializable]
     public class StartGameData
@@ -233,9 +235,9 @@ public class StartGameHandler : MonoBehaviour
         public int LevelDeaths_3;
         public int LevelEndHp_3;
         public int UserId;
-        public DateTime StartTime;
-        public DateTime? EndTime;
-        public DateTime? LastUpdate;
+        public long StartTime;
+        public long EndTime;
+        public long LastUpdate;
     }
     [Serializable]
     public class CheckpointData
