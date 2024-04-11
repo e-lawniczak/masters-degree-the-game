@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using static StartGameHandler;
 
 public class HelperFunctions : MonoBehaviour
 {
@@ -34,5 +37,80 @@ public class HelperFunctions : MonoBehaviour
         score = (int)(score / totalTime);
 
         return score;
+    }
+    public static string SceneToLoad(int level)
+    {
+        var sceneToLoad = SceneNames.Test;
+        switch (level)
+        {
+
+            case 1:
+                sceneToLoad = SceneNames.Level1;
+                break;
+            case 2:
+                sceneToLoad = SceneNames.Level1;
+                break;
+            case 3:
+                sceneToLoad = SceneNames.Level1;
+                break;
+            default:
+                sceneToLoad = SceneNames.Test;
+                break;
+
+        }
+        return sceneToLoad;
+    }
+
+    internal static void ResetPlaytrough()
+    {
+        RuntimeVariables.TotalPoints = 0;
+        RuntimeVariables.TotalTime = 0;
+        RuntimeVariables.defeatedEnemies.Clear();
+        RuntimeVariables.collectedCoins.Clear();
+        RuntimeVariables.GameWon = false;
+        RuntimeVariables.GameStarted = false;
+        RuntimeVariables.HighScore = 0;
+        RuntimeVariables.CurrentLevel = 0;
+        RuntimeVariables.CurrentLevelTime = 0;
+        RuntimeVariables.CurrentLevelPoints = 0;
+        RuntimeVariables.CurrentLevelCoins = 0;
+        RuntimeVariables.CurrentLevelEnemiesDefeated = 0;
+
+        PlaytroughVariables.PlaytroughLoaded = false;
+        PlaytroughVariables.PlaytroughId = -1;
+        PlaytroughVariables.TotalTime = 0f;
+        PlaytroughVariables.TotalPoints = 0;
+        PlaytroughVariables.CoinsCollected = 0;
+        PlaytroughVariables.EnemiesDefeated = 0;
+        PlaytroughVariables.PercentageProgress = 0;
+        PlaytroughVariables.Deaths = 0;
+        PlaytroughVariables.TotalEnemyProxTime = 0f;
+        PlaytroughVariables.StandingStillTime = 0f;
+        PlaytroughVariables.Score = 0;
+        PlaytroughVariables.IsFinished = false;
+        PlaytroughVariables.LevelTime_1 = 0f;
+        PlaytroughVariables.LevelPoints_1 = 0;
+        PlaytroughVariables.LevelEnemies_1 = 0;
+        PlaytroughVariables.LevelCoins_1 = 0;
+        PlaytroughVariables.LevelDeaths_1 = 0;
+        PlaytroughVariables.LevelEndHp_1 = 0;
+        PlaytroughVariables.LevelTime_2 = 0f;
+        PlaytroughVariables.LevelPoints_2 = 0;
+        PlaytroughVariables.LevelEnemies_2 = 0;
+        PlaytroughVariables.LevelCoins_2 = 0;
+        PlaytroughVariables.LevelDeaths_2 = 0;
+        PlaytroughVariables.LevelEndHp_2 = 0;
+        PlaytroughVariables.LevelTime_3 = 0f;
+        PlaytroughVariables.LevelPoints_3 = 0;
+        PlaytroughVariables.LevelEnemies_3 = 0;
+        PlaytroughVariables.LevelCoins_3 = 0;
+        PlaytroughVariables.LevelDeaths_3 = 0;
+        PlaytroughVariables.LevelEndHp_3 = 0;
+        PlaytroughVariables.UserId = -1;
+        PlaytroughVariables.StartTime = DateTime.UtcNow;
+        PlaytroughVariables.EndTime = null;
+        PlaytroughVariables.LastUpdate = null;
+
+
     }
 }

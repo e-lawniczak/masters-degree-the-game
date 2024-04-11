@@ -10,7 +10,7 @@ public class coin_script : MonoBehaviour
     {
         if (RuntimeVariables.collectedCoins.IndexOf(coinId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
     }
@@ -21,6 +21,7 @@ public class coin_script : MonoBehaviour
             collision.gameObject.GetComponent<PlayerLogic>().AddPoints(25);
             PlaytroughVariables.CoinsCollected += 1;
             RuntimeVariables.CurrentLevelCoins += 1;
+            RuntimeVariables.collectedCoins.Add(coinId);
             Destroy(this.gameObject);
         }
     }
@@ -32,7 +33,7 @@ public class coin_script : MonoBehaviour
     {
         if (RuntimeVariables.defeatedEnemies.IndexOf(coinId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
     }

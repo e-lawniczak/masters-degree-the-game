@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class EndScreen : MonoBehaviour
@@ -10,6 +12,7 @@ public class EndScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI highScore;
     [SerializeField] private TextMeshProUGUI leaderBoards;
+    private string Boards;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +22,8 @@ public class EndScreen : MonoBehaviour
         }
         score.text = string.Format("Your score: {0}", HelperFunctions.CalculateFinalScore(PlaytroughVariables.TotalPoints, PlaytroughVariables.TotalTime));
         highScore.text = string.Format("High score: {0}", RuntimeVariables.HighScore);
-        var leaderboardsArray = GetLeaderboards();
-        leaderBoards.text = string.Format("Leaderboards\n{0}", leaderboardsArray);
+        StartCoroutine(GetLeaderboards());
+
     }
 
     public void MoveToMenu()
@@ -28,13 +31,42 @@ public class EndScreen : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneNames.Stats);
     }
 
-    private string GetLeaderboards()
+    private IEnumerator GetLeaderboards()
     {
-        string str = string.Empty;
-        for (int i = 0; i < 10; i++)
+
+        UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/leaderboards/get");
+        req.useHttpContinue = false;
+        req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
+        yield return req.SendWebRequest();
+
+
+        if (req.result != UnityWebRequest.Result.Success)
         {
-            str += string.Format("{0}: {1}\n", "UserName", "1000");
+            Debug.LogError(req.downloadHandler.text);
+            Debug.LogError(req.error);
         }
-        return str;
+        else
+        {
+            var lb = JsonUtility.FromJson<LBRes>(req.downloadHandler.text);
+            new List<Leaderboards>(lb.leaderboards).ForEach(s =>
+            {
+                Boards += string.Format("{0}: {1}\n", s.userName, s.highScore);
+            });
+            leaderBoards.text = string.Format("<b>Leaderboards</b>\n\n{0}", Boards);
+
+        }
+    }
+    
+    public class LBRes
+    {
+        public Leaderboards[] leaderboards;
+    }
+
+    [Serializable]
+    public class Leaderboards
+    {
+        public string userName;
+        public int highScore;
+
     }
 }

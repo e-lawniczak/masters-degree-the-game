@@ -81,6 +81,7 @@ public class PlayerLogic : MonoBehaviour
     private void Die()
     {
         //Destroy(this, 0.0f);
+        PlaytroughVariables.Deaths += 1;
     }
     public void Recoil(Vector2? recoildVec = null)
     {

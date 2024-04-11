@@ -5,4 +5,5 @@
     internal static readonly string Enemy = "Enemies";
     internal static readonly string Environment = "Environment";
     internal static readonly string Player = "Player";
+    internal static readonly string Checkpoint = "Checkpoint";
 }

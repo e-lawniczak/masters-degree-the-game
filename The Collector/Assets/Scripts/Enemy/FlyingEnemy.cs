@@ -32,9 +32,9 @@ public class FlyingEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
+        if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
         rb = GetComponent<Rigidbody2D>();
@@ -53,7 +53,7 @@ public class FlyingEnemy : MonoBehaviour
     {
         if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
         if (!isActive)
@@ -149,9 +149,14 @@ public class FlyingEnemy : MonoBehaviour
             lockOnWait = lockOnWaitOriginal;
         }
     }
-    void Die()
+    void Die(bool isKilled = false)
     {
-     
+        if (isKilled)
+        {
+            RuntimeVariables.defeatedEnemies.Add(enemyId);
+            PlaytroughVariables.EnemiesDefeated += 1;
+            RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
+        }
         Destroy(gameObject, 0.0f);
     }
 
@@ -169,10 +174,8 @@ public class FlyingEnemy : MonoBehaviour
     }
     public bool GetHit(int damage, Vector3 position)
     {
-        Die();
-        RuntimeVariables.defeatedEnemies.Add(enemyId);
-        PlaytroughVariables.EnemiesDefeated += 1;
-        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
+        Die(true);
+       
         return true;
     }
     //void OnDrawGizmos()

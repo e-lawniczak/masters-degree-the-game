@@ -29,7 +29,7 @@ public class BasicEnemy : MonoBehaviour
     {
         if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
         rb = GetComponent<Rigidbody2D>();
@@ -46,7 +46,7 @@ public class BasicEnemy : MonoBehaviour
     {
         if (RuntimeVariables.defeatedEnemies.IndexOf(enemyId) > -1)
         {
-            Destroy(this, 0.0f);
+            Destroy(gameObject, 0.0f);
             return;
         }
         if (hp <= 0) return;
@@ -63,8 +63,7 @@ public class BasicEnemy : MonoBehaviour
         if (collision.rigidbody && collision.rigidbody.name == LayerVariables.Player)
         {
             var pl = collision.collider.GetComponent<PlayerLogic>();
-            PlaytroughVariables.EnemiesDefeated += 1;
-            RuntimeVariables.CurrentLevelEnemiesDefeated+= 1;
+           
             pl.GetHitByEnemy(this.gameObject, this.transform.position);
         }
     }
@@ -84,6 +83,8 @@ public class BasicEnemy : MonoBehaviour
     void Die()
     {
         RuntimeVariables.defeatedEnemies.Add(enemyId);
+        PlaytroughVariables.EnemiesDefeated += 1;
+        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
         Destroy(gameObject, 0.0f);
     }
 

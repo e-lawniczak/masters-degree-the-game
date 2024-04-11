@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using static StartGameHandler;
@@ -27,64 +28,32 @@ public class StartGameHandler : MonoBehaviour
     }
     public IEnumerator StartGameAsync()
     {
-        toHide.SetActive(false);
+        if (toHide != null)
+            toHide.SetActive(false);
         yield return StartCoroutine(FetchInitialPlaytroughData());
-        Debug.Log(_StartGameData);
         if (_StartGameData == null)
         {
             yield return null;
         }
-        if (!_StartGameData.isControlGroup || !_StartGameData.currentPlaytrough.HasValue)
-        {
-            StartFromBegining();
-        }
         else
         {
-            yield return StartCoroutine(FetchPlaytrough());
-            if (_PlaytroughData == null)
-            {
-                yield return null;
-            }
-            yield return StartCoroutine(FetchCheckpoint());
-            if (_CheckpointData == null)
-            {
-                yield return null;
-            }
-            RuntimeVariables.CurrentLevel = _CheckpointData.LevelNo;
-            StartFromCheckpoint();
+            StartFromBegining();
         }
     }
 
 
-    private void StartFromCheckpoint()
+    public void StartFromCheckpoint()
     {
         Debug.Log("Checkpoint start");
-        AssignRuntimeVariables();
-        var sceneToLoad = SceneNames.Test;
-        switch (_CheckpointData.LevelNo)
-        {
-
-            case 1:
-                sceneToLoad = SceneNames.Level1;
-                break;
-            case 2:
-                sceneToLoad = SceneNames.Level1;
-                break;
-            case 3:
-                sceneToLoad = SceneNames.Level1;
-                break;
-            default:
-                sceneToLoad = SceneNames.Test;
-                break;
-
-        }
-
+        //AssignRuntimeVariables();
+        string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
         SceneManager.LoadSceneAsync(sceneToLoad);
     }
     private void StartFromBegining()
     {
         Debug.Log("No save start");
         RuntimeVariables.CurrentLevel = 1;
+        HelperFunctions.ResetPlaytrough();
         SceneManager.LoadSceneAsync(SceneNames.Test);
     }
     IEnumerator FetchInitialPlaytroughData()
@@ -103,98 +72,52 @@ public class StartGameHandler : MonoBehaviour
         else
         {
             _StartGameData = JsonUtility.FromJson<StartGameData>(req.downloadHandler.text);
-        }
-    }
-    IEnumerator FetchPlaytrough()
-    {
-        UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/playtrough/getPlaytrough/" + _StartGameData.currentPlaytrough.ToString());
-        req.useHttpContinue = false;
-        req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
-        yield return req.SendWebRequest();
-
-
-        if (req.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(req.downloadHandler.text);
-            Debug.LogError(req.error);
-        }
-        else
-        {
-            _PlaytroughData = JsonUtility.FromJson<PlaytroughData>(req.downloadHandler.text);
+            Debug.Log(req.downloadHandler.text);
+            RuntimeVariables.IsControlGroup = _StartGameData.isControlGroup;
+            PlaytroughVariables.PlaytroughId = _StartGameData.currentPlaytrough.HasValue ? _StartGameData.currentPlaytrough.Value : -1;
 
         }
     }
-    IEnumerator FetchCheckpoint()
-    {
-        UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/playtrough/getCheckpoint/" + _StartGameData.currentPlaytrough.ToString());
-        req.useHttpContinue = false;
-        req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
-        yield return req.SendWebRequest();
+ 
+    //IEnumerator FetchPlaytrough()
+    //{
+    //    UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/playtrough/getPlaytrough/" + _StartGameData.currentPlaytrough.ToString());
+    //    req.useHttpContinue = false;
+    //    req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
+    //    yield return req.SendWebRequest();
 
 
-        if (req.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError(req.downloadHandler.text);
-            Debug.LogError(req.error);
-        }
-        else
-        {
-            _CheckpointData = JsonUtility.FromJson<CheckpointData>(req.downloadHandler.text);
+    //    if (req.result != UnityWebRequest.Result.Success)
+    //    {
+    //        Debug.LogError(req.downloadHandler.text);
+    //        Debug.LogError(req.error);
+    //    }
+    //    else
+    //    {
+    //        _PlaytroughData = JsonUtility.FromJson<PlaytroughData>(req.downloadHandler.text);
 
-        }
-    }
-    private void AssignRuntimeVariables()
-    {
-        RuntimeVariables.collectedCoins = _CheckpointData.CollectedCoinsIds;
-        RuntimeVariables.defeatedEnemies = _CheckpointData.DefeatedEnemiesIds;
+    //    }
+    //}
+    //IEnumerator FetchCheckpoint()
+    //{
+    //    UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/playtrough/getCheckpoint/" + _StartGameData.currentPlaytrough.ToString());
+    //    req.useHttpContinue = false;
+    //    req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
+    //    yield return req.SendWebRequest();
 
-        CheckpointVariables.CheckpointLoaded = true;
-        CheckpointVariables.CheckpointId = _CheckpointData.CheckpointId;
-        CheckpointVariables.Data = _CheckpointData.Data;
-        CheckpointVariables.LevelNo = _CheckpointData.LevelNo;
-        CheckpointVariables.PlayerPosX = _CheckpointData.PlayerPosX;
-        CheckpointVariables.PlayerPosY = _CheckpointData.PlayerPosY;
-        CheckpointVariables.Health = _CheckpointData.Health;
-        CheckpointVariables.DefeatedEnemiesIds = _CheckpointData.DefeatedEnemiesIds;
-        CheckpointVariables.CollectedCoinsIds = _CheckpointData.CollectedCoinsIds;
-        CheckpointVariables.PlaytroughId = _CheckpointData.PlaytroughId;
-        CheckpointVariables.Date = _CheckpointData.Date;
 
-        PlaytroughVariables.PlaytroughLoaded = true;
-        PlaytroughVariables.PlaytroughId = _PlaytroughData.PlaytroughId;
-        PlaytroughVariables.TotalTime = _PlaytroughData.TotalTime;
-        PlaytroughVariables.TotalPoints = _PlaytroughData.TotalPoints;
-        PlaytroughVariables.CoinsCollected = _PlaytroughData.CoinsCollected;
-        PlaytroughVariables.EnemiesDefeated = _PlaytroughData.EnemiesDefeated;
-        PlaytroughVariables.PercentageProgress = _PlaytroughData.PercentageProgress;
-        PlaytroughVariables.Deaths = _PlaytroughData.Deaths;
-        PlaytroughVariables.TotalEnemyProxTime = _PlaytroughData.TotalEnemyProxTime;
-        PlaytroughVariables.StandingStillTime = _PlaytroughData.StandingStillTime;
-        PlaytroughVariables.Score = _PlaytroughData.Score;
-        PlaytroughVariables.IsFinished = _PlaytroughData.IsFinished;
-        PlaytroughVariables.LevelTime_1 = _PlaytroughData.LevelTime_1;
-        PlaytroughVariables.LevelPoints_1 = _PlaytroughData.LevelPoints_1;
-        PlaytroughVariables.LevelEnemies_1 = _PlaytroughData.LevelEnemies_1;
-        PlaytroughVariables.LevelCoins_1 = _PlaytroughData.LevelCoins_1;
-        PlaytroughVariables.LevelDeaths_1 = _PlaytroughData.LevelDeaths_1;
-        PlaytroughVariables.LevelEndHp_1 = _PlaytroughData.LevelEndHp_1;
-        PlaytroughVariables.LevelTime_2 = _PlaytroughData.LevelTime_2;
-        PlaytroughVariables.LevelPoints_2 = _PlaytroughData.LevelPoints_2;
-        PlaytroughVariables.LevelEnemies_2 = _PlaytroughData.LevelEnemies_2;
-        PlaytroughVariables.LevelCoins_2 = _PlaytroughData.LevelCoins_2;
-        PlaytroughVariables.LevelDeaths_2 = _PlaytroughData.LevelDeaths_2;
-        PlaytroughVariables.LevelEndHp_2 = _PlaytroughData.LevelEndHp_2;
-        PlaytroughVariables.LevelTime_3 = _PlaytroughData.LevelTime_3;
-        PlaytroughVariables.LevelPoints_3 = _PlaytroughData.LevelPoints_3;
-        PlaytroughVariables.LevelEnemies_3 = _PlaytroughData.LevelEnemies_3;
-        PlaytroughVariables.LevelCoins_3 = _PlaytroughData.LevelCoins_3;
-        PlaytroughVariables.LevelDeaths_3 = _PlaytroughData.LevelDeaths_3;
-        PlaytroughVariables.LevelEndHp_3 = _PlaytroughData.LevelEndHp_3;
-        PlaytroughVariables.UserId = RuntimeVariables.PlayerId;
-        PlaytroughVariables.StartTime = new DateTime(_PlaytroughData.StartTime);
-        PlaytroughVariables.EndTime = _PlaytroughData.EndTime != 0 ? new DateTime(_PlaytroughData.EndTime) : null;
-        PlaytroughVariables.LastUpdate = _PlaytroughData.LastUpdate != 0 ? new DateTime(_PlaytroughData.LastUpdate) : null;
-    }
+    //    if (req.result != UnityWebRequest.Result.Success)
+    //    {
+    //        Debug.LogError(req.downloadHandler.text);
+    //        Debug.LogError(req.error);
+    //    }
+    //    else
+    //    {
+    //        _CheckpointData = JsonUtility.FromJson<CheckpointData>(req.downloadHandler.text);
+
+    //    }
+    //}
+
     [Serializable]
     public class StartGameData
     {
@@ -243,14 +166,21 @@ public class StartGameHandler : MonoBehaviour
     public class CheckpointData
     {
         public int CheckpointId;
-        public int? Data;
+        public string Data;
         public int LevelNo;
         public float PlayerPosX;
         public float PlayerPosY;
         public int Health;
-        public List<int> DefeatedEnemiesIds;
-        public List<int> CollectedCoinsIds;
+        public int[] DefeatedEnemiesIds;
+        public int[] CollectedCoinsIds;
         public int PlaytroughId;
         public DateTime Date;
+        public int Points;
+    }
+    [Serializable]
+    public class CheckpointJsonData
+    {
+        public int SavedLevelEnemies;
+        public int SavedLevelCoins;
     }
 }
