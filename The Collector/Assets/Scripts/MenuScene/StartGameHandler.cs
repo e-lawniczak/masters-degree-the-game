@@ -75,6 +75,7 @@ public class StartGameHandler : MonoBehaviour
             Debug.Log(req.downloadHandler.text);
             RuntimeVariables.IsControlGroup = _StartGameData.isControlGroup;
             PlaytroughVariables.PlaytroughId = _StartGameData.currentPlaytrough.HasValue ? _StartGameData.currentPlaytrough.Value : -1;
+            RuntimeVariables.HighScore = _StartGameData.highScore;
 
         }
     }
@@ -145,18 +146,21 @@ public class StartGameHandler : MonoBehaviour
         public int LevelCoins_1;
         public int LevelDeaths_1;
         public int LevelEndHp_1;
+        public bool LevelFinished_1;
         public float LevelTime_2;
         public int LevelPoints_2;
         public int LevelEnemies_2;
         public int LevelCoins_2;
         public int LevelDeaths_2;
         public int LevelEndHp_2;
+        public bool LevelFinished_2;
         public float LevelTime_3;
         public int LevelPoints_3;
         public int LevelEnemies_3;
         public int LevelCoins_3;
         public int LevelDeaths_3;
         public int LevelEndHp_3;
+        public bool LevelFinished_3;
         public int UserId;
         public long StartTime;
         public long EndTime;

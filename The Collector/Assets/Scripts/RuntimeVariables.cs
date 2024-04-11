@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RuntimeVariables : MonoBehaviour
 {
-    public static string PlayerJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3M2NlMDBlOS04OTk3LTQ3NTAtYjM0Ni04ZmZjOTAxYmY0MGIiLCJ1bmlxdWVfbmFtZSI6ImRlZSIsInVpZCI6IjMyIiwibmJmIjoxNzEyNzg1NDUwLCJleHAiOjE3MTI3OTI2NTAsImlhdCI6MTcxMjc4NTQ1MCwiaXNzIjoiQ2xvdGhJc3N1ZXIiLCJhdWQiOiJDbG90aEF1ZGllbmNlIn0.IUtD5do6xGtb_MCJ7DoF2SSdCCgjg17B2Cm-rqlCdpI";
+    public static string PlayerJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkM2U5ZWEwOS0xZDc3LTQwMzEtYWJhMS00NzIzZTg1MWIyNWMiLCJ1bmlxdWVfbmFtZSI6ImRlZSIsInVpZCI6IjMyIiwibmJmIjoxNzEyODM5MzE5LCJleHAiOjE3MTI4NDY1MTksImlhdCI6MTcxMjgzOTMxOSwiaXNzIjoiQ2xvdGhJc3N1ZXIiLCJhdWQiOiJDbG90aEF1ZGllbmNlIn0.hvMEvpSFhuWDK_8_ikGHQUTdlawJQ11mzQQQtKW3SjA";
     public static int PlayerId = 32;
     public static string PlayerEmail = "";
     public static string UserName = "";

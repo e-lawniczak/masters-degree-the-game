@@ -34,7 +34,7 @@ public class HelperFunctions : MonoBehaviour
     public static int CalculateFinalScore(int totalPoints, float totalTime)
     {
         int score = totalPoints * 3000;
-        score = (int)(score / totalTime);
+        score = (int)(score / (totalTime + 1f));
 
         return score;
     }

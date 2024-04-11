@@ -20,7 +20,12 @@ public class EndScreen : MonoBehaviour
         {
             title.text = "Congratulations!!!\n You won!";
         }
-        score.text = string.Format("Your score: {0}", HelperFunctions.CalculateFinalScore(PlaytroughVariables.TotalPoints, PlaytroughVariables.TotalTime));
+        var finalScore = HelperFunctions.CalculateFinalScore(PlaytroughVariables.TotalPoints, PlaytroughVariables.TotalTime);
+        score.text = string.Format("Your score: {0}", finalScore);
+        if(finalScore > RuntimeVariables.HighScore)
+        {
+            RuntimeVariables.HighScore = finalScore;
+        }
         highScore.text = string.Format("High score: {0}", RuntimeVariables.HighScore);
         StartCoroutine(GetLeaderboards());
 

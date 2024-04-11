@@ -15,6 +15,15 @@ public class CheckpointScript : MonoBehaviour
             {
                 ge.SaveCheckpoint();
             }
+        } 
+        if (collision.gameObject.tag == LayerVariables.FinishLine)
+        {
+            var gameEngine = GameObject.Find("GameEngine");
+            GameEngine ge = gameEngine.GetComponent<GameEngine>();
+            if (ge != null)
+            {
+                ge.LevelComplete();
+            }
         }
 
     }
