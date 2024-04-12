@@ -48,10 +48,10 @@ public class HelperFunctions : MonoBehaviour
                 sceneToLoad = SceneNames.Level1;
                 break;
             case 2:
-                sceneToLoad = SceneNames.Level1;
+                sceneToLoad = SceneNames.Level2;
                 break;
             case 3:
-                sceneToLoad = SceneNames.Level1;
+                sceneToLoad = SceneNames.Level3;
                 break;
             default:
                 sceneToLoad = SceneNames.Test;
@@ -59,6 +59,22 @@ public class HelperFunctions : MonoBehaviour
 
         }
         return sceneToLoad;
+    }
+    public static float GetPercentCompletion()
+    {
+        float percentCompletion = 0;
+
+        percentCompletion += PlaytroughVariables.LevelFinished_1 ? 25 : 0;
+        percentCompletion += PlaytroughVariables.LevelFinished_2 ? 25 : 0;
+        percentCompletion += PlaytroughVariables.LevelFinished_3 ? 25 : 0;
+
+        percentCompletion += (PlaytroughVariables.CoinsCollected);
+        percentCompletion += (PlaytroughVariables.EnemiesDefeated);
+
+        percentCompletion = (percentCompletion / ((25 * 3) + RuntimeVariables.TotalCoinsInGame + RuntimeVariables.TotalEnemiesInGame)) * 100;
+
+
+        return percentCompletion;
     }
 
     internal static void ResetPlaytrough()
@@ -70,7 +86,7 @@ public class HelperFunctions : MonoBehaviour
         RuntimeVariables.GameWon = false;
         RuntimeVariables.GameStarted = false;
         RuntimeVariables.HighScore = 0;
-        RuntimeVariables.CurrentLevel = 0;
+        RuntimeVariables.CurrentLevel = 1;
         RuntimeVariables.CurrentLevelTime = 0;
         RuntimeVariables.CurrentLevelPoints = 0;
         RuntimeVariables.CurrentLevelCoins = 0;
@@ -94,18 +110,21 @@ public class HelperFunctions : MonoBehaviour
         PlaytroughVariables.LevelCoins_1 = 0;
         PlaytroughVariables.LevelDeaths_1 = 0;
         PlaytroughVariables.LevelEndHp_1 = 0;
+        PlaytroughVariables.LevelFinished_1 = false;
         PlaytroughVariables.LevelTime_2 = 0f;
         PlaytroughVariables.LevelPoints_2 = 0;
         PlaytroughVariables.LevelEnemies_2 = 0;
         PlaytroughVariables.LevelCoins_2 = 0;
         PlaytroughVariables.LevelDeaths_2 = 0;
         PlaytroughVariables.LevelEndHp_2 = 0;
+        PlaytroughVariables.LevelFinished_2 = false;
         PlaytroughVariables.LevelTime_3 = 0f;
         PlaytroughVariables.LevelPoints_3 = 0;
         PlaytroughVariables.LevelEnemies_3 = 0;
         PlaytroughVariables.LevelCoins_3 = 0;
         PlaytroughVariables.LevelDeaths_3 = 0;
         PlaytroughVariables.LevelEndHp_3 = 0;
+        PlaytroughVariables.LevelFinished_3 = false;
         PlaytroughVariables.UserId = -1;
         PlaytroughVariables.StartTime = DateTime.UtcNow;
         PlaytroughVariables.EndTime = null;

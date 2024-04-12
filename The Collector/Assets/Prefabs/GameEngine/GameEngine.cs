@@ -55,7 +55,7 @@ public class GameEngine : MonoBehaviour
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
         _currentLevelEnemiesDefeated = RuntimeVariables.CurrentLevelEnemiesDefeated;
-        Debug.Log(PlaytroughVariables.Deaths);
+        SaveCheckpoint();
     }
 
     void Update()
@@ -106,7 +106,8 @@ public class GameEngine : MonoBehaviour
             }
             else
             {
-                AssignDeathUpdateValues();
+                PlaytroughVariables.IsFinished = true;
+                PlaytroughVariables.EndTime = DateTime.UtcNow;
                 StartCoroutine(UpdatePlaytrough());
                 EndGame();
             }
@@ -244,12 +245,6 @@ public class GameEngine : MonoBehaviour
     }
 
 
-    private void AssignDeathUpdateValues()
-    {
-        PlaytroughVariables.IsFinished = true;
-        PlaytroughVariables.EndTime = DateTime.UtcNow;
-
-    }
 
     IEnumerator UpdatePlaytrough()
     {
@@ -269,7 +264,6 @@ public class GameEngine : MonoBehaviour
         else
         {
             PlaytroughVariables.PlaytroughId = Convert.ToInt32(req.downloadHandler.text);
-            Debug.Log(req.downloadHandler.text);
             if (levelFinished)
             {
                 RuntimeVariables.CurrentLevel = RuntimeVariables.CurrentLevel + 1;
@@ -278,7 +272,15 @@ public class GameEngine : MonoBehaviour
                 RuntimeVariables.CurrentLevelCoins = 0;
                 RuntimeVariables.CurrentLevelEnemiesDefeated = 0;
 
-                SceneManager.LoadScene(RuntimeVariables.CurrentLevel - 1);
+                if (RuntimeVariables.CurrentLevel - 1 == 3)
+                {
+                    EndGame();
+                }
+                else
+                {
+                    SceneManager.LoadScene(HelperFunctions.SceneToLoad(RuntimeVariables.CurrentLevel));
+
+                }
             }
 
         }
@@ -293,7 +295,7 @@ public class GameEngine : MonoBehaviour
             TotalPoints = PlaytroughVariables.TotalPoints,
             CoinsCollected = PlaytroughVariables.CoinsCollected,
             EnemiesDefeated = PlaytroughVariables.EnemiesDefeated,
-            PercentageProgress = PlaytroughVariables.PercentageProgress,
+            PercentageProgress = HelperFunctions.GetPercentCompletion(),
             Deaths = PlaytroughVariables.Deaths,
             TotalEnemyProxTime = PlaytroughVariables.TotalEnemyProxTime,
             StandingStillTime = PlaytroughVariables.StandingStillTime,
@@ -371,6 +373,24 @@ public class GameEngine : MonoBehaviour
     {
         Debug.Log("Level finished " + RuntimeVariables.CurrentLevel.ToString());
         levelFinished = true;
+        if (RuntimeVariables.CurrentLevel == 1)
+        {
+            PlaytroughVariables.LevelFinished_1 = true;
+        }
+        else if (RuntimeVariables.CurrentLevel == 2)
+        {
+            PlaytroughVariables.LevelFinished_2 = true;
+        }
+        else
+        {
+            PlaytroughVariables.LevelFinished_3 = true;
+        }
+        if (RuntimeVariables.CurrentLevel == 3)
+        {
+            RuntimeVariables.GameWon = true;
+            PlaytroughVariables.IsFinished = true;
+            PlaytroughVariables.EndTime = DateTime.UtcNow;
+        }
         StartCoroutine(UpdatePlaytrough());
     }
 

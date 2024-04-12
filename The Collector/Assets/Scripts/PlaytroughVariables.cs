@@ -11,7 +11,7 @@ public class PlaytroughVariables : MonoBehaviour
     public static int TotalPoints = 0;
     public static int CoinsCollected = 0;
     public static int EnemiesDefeated = 0;
-    public static int PercentageProgress = 0;
+    public static float PercentageProgress = 0;
     public static int Deaths = 0;
     public static float TotalEnemyProxTime = 0f;
     public static float StandingStillTime = 0f;
@@ -23,18 +23,21 @@ public class PlaytroughVariables : MonoBehaviour
     public static int LevelCoins_1 = 0;
     public static int LevelDeaths_1 = 0;
     public static int LevelEndHp_1 = 0;
+    public static bool LevelFinished_1 = false;
     public static float LevelTime_2 = 0f;
     public static int LevelPoints_2 = 0;
     public static int LevelEnemies_2 = 0;
     public static int LevelCoins_2 = 0;
     public static int LevelDeaths_2 = 0;
     public static int LevelEndHp_2 = 0;
+    public static bool LevelFinished_2 = false;
     public static float LevelTime_3 = 0f;
     public static int LevelPoints_3 = 0;
     public static int LevelEnemies_3 = 0;
     public static int LevelCoins_3 = 0;
     public static int LevelDeaths_3 = 0;
     public static int LevelEndHp_3 = 0;
+    public static bool LevelFinished_3 = false;
     public static int UserId = -1;
     public static DateTime StartTime = DateTime.UtcNow;
     public static DateTime? EndTime = null;
@@ -49,7 +52,7 @@ public class PlaytroughVariablesInstance
     public int TotalPoints { get; set; }
     public int CoinsCollected { get; set; }
     public int EnemiesDefeated { get; set; }
-    public int PercentageProgress { get; set; }
+    public float PercentageProgress { get; set; }
     public int Deaths { get; set; }
     public float TotalEnemyProxTime { get; set; }
     public float StandingStillTime { get; set; }

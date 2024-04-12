@@ -39,6 +39,15 @@ public class FlyingEnemy : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<PolygonCollider2D>();
+        if(player == null)
+        {
+            player = GameObject.Find("Player");
+        }
+        if (player == null)
+        {
+            Destroy(gameObject, 0.0f);
+            return;
+        }
         playerPos = player.GetComponent<Transform>().position;
         xAxis = 1;
         isActive = false;
@@ -81,7 +90,7 @@ public class FlyingEnemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isActive) return;
+        if (!isActive && goingLeft) return;
         LockOn();
         Move();
     }

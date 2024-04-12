@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,7 +80,9 @@ public class PlayerController : MonoBehaviour
     private float timeSinceDash = 0;
     private float dashCooldown = 1.5f;
     private bool isTurnedLeft = true;
-
+    private Vector3 prevPos;
+    private float checkPosTimer = 2f;
+    private float counter = 0f;
     public DashInfo DashInfo { get { return new DashInfo { dashCd = dashCooldown, currentCd = timeSinceDash, canDash = canDash }; } }
 
     Rigidbody2D rb;
@@ -96,18 +99,36 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerLogic = GetComponent<PlayerLogic>();
         gravity = rb.gravityScale;
+        prevPos = rb.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!playerLogic.IsAlive) return;
+        CheckEnemyInProximity();
+        CheckIfStandingStill();
         GetInputs();
         Flip();
         Walk(xAxis);
         Recoil();
         Attack();
-        Dash();
+    }
+
+    private void CheckIfStandingStill()
+    {
+        counter += Time.deltaTime;
+        if (counter >= checkPosTimer)
+        {
+            if (rb.position.Equals(prevPos))
+            {
+                PlaytroughVariables.StandingStillTime += Time.deltaTime;
+            }
+            else
+            {
+                counter = 0;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -136,6 +157,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Jump();
+        Dash();
     }
 
     void Jump()
@@ -269,6 +291,28 @@ public class PlayerController : MonoBehaviour
 
             weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
         }
+    }
+    void CheckEnemyInProximity()
+    {
+        float attackRradius = attackRadius;
+
+        Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(rb.position, attackRradius * 2, attackableLayer);
+
+        if (objectsToHit.Length > 0)
+        {
+            for (int i = 0; i < objectsToHit.Length; i++)
+            {
+                if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
+                }
+                else if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
+                }
+            }
+        }
+
     }
 
     void Recoil()

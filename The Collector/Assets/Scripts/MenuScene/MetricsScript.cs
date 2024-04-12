@@ -156,7 +156,7 @@ public class MetricsScript : MonoBehaviour
         demographicDropdown.AddOptions(new List<TMP_Dropdown.OptionData>
      (
          new TMP_Dropdown.OptionData[] {
-                new TMP_Dropdown.OptionData { text = "Country/Vilalge"},
+                new TMP_Dropdown.OptionData { text = "Country/Village"},
                 new TMP_Dropdown.OptionData { text = "City up to 50k population "},
                 new TMP_Dropdown.OptionData { text = "City from 50k to 150k population "},
                 new TMP_Dropdown.OptionData { text = "City from 150k to 500k population "},

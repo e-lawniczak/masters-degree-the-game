@@ -42,19 +42,19 @@ public class StartGameHandler : MonoBehaviour
     }
 
 
-    public void StartFromCheckpoint()
-    {
-        Debug.Log("Checkpoint start");
-        //AssignRuntimeVariables();
-        string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
-        SceneManager.LoadSceneAsync(sceneToLoad);
-    }
+    //public void StartFromCheckpoint()
+    //{
+    //    Debug.Log("Checkpoint start");
+    //    //AssignRuntimeVariables();
+    //    string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
+    //    SceneManager.LoadSceneAsync(sceneToLoad);
+    //}
     private void StartFromBegining()
     {
         Debug.Log("No save start");
         RuntimeVariables.CurrentLevel = 1;
         HelperFunctions.ResetPlaytrough();
-        SceneManager.LoadSceneAsync(SceneNames.Test);
+        SceneManager.LoadSceneAsync(HelperFunctions.SceneToLoad(RuntimeVariables.CurrentLevel));
     }
     IEnumerator FetchInitialPlaytroughData()
     {
@@ -72,6 +72,7 @@ public class StartGameHandler : MonoBehaviour
         else
         {
             _StartGameData = JsonUtility.FromJson<StartGameData>(req.downloadHandler.text);
+            Debug.Log(RuntimeVariables.PlayerId);
             Debug.Log(req.downloadHandler.text);
             RuntimeVariables.IsControlGroup = _StartGameData.isControlGroup;
             PlaytroughVariables.PlaytroughId = _StartGameData.currentPlaytrough.HasValue ? _StartGameData.currentPlaytrough.Value : -1;
@@ -134,7 +135,7 @@ public class StartGameHandler : MonoBehaviour
         public int TotalPoints;
         public int CoinsCollected;
         public int EnemiesDefeated;
-        public int PercentageProgress;
+        public float PercentageProgress;
         public int Deaths;
         public float TotalEnemyProxTime;
         public float StandingStillTime;

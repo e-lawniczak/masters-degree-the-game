@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class RuntimeVariables : MonoBehaviour
 {
-    public static string PlayerJwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJkM2U5ZWEwOS0xZDc3LTQwMzEtYWJhMS00NzIzZTg1MWIyNWMiLCJ1bmlxdWVfbmFtZSI6ImRlZSIsInVpZCI6IjMyIiwibmJmIjoxNzEyODM5MzE5LCJleHAiOjE3MTI4NDY1MTksImlhdCI6MTcxMjgzOTMxOSwiaXNzIjoiQ2xvdGhJc3N1ZXIiLCJhdWQiOiJDbG90aEF1ZGllbmNlIn0.hvMEvpSFhuWDK_8_ikGHQUTdlawJQ11mzQQQtKW3SjA";
-    public static int PlayerId = 32;
+    public static string PlayerJwtToken = "";
+    public static int PlayerId = -1;
     public static string PlayerEmail = "";
     public static string UserName = "";
     public static float MasterVolume = 0.24f;
@@ -24,5 +24,7 @@ public class RuntimeVariables : MonoBehaviour
     public static int CurrentLevelPoints = 0;
     public static int CurrentLevelCoins= 0;
     public static int CurrentLevelEnemiesDefeated = 0;
+    public static readonly int TotalCoinsInGame = 9;
+    public static readonly int TotalEnemiesInGame = 2;
 
 }
