@@ -42,7 +42,7 @@ public class RuntimeVariables : MonoBehaviour
     public static readonly float CannonBulletReload = 2f;
     public static readonly float CannonBulletLifetime = 5f;
 
-    public static readonly int CoinPoints = 10;
+    public static readonly int CoinPoints = 25;
     private static readonly int EnemyPoints = 10;
     public static readonly int BasicEnemyPoints = EnemyPoints + 10;
     public static readonly int FlyingEnemyPoints = EnemyPoints;

@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour
     {
         if (pState.jumping)
         {
+            anim.SetBool(AnimationVariables.IsJumping, true);
             float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 2 : jumpSpeed;
             if (stepsJumped < jumpSteps && !Roofed())
             {
@@ -223,10 +224,12 @@ public class PlayerController : MonoBehaviour
             if (Mathf.Abs(rb.velocity.x) > 0)
             {
                 pState.walking = true;
+                anim.SetBool(AnimationVariables.IsMoving, true);
             }
             else
             {
                 pState.walking = false;
+                anim.SetBool(AnimationVariables.IsMoving, false);
             }
             if (xAxis > 0)
             {
@@ -397,6 +400,8 @@ public class PlayerController : MonoBehaviour
         //this does three small raycasts at the specified positions to see if the player is grounded.
         if (Physics2D.Raycast(groundTransform.position, Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(-groundCheckX, 0), Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(groundCheckX, 0), Vector2.down, groundCheckY, groundLayer))
         {
+            anim.SetBool(AnimationVariables.IsJumping, false);
+            anim.SetTrigger(AnimationVariables.IsGrounded);
             return true;
         }
         else

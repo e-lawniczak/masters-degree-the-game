@@ -18,7 +18,7 @@ public class coin_script : MonoBehaviour
     {
         if(collision.name == LayerVariables.Player)
         {
-            collision.gameObject.GetComponent<PlayerLogic>().AddPoints(25);
+            collision.gameObject.GetComponent<PlayerLogic>().AddPoints(RuntimeVariables.CoinPoints);
             PlaytroughVariables.CoinsCollected += 1;
             RuntimeVariables.CurrentLevelCoins += 1;
             RuntimeVariables.collectedCoins.Add(coinId);

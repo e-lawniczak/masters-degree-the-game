@@ -53,7 +53,7 @@ public class HelperFunctions : MonoBehaviour
     private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.05f, float timeWeight = 200f)
     {
         var timeInMinutes = totalTime / 60f;
-        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 50f;
+        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 10f;
     }
 
     public static string SceneToLoad(int level)
