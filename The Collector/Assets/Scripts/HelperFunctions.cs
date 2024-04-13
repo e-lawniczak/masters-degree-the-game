@@ -33,11 +33,29 @@ public class HelperFunctions : MonoBehaviour
     }
     public static int CalculateFinalScore(int totalPoints, float totalTime)
     {
-        int score = totalPoints * 3000;
-        score = (int)(score / (totalTime + 1f));
+        //int score = totalPoints * 1000;
+        //score = (int)(score / (totalTime + 1f));
+
+        int score = (int)Math.Max(ScoreFuncSimple(totalPoints, totalTime), 0);
 
         return score;
     }
+    private static float ScoreFuncExp(int points, float totalTime, float timeWeight = 15f)
+    {
+        var timeInMinutes = totalTime / 60f;
+        return (float)(points * (1 - Math.Exp(-(timeInMinutes / timeWeight))));
+    }
+    private static float ScoreFuncWeights(int points, float totalTime, float pointsWeight = 15f, float timeWeight = 9f)
+    {
+        var timeInMinutes = totalTime / 60f;
+        return (float)(pointsWeight * Math.Log10(points) + timeWeight * (1 / Math.Log10((timeInMinutes + 1)))) * 150f;
+    }
+    private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.05f, float timeWeight = 200f)
+    {
+        var timeInMinutes = totalTime / 60f;
+        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 50f;
+    }
+
     public static string SceneToLoad(int level)
     {
         var sceneToLoad = SceneNames.Test;

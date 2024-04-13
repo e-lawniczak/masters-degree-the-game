@@ -38,11 +38,11 @@ public class PlayerController : MonoBehaviour
     [Header("Attacking")]
     [SerializeField] private float timeBetweenAttack = 0.2f;
     [SerializeField] private Transform attackTransform; // this should be a transform childed to the player but to the right of them, where they attack from.
-    [SerializeField] private float attackRadius = 1f;
+    private float attackRadius = RuntimeVariables.PlayerAttackRadius;
     [SerializeField] private Transform downAttackTransform;//This should be a transform childed below the player, for the down attack.
-    [SerializeField] private float downAttackRadius = 1f;
+    private float downAttackRadius = RuntimeVariables.PlayerAttackRadiusDown;
     [SerializeField] private Transform upAttackTransform;//Same as above but for the up attack.
-    [SerializeField] private float upAttackRadius = 1f;
+    private float upAttackRadius = RuntimeVariables.PlayerAttackRadiusUp;
     [SerializeField] private LayerMask attackableLayer;
     [Space(5)]
 
@@ -276,7 +276,7 @@ public class PlayerController : MonoBehaviour
                     bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
                     if (isDead)
                     {
-                        playerLogic.AddPoints(10);
+                        playerLogic.AddPoints(RuntimeVariables.BasicEnemyPoints);
                     }
                 }
                 if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour
                     bool isDead = objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
                     if (isDead)
                     {
-                        playerLogic.AddPoints(10);
+                        playerLogic.AddPoints(RuntimeVariables.FlyingEnemyPoints);
                     }
                 }
             }
@@ -480,9 +480,9 @@ public class PlayerController : MonoBehaviour
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackTransform.position, attackRadius);
-        Gizmos.DrawWireSphere(downAttackTransform.position, downAttackRadius);
-        Gizmos.DrawWireSphere(upAttackTransform.position, upAttackRadius);
+        Gizmos.DrawWireSphere(attackTransform.position, RuntimeVariables.PlayerAttackRadius);
+        Gizmos.DrawWireSphere(downAttackTransform.position, RuntimeVariables.PlayerAttackRadiusDown);
+        Gizmos.DrawWireSphere(upAttackTransform.position, RuntimeVariables.PlayerAttackRadiusUp);
         //Gizmos.DrawWireCube(groundTransform.position, new Vector2(groundCheckX, groundCheckY));
 
         Gizmos.DrawLine(groundTransform.position, groundTransform.position + new Vector3(0, -groundCheckY));

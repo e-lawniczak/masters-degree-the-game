@@ -10,10 +10,9 @@ using static UnityEngine.GraphicsBuffer;
 public class BasicEnemy : MonoBehaviour
 {
     [SerializeField] private int enemyId;
-    [SerializeField] private float maxHp = 4;
-    [SerializeField] private float speed = 5f;
-
-    [SerializeField] private float onHitRecoil = 50f;
+    private float maxHp = RuntimeVariables.BasicEnemyHp;
+    private float speed = RuntimeVariables.BasicEnemySpeed;
+    private float onHitRecoil = RuntimeVariables.BasicEnemyRecoil;
 
     private Rigidbody2D rb;
     private CircleCollider2D bc;
@@ -63,7 +62,7 @@ public class BasicEnemy : MonoBehaviour
         if (collision.rigidbody && collision.rigidbody.name == LayerVariables.Player)
         {
             var pl = collision.collider.GetComponent<PlayerLogic>();
-           
+
             pl.GetHitByEnemy(this.gameObject, this.transform.position);
         }
     }
@@ -115,7 +114,7 @@ public class BasicEnemy : MonoBehaviour
             Die();
             return true;
         }
-        
+
         return false;
     }
     public int GetId()

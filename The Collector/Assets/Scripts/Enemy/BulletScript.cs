@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [SerializeField] private float bulletSpeed = 10f;
-    private float timeToLive = 5f;
+    [SerializeField] private float bulletSpeedOverwrite = -1;
+    private float bulletSpeed = RuntimeVariables.CannonBulletSpeed;
+    [SerializeField] private float timeToLive = RuntimeVariables.CannonBulletLifetime;
     private Vector3 dir;
+    private float speed;
     void Start()
     {
-
+        speed = bulletSpeedOverwrite > 0 ? bulletSpeedOverwrite : bulletSpeed;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.position += dir * Time.deltaTime * bulletSpeed;
+        transform.position += dir * Time.deltaTime * speed;
         timeToLive -= Time.deltaTime;
         if (timeToLive < 0)
         {
@@ -44,5 +46,5 @@ public class BulletScript : MonoBehaviour
         Die();
 
     }
-    
+
 }

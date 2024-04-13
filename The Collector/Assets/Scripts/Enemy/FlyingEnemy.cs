@@ -7,11 +7,11 @@ using static UnityEngine.GraphicsBuffer;
 public class FlyingEnemy : MonoBehaviour
 {
     [SerializeField] private int enemyId;
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float lockOnSpeed = 15f;
+    private float speed = RuntimeVariables.FlyingEnemySpeed;
+    private float lockOnSpeed = RuntimeVariables.FlyingEnemyLockOnSpeed;
     [SerializeField] private float activationRadius = 25f;
-    [SerializeField] private float lockOnRadius = 15f;
-    [SerializeField] private float lockOnWait = 0.3f;
+    private float lockOnRadius = RuntimeVariables.FlyingEnemyLockOnRadius;
+    private float lockOnWait = RuntimeVariables.FlyingEnemyLockOnWait;
     [SerializeField] private float timeToDie = 3f;
     [SerializeField] private float lockOnOffset = 1f;
     [SerializeField] GameObject player;
@@ -39,7 +39,7 @@ public class FlyingEnemy : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<PolygonCollider2D>();
-        if(player == null)
+        if (player == null)
         {
             player = GameObject.Find("Player");
         }
@@ -184,7 +184,7 @@ public class FlyingEnemy : MonoBehaviour
     public bool GetHit(int damage, Vector3 position)
     {
         Die(true);
-       
+
         return true;
     }
     //void OnDrawGizmos()

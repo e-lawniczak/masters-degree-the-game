@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CannonEnemy : MonoBehaviour
 {
-    [SerializeField] private float bulletSpeed = 10f;
-    [SerializeField] private float shootDelay = 2f;
+    [SerializeField] private float bulletSpeedOverwrite = -1;
+    private float bulletSpeed = RuntimeVariables.CannonBulletSpeed;
+    [SerializeField] private float shootDelayOverwrite = -1;
+    private float shootDelay = RuntimeVariables.CannonBulletReload;
     [SerializeField] private float activationRadius = 25f;
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform bulletSpawn;
@@ -20,10 +22,14 @@ public class CannonEnemy : MonoBehaviour
     private bool isActive;
     private bool canShoot;
     private float counter = 0f;
+    private float speed;
+    private float reload;
 
 
     private void Start()
     {
+        speed = bulletSpeedOverwrite > 0 ? bulletSpeedOverwrite : bulletSpeed;
+        reload = shootDelayOverwrite > 0 ? shootDelayOverwrite : shootDelay;
         playerPos = player.GetComponent<Transform>().transform.position;
         isActive = false;
         canShoot = true;
@@ -45,12 +51,13 @@ public class CannonEnemy : MonoBehaviour
             canShoot = false;
             GameObject b = Instantiate(bullet, bulletSpawn.transform.position, transform.rotation);
             b.GetComponent<BulletScript>().SetDirection(PickDirectionVector());
-            b.GetComponent<BulletScript>().SetBulletSpeed(bulletSpeed);
+            b.GetComponent<BulletScript>().SetBulletSpeed(speed);
+            b.SetActive(true);
         }
         else
         {
             counter += Time.deltaTime;
-            if (counter > shootDelay)
+            if (counter > reload)
             {
                 canShoot = true;
                 counter = 0f;
