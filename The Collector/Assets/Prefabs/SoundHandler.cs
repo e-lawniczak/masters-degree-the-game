@@ -51,15 +51,18 @@ public class SoundHandler : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        if (RuntimeVariables.GameStarted)
         {
-            StopAllSounds();
-            PlaySound(3);
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            StopAllSounds();
-            PlaySound(2);
+            if (Input.GetKeyDown(KeyCode.B))
+            {
+                StopAllSounds();
+                PlaySound(3);
+            }
+            if (Input.GetKeyDown(KeyCode.N))
+            {
+                StopAllSounds();
+                PlaySound(2);
+            }
         }
     }
     void StopAllSounds()
