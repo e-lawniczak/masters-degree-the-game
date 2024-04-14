@@ -157,6 +157,13 @@ public class GameEngine : MonoBehaviour
         }
         if (level > 2)
         {
+            PlaytroughVariables.LevelTime_1 = CheckpointVariables.pvi.LevelTime_1;
+            PlaytroughVariables.LevelPoints_1 = CheckpointVariables.pvi.LevelPoints_1;
+            PlaytroughVariables.LevelEnemies_1 = CheckpointVariables.pvi.LevelEnemies_1;
+            PlaytroughVariables.LevelCoins_1 = CheckpointVariables.pvi.LevelCoins_1;
+            PlaytroughVariables.LevelDeaths_1 = CheckpointVariables.pvi.LevelDeaths_1;
+            PlaytroughVariables.LevelEndHp_1 = CheckpointVariables.pvi.LevelEndHp_1;
+
             PlaytroughVariables.LevelTime_2 = CheckpointVariables.pvi.LevelTime_2;
             PlaytroughVariables.LevelPoints_2 = CheckpointVariables.pvi.LevelPoints_2;
             PlaytroughVariables.LevelEnemies_2 = CheckpointVariables.pvi.LevelEnemies_2;
@@ -166,6 +173,20 @@ public class GameEngine : MonoBehaviour
         }
         if (level > 3)
         {
+            PlaytroughVariables.LevelTime_1 = CheckpointVariables.pvi.LevelTime_1;
+            PlaytroughVariables.LevelPoints_1 = CheckpointVariables.pvi.LevelPoints_1;
+            PlaytroughVariables.LevelEnemies_1 = CheckpointVariables.pvi.LevelEnemies_1;
+            PlaytroughVariables.LevelCoins_1 = CheckpointVariables.pvi.LevelCoins_1;
+            PlaytroughVariables.LevelDeaths_1 = CheckpointVariables.pvi.LevelDeaths_1;
+            PlaytroughVariables.LevelEndHp_1 = CheckpointVariables.pvi.LevelEndHp_1;
+
+            PlaytroughVariables.LevelTime_2 = CheckpointVariables.pvi.LevelTime_2;
+            PlaytroughVariables.LevelPoints_2 = CheckpointVariables.pvi.LevelPoints_2;
+            PlaytroughVariables.LevelEnemies_2 = CheckpointVariables.pvi.LevelEnemies_2;
+            PlaytroughVariables.LevelCoins_2 = CheckpointVariables.pvi.LevelCoins_2;
+            PlaytroughVariables.LevelDeaths_2 = CheckpointVariables.pvi.LevelDeaths_2;
+            PlaytroughVariables.LevelEndHp_2 = CheckpointVariables.pvi.LevelEndHp_2;
+
             PlaytroughVariables.LevelTime_3 = CheckpointVariables.pvi.LevelTime_3;
             PlaytroughVariables.LevelPoints_3 = CheckpointVariables.pvi.LevelPoints_3;
             PlaytroughVariables.LevelEnemies_3 = CheckpointVariables.pvi.LevelEnemies_3;
