@@ -10,7 +10,7 @@ public class PlayerLogic : MonoBehaviour
     public bool IsAlive { get { return _isAlive; } }
 
     [SerializeField] private CapsuleCollider2D _collider;
-    [SerializeField] private GameEngine engine; 
+    [SerializeField] private GameEngine engine;
     [SerializeField] private int _maxHp = 5;
     private Animator _animator;
     private Rigidbody2D rb;
@@ -21,8 +21,8 @@ public class PlayerLogic : MonoBehaviour
     private float _iframeTime = 2.5f;
     private float _count = 0f;
     private int points;
-    private UnityEvent updateState;
-    private bool queueUpdate;
+    private float iframeTick = 0.25f;
+    private float iframeCount = 0f;
 
     private void Start()
     {
@@ -32,12 +32,12 @@ public class PlayerLogic : MonoBehaviour
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         points = PlaytroughVariables.TotalPoints;
-        updateState = new UnityEvent();
-        queueUpdate = false;
+
     }
 
     void Update()
     {
+        if (!_isAlive) { return; }
         if (_isAlive)
         {
             CalculateDamage();
@@ -45,11 +45,20 @@ public class PlayerLogic : MonoBehaviour
         if (_isInvincible)
         {
             _count += Time.deltaTime;
+            iframeCount += Time.deltaTime;
+            Debug.Log(iframeCount);
+            if (iframeCount >= iframeTick)
+            {
+                GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
+                iframeCount = 0;
+            }
+
             if (_count >= _iframeTime)
             {
                 _count = 0;
                 _isInvincible = false;
-                _animator.SetTrigger(AnimationVariables.EndInvincible);
+                //_animator.SetTrigger(AnimationVariables.EndInvincible);
+                GetComponent<SpriteRenderer>().enabled = true;
 
             }
         }
@@ -81,8 +90,8 @@ public class PlayerLogic : MonoBehaviour
     private void Die()
     {
         //Destroy(this, 0.0f);
-        _animator.SetTrigger(AnimationVariables.IsDead);
-        
+        _animator.SetBool(AnimationVariables.IsDead, true);
+        rb.velocity = Vector3.zero;
         PlaytroughVariables.Deaths += 1;
     }
     public void Recoil(Vector2? recoildVec = null)
@@ -93,8 +102,9 @@ public class PlayerLogic : MonoBehaviour
     }
     private void GiveIframes()
     {
-        _isInvincible = true;
-        _animator.SetTrigger(AnimationVariables.IsInvincible);
+        if (_hp > 1)
+            _isInvincible = true;
+        //_animator.SetTrigger(AnimationVariables.IsInvincible);
     }
 
     public void DealDamage(int damage)
@@ -105,6 +115,10 @@ public class PlayerLogic : MonoBehaviour
     public int GetCurrentHp()
     {
         return _hp;
+    }
+    public void SetHp(int hp)
+    {
+        _hp = hp;
     }
     public DashInfo GetCanDash()
     {
@@ -119,14 +133,7 @@ public class PlayerLogic : MonoBehaviour
     {
         return points;
     }
-    public bool GetQueueUpdate()
-    {
-        return queueUpdate;
-    }
-    public void SetQueueUpdate(bool v)
-    {
-        queueUpdate = v;
-    }
+
 
 
 }

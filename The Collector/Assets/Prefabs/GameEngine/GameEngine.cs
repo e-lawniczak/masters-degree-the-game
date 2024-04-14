@@ -51,6 +51,11 @@ public class GameEngine : MonoBehaviour
             RuntimeVariables.GameStarted = true;
         }
 
+        if (RuntimeVariables.CurrentHp > -1 && playerLogic.GetCurrentHp() != RuntimeVariables.CurrentHp)
+        {
+            playerLogic.SetHp(RuntimeVariables.CurrentHp);
+        }
+
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
         _currentLevelEnemiesDefeated = RuntimeVariables.CurrentLevelEnemiesDefeated;
@@ -175,6 +180,7 @@ public class GameEngine : MonoBehaviour
         RuntimeVariables.CurrentLevelEnemiesDefeated = CheckpointVariables.CurrentLevelEnemiesDefeated;
 
 
+        playerLogic.SetHp(CheckpointVariables.Health);
         CheckpointVariables.CheckpointLoaded = true;
         string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
         SceneManager.LoadScene(sceneToLoad);
@@ -390,6 +396,7 @@ public class GameEngine : MonoBehaviour
             PlaytroughVariables.IsFinished = true;
             PlaytroughVariables.EndTime = DateTime.UtcNow;
         }
+        RuntimeVariables.CurrentHp = playerLogic.GetCurrentHp();
         StartCoroutine(UpdatePlaytrough());
     }
 

@@ -20,6 +20,7 @@ public class RuntimeVariables : MonoBehaviour
     public static bool IsControlGroup = true;
     public static int HighScore = 0;
     public static int CurrentLevel = 0;
+    public static int CurrentHp = -1;
     public static float CurrentLevelTime = 0f;
     public static int CurrentLevelPoints = 0;
     public static int CurrentLevelCoins = 0;
