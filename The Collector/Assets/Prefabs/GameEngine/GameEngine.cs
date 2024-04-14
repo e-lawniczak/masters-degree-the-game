@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
@@ -51,10 +52,7 @@ public class GameEngine : MonoBehaviour
             RuntimeVariables.GameStarted = true;
         }
 
-        if (RuntimeVariables.CurrentHp > -1 && playerLogic.GetCurrentHp() != RuntimeVariables.CurrentHp)
-        {
-            playerLogic.SetHp(RuntimeVariables.CurrentHp);
-        }
+       
 
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
@@ -172,8 +170,8 @@ public class GameEngine : MonoBehaviour
         PlaytroughVariables.UserId = CheckpointVariables.pvi.UserId;
         PlaytroughVariables.StartTime = CheckpointVariables.pvi.StartTime;
 
-        RuntimeVariables.defeatedEnemies = CheckpointVariables.DefeatedEnemiesIds;
-        RuntimeVariables.collectedCoins = CheckpointVariables.CollectedCoinsIds;
+        RuntimeVariables.defeatedEnemies = CheckpointVariables.DefeatedEnemiesIds.Select(o => o).ToList();
+        RuntimeVariables.collectedCoins = CheckpointVariables.CollectedCoinsIds.Select(o => o).ToList();
         RuntimeVariables.CurrentLevelTime = CheckpointVariables.CurrentLevelTime;
         RuntimeVariables.CurrentLevelPoints = CheckpointVariables.CurrentLevelPoints;
         RuntimeVariables.CurrentLevelCoins = CheckpointVariables.CurrentLevelCoins;
@@ -189,7 +187,6 @@ public class GameEngine : MonoBehaviour
 
     public void SaveCheckpoint()
     {
-        Debug.Log("Saving Game");
         CheckpointVariables.CheckpointLoaded = false;
         CheckpointVariables.CheckpointId = 1;
         CheckpointVariables.Data = null;
@@ -198,8 +195,8 @@ public class GameEngine : MonoBehaviour
         CheckpointVariables.PlayerPosY = playerTransform.position.y;
         CheckpointVariables.Health = playerLogic.GetCurrentHp();
 
-        CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies;
-        CheckpointVariables.CollectedCoinsIds = RuntimeVariables.collectedCoins;
+        CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies.Select(o=>o).ToList();
+        CheckpointVariables.CollectedCoinsIds = RuntimeVariables.collectedCoins.Select(o => o).ToList();
         CheckpointVariables.CurrentLevelTime = RuntimeVariables.CurrentLevelTime;
         CheckpointVariables.CurrentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         CheckpointVariables.CurrentLevelCoins = RuntimeVariables.CurrentLevelCoins;
@@ -254,7 +251,6 @@ public class GameEngine : MonoBehaviour
     IEnumerator UpdatePlaytrough()
     {
         StartGameHandler.PlaytroughData obj = PreparePlaytroughUpdate();
-        Debug.Log(JsonUtility.ToJson(obj));
         UnityWebRequest req = UnityWebRequest.Post(RuntimeVariables.apiUrl + "/api/playtrough/updatePlaytrough", JsonUtility.ToJson(obj), "application/json");
         req.useHttpContinue = false;
         req.SetRequestHeader("Authorization", "Bearer " + RuntimeVariables.PlayerJwtToken);
@@ -376,7 +372,6 @@ public class GameEngine : MonoBehaviour
 
     internal void LevelComplete()
     {
-        Debug.Log("Level finished " + RuntimeVariables.CurrentLevel.ToString());
         levelFinished = true;
         if (RuntimeVariables.CurrentLevel == 1)
         {

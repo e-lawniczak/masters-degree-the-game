@@ -32,6 +32,10 @@ public class PlayerLogic : MonoBehaviour
         _animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         points = PlaytroughVariables.TotalPoints;
+        if (RuntimeVariables.CurrentHp > -1 && _hp != RuntimeVariables.CurrentHp)
+        {
+            SetHp(RuntimeVariables.CurrentHp);
+        }
 
     }
 
@@ -46,7 +50,6 @@ public class PlayerLogic : MonoBehaviour
         {
             _count += Time.deltaTime;
             iframeCount += Time.deltaTime;
-            Debug.Log(iframeCount);
             if (iframeCount >= iframeTick)
             {
                 GetComponent<SpriteRenderer>().enabled = !GetComponent<SpriteRenderer>().enabled;
@@ -102,7 +105,7 @@ public class PlayerLogic : MonoBehaviour
     }
     private void GiveIframes()
     {
-        if (_hp > 1)
+        if (_hp > 0)
             _isInvincible = true;
         //_animator.SetTrigger(AnimationVariables.IsInvincible);
     }

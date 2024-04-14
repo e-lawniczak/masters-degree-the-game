@@ -103,12 +103,14 @@ public class HelperFunctions : MonoBehaviour
         RuntimeVariables.collectedCoins.Clear();
         RuntimeVariables.GameWon = false;
         RuntimeVariables.GameStarted = false;
-        RuntimeVariables.HighScore = 0;
+        //RuntimeVariables.HighScore = 0;
         RuntimeVariables.CurrentLevel = 1;
         RuntimeVariables.CurrentLevelTime = 0;
         RuntimeVariables.CurrentLevelPoints = 0;
         RuntimeVariables.CurrentLevelCoins = 0;
         RuntimeVariables.CurrentLevelEnemiesDefeated = 0;
+        RuntimeVariables.CurrentHp = -1;
+
 
         PlaytroughVariables.PlaytroughLoaded = false;
         PlaytroughVariables.PlaytroughId = -1;

@@ -110,6 +110,7 @@ public class MenuHandlerScript : MonoBehaviour
         else
         {
             Stats = JsonUtility.FromJson<StatResponse>(req.downloadHandler.text);
+            RuntimeVariables.HighScore = Stats.highScore;
             SetStats();
         }
     }
