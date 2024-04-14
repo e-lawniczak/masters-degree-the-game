@@ -23,6 +23,7 @@ public class RuntimeVariables : MonoBehaviour
     public static int CurrentHp = -1;
     public static float CurrentLevelTime = 0f;
     public static int CurrentLevelPoints = 0;
+    public static int CurrentLevelDeaths = 0;
     public static int CurrentLevelCoins = 0;
     public static int CurrentLevelEnemiesDefeated = 0;
     public static readonly int TotalCoinsInGame = 9;

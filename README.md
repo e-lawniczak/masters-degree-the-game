@@ -173,6 +173,17 @@ Enemy_Hit.wav by D001447733 -- https://freesound.org/s/464623/ -- License: Attri
 
 --- 
 
+Hit Punch cloth pillow bedding-030.wav by MattRuthSound -- https://freesound.org/s/561655/ -- License: Attribution 4.0
+
+---
+
+Coin_C_01 by cabled_mess -- https://freesound.org/s/350872/ -- License: Creative Commons 0
+
+---
+Whoosh / Dash (2) by Kastenfrosch -- https://freesound.org/s/521996/ -- License: Creative Commons 0
+
+---
+
 
 
 ### Fonts

@@ -100,6 +100,7 @@ public class PlayerLogic : MonoBehaviour
         _animator.SetBool(AnimationVariables.IsDead, true);
         rb.velocity = Vector3.zero;
         PlaytroughVariables.Deaths += 1;
+        RuntimeVariables.CurrentLevelDeaths += 1;
     }
     public void Recoil(Vector2? recoildVec = null)
     {

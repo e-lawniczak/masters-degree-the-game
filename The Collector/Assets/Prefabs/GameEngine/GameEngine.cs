@@ -298,6 +298,7 @@ public class GameEngine : MonoBehaviour
                 RuntimeVariables.CurrentLevelTime = 0f;
                 RuntimeVariables.CurrentLevelPoints = 0;
                 RuntimeVariables.CurrentLevelCoins = 0;
+                RuntimeVariables.CurrentLevelDeaths = 0;
                 RuntimeVariables.CurrentLevelEnemiesDefeated = 0;
 
                 if (RuntimeVariables.CurrentLevel - 1 == 3)
@@ -407,14 +408,32 @@ public class GameEngine : MonoBehaviour
         if (RuntimeVariables.CurrentLevel == 1)
         {
             PlaytroughVariables.LevelFinished_1 = true;
+            PlaytroughVariables.LevelTime_1 = RuntimeVariables.CurrentLevelTime;
+            PlaytroughVariables.LevelPoints_1 = RuntimeVariables.CurrentLevelPoints;
+            PlaytroughVariables.LevelEnemies_1 = RuntimeVariables.CurrentLevelEnemiesDefeated;
+            PlaytroughVariables.LevelCoins_1 = RuntimeVariables.CurrentLevelCoins;
+            PlaytroughVariables.LevelDeaths_1 = RuntimeVariables.CurrentLevelDeaths;
+            PlaytroughVariables.LevelEndHp_1 = playerLogic.GetCurrentHp() ;
         }
         else if (RuntimeVariables.CurrentLevel == 2)
         {
             PlaytroughVariables.LevelFinished_2 = true;
+            PlaytroughVariables.LevelTime_2 = RuntimeVariables.CurrentLevelTime;
+            PlaytroughVariables.LevelPoints_2 = RuntimeVariables.CurrentLevelPoints;
+            PlaytroughVariables.LevelEnemies_2 = RuntimeVariables.CurrentLevelEnemiesDefeated;
+            PlaytroughVariables.LevelCoins_2 = RuntimeVariables.CurrentLevelCoins;
+            PlaytroughVariables.LevelDeaths_2 = RuntimeVariables.CurrentLevelDeaths;
+            PlaytroughVariables.LevelEndHp_2 = playerLogic.GetCurrentHp();
         }
         else
         {
             PlaytroughVariables.LevelFinished_3 = true;
+            PlaytroughVariables.LevelTime_3 = RuntimeVariables.CurrentLevelTime;
+            PlaytroughVariables.LevelPoints_3 = RuntimeVariables.CurrentLevelPoints;
+            PlaytroughVariables.LevelEnemies_3 = RuntimeVariables.CurrentLevelEnemiesDefeated;
+            PlaytroughVariables.LevelCoins_3 = RuntimeVariables.CurrentLevelCoins;
+            PlaytroughVariables.LevelDeaths_3 = RuntimeVariables.CurrentLevelDeaths;
+            PlaytroughVariables.LevelEndHp_3 = playerLogic.GetCurrentHp();
         }
         if (RuntimeVariables.CurrentLevel == 3)
         {

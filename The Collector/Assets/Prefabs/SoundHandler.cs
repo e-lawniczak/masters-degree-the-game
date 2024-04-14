@@ -158,4 +158,8 @@ public class SoundHandler : MonoBehaviour
     {
         PlaySound(10);
     }
+    public void Dash()
+    {
+        PlaySound(11);
+    }
 }
