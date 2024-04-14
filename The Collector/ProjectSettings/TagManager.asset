@@ -8,6 +8,7 @@ TagManager:
   - Hazards
   - Checkpoint
   - FinishLine
+  - MuteButton
   layers:
   - Default
   - TransparentFX

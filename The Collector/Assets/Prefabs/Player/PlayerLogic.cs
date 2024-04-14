@@ -14,6 +14,7 @@ public class PlayerLogic : MonoBehaviour
     [SerializeField] private int _maxHp = 5;
     private Animator _animator;
     private Rigidbody2D rb;
+    private SoundHandler soundHandler;
     private bool _isAlive;
     private List<LayerMask> _hazardLayers;
     private int _hp;
@@ -36,6 +37,7 @@ public class PlayerLogic : MonoBehaviour
         {
             SetHp(RuntimeVariables.CurrentHp);
         }
+        soundHandler = GameObject.Find("SoundHandler").GetComponent<SoundHandler>();
 
     }
 
@@ -71,6 +73,7 @@ public class PlayerLogic : MonoBehaviour
     {
         if (!_isInvincible && _collider.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards)))
         {
+            soundHandler.PlayerHit();
             DealDamage(1);
             GiveIframes();
             Recoil();
@@ -88,6 +91,7 @@ public class PlayerLogic : MonoBehaviour
             GiveIframes();
             DealDamage(1);
             Recoil();
+            soundHandler.PlayerHit();
         }
     }
     private void Die()

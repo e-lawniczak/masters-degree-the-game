@@ -5,6 +5,7 @@ using UnityEngine;
 public class coin_script : MonoBehaviour
 {
     [SerializeField] private int coinId;
+    private SoundHandler soundHandler;
     // Start is called before the first frame update
     private void Start()
     {
@@ -13,6 +14,7 @@ public class coin_script : MonoBehaviour
             Destroy(gameObject, 0.0f);
             return;
         }
+        soundHandler = GameObject.Find("SoundHandler").GetComponent<SoundHandler>();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -22,6 +24,7 @@ public class coin_script : MonoBehaviour
             PlaytroughVariables.CoinsCollected += 1;
             RuntimeVariables.CurrentLevelCoins += 1;
             RuntimeVariables.collectedCoins.Add(coinId);
+            soundHandler.CoinPickup();
             Destroy(this.gameObject);
         }
     }

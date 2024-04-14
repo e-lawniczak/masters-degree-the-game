@@ -34,6 +34,33 @@ Follow on Twitter for updates:
 http://twitter.com/KenneyNL
 
 ---
+Impact Sounds (1.0)
+
+Created/distributed by Kenney (www.kenney.nl)
+
+Creation date: 19-12-2019
+
+		
+License: (Creative Commons Zero, CC0)
+
+http://creativecommons.org/publicdomain/zero/1.0/
+
+This content is free to use in personal, educational and commercial projects.
+
+Support us by crediting Kenney or www.kenney.nl (this is not mandatory)
+
+		
+Donate:   http://support.kenney.nl
+
+Request:  http://request.kenney.nl
+
+Patreon:  http://patreon.com/kenney/
+
+Follow on Twitter for updates:
+
+http://twitter.com/KenneyNL
+
+---
 Retro Sounds 2 (1.0)
 
 Created/distributed by Kenney (www.kenney.nl)
@@ -83,6 +110,8 @@ https://creativecommons.org/licenses/by/3.0/
 
 Music: https://www.chosic.com/free-music/all/
 
+Artist: https://freemusicarchive.org/music/Komiku/
+
 ---
 Savage by Alex-Productions | https://onsound.eu/
 
@@ -122,7 +151,27 @@ Attribution 4.0 International (CC BY 4.0)
 
 https://creativecommons.org/licenses/by/4.0/
 
+---
 
+Katana sword.wav by crawfordjohnb@bellsouth.net -- https://freesound.org/s/403235/ -- License: Creative Commons 0
+
+---
+
+Sword Clash by loudernoises -- https://freesound.org/s/334169/ -- License: Creative Commons 0
+
+---
+
+Slime Death (1) by DrMinky -- https://freesound.org/s/167074/ -- License: Attribution 4.0
+
+---
+
+SlimeJump.wav by Zuzek06 -- https://freesound.org/s/353250/ -- License: Creative Commons 0
+
+---
+
+Enemy_Hit.wav by D001447733 -- https://freesound.org/s/464623/ -- License: Attribution 3.0
+
+--- 
 
 
 

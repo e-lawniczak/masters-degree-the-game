@@ -7,6 +7,8 @@ using static HelperFunctions;
 
 public class PlayerController : MonoBehaviour
 {
+    // The script below is a modified verios of the script mentioned in the source
+
     // script source: https://www.reddit.com/r/Unity2D/comments/arb0tp/hollowknight_style_movement/
     // https://pastebin.com/X0AytNFR
 
@@ -91,6 +93,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject weapon;
     private PlayerLogic playerLogic;
+    private SoundHandler soundHandler;
 
     // Use this for initialization
     void Start()
@@ -100,6 +103,7 @@ public class PlayerController : MonoBehaviour
         playerLogic = GetComponent<PlayerLogic>();
         gravity = rb.gravityScale;
         prevPos = rb.position;
+        soundHandler = GameObject.Find("SoundHandler").GetComponent<SoundHandler>();
     }
 
     // Update is called once per frame
@@ -207,7 +211,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    private float walkSoundTimer = 0.4f;
+    private float walkSoundCounter;
     void Walk(float MoveDirection)
     {
         //Rigidbody2D rigidbody2D = rb;
@@ -215,7 +220,7 @@ public class PlayerController : MonoBehaviour
         //Vector2 velocity = rb.velocity;
         //rigidbody2D.velocity = new Vector2(x, velocity.y);
         float x = MoveDirection * walkSpeed;
-
+        //walkSoundCounter += Time.deltaTime;
         x = Grounded() ? x : x / airMovementMod;
         if (!pState.recoilingX)
         {
@@ -225,6 +230,11 @@ public class PlayerController : MonoBehaviour
             {
                 pState.walking = true;
                 anim.SetBool(AnimationVariables.IsMoving, true);
+                //if(walkSoundCounter > walkSoundTimer)
+                //{
+                //soundHandler.GrassStep();
+                //    walkSoundCounter = 0f;
+                //}
             }
             else
             {
@@ -247,6 +257,7 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
+        
         timeSinceAttack += Time.deltaTime;
         if (Input.GetButtonDown(InputButtons.Swing) && timeSinceAttack >= timeBetweenAttack)
         {
@@ -270,6 +281,10 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj || o.name == LayerVariables.Enemy).ToArray().Length > 0 && attackDown)
                 {
                     pState.jumpedOnSpikes = true;
+                    if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj).ToArray().Length > 0)
+                    {
+                        soundHandler.SpikeHit();
+                    }
                 }
             }
             for (int i = 0; i < objectsToHit.Length; i++)
@@ -277,6 +292,7 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    soundHandler.EnemyHit();
                     if (isDead)
                     {
                         playerLogic.AddPoints(RuntimeVariables.BasicEnemyPoints);
@@ -285,6 +301,7 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
+                    soundHandler.EnemyHit();
                     if (isDead)
                     {
                         playerLogic.AddPoints(RuntimeVariables.FlyingEnemyPoints);
@@ -293,6 +310,7 @@ public class PlayerController : MonoBehaviour
             }
 
             weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
+            soundHandler.SwingSword();
         }
     }
     void CheckEnemyInProximity()

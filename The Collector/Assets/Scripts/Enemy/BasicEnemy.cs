@@ -103,6 +103,7 @@ public class BasicEnemy : MonoBehaviour
     }
     public bool GetHit(int damage, Vector3 position)
     {
+        
         hp -= damage;
         if (hp > 0)
         {

@@ -52,7 +52,7 @@ public class GameEngine : MonoBehaviour
             RuntimeVariables.GameStarted = true;
         }
 
-       
+
 
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
@@ -97,21 +97,27 @@ public class GameEngine : MonoBehaviour
         PlaytroughVariables.TotalTime += Time.deltaTime;
         RuntimeVariables.CurrentLevelTime += Time.deltaTime;
     }
+    private float playerDeadTimer = 1f;
+    private float playerDeadCounter = 0f;
 
     void CheckIfPlayerAlive()
     {
         if (!playerLogic.IsAlive)
         {
-            if (RuntimeVariables.IsControlGroup && CheckpointVariables.CheckpointId > 0)
+            playerDeadCounter += Time.deltaTime;
+            if (playerDeadCounter > playerDeadTimer)
             {
-                LoadFromCheckpoint();
-            }
-            else
-            {
-                PlaytroughVariables.IsFinished = true;
-                PlaytroughVariables.EndTime = DateTime.UtcNow;
-                StartCoroutine(UpdatePlaytrough());
-                EndGame();
+                if (RuntimeVariables.IsControlGroup && CheckpointVariables.CheckpointId > 0)
+                {
+                    LoadFromCheckpoint();
+                }
+                else
+                {
+                    PlaytroughVariables.IsFinished = true;
+                    PlaytroughVariables.EndTime = DateTime.UtcNow;
+                    StartCoroutine(UpdatePlaytrough());
+                    EndGame();
+                }
             }
         }
     }
@@ -195,7 +201,7 @@ public class GameEngine : MonoBehaviour
         CheckpointVariables.PlayerPosY = playerTransform.position.y;
         CheckpointVariables.Health = playerLogic.GetCurrentHp();
 
-        CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies.Select(o=>o).ToList();
+        CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies.Select(o => o).ToList();
         CheckpointVariables.CollectedCoinsIds = RuntimeVariables.collectedCoins.Select(o => o).ToList();
         CheckpointVariables.CurrentLevelTime = RuntimeVariables.CurrentLevelTime;
         CheckpointVariables.CurrentLevelPoints = RuntimeVariables.CurrentLevelPoints;
@@ -368,6 +374,10 @@ public class GameEngine : MonoBehaviour
     private void EndGame()
     {
         SceneManager.LoadScene(SceneNames.EndScreen);
+    }
+    public void MuteSound()
+    {
+        GameObject.Find("SoundHandler").GetComponent<SoundHandler>().MuteUnmute();
     }
 
     internal void LevelComplete()

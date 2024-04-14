@@ -42,13 +42,6 @@ public class StartGameHandler : MonoBehaviour
     }
 
 
-    //public void StartFromCheckpoint()
-    //{
-    //    Debug.Log("Checkpoint start");
-    //    //AssignRuntimeVariables();
-    //    string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
-    //    SceneManager.LoadSceneAsync(sceneToLoad);
-    //}
     private void StartFromBegining()
     {
         RuntimeVariables.CurrentLevel = 1;

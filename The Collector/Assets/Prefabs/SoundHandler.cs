@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,8 @@ public class SoundHandler : MonoBehaviour
 
     AudioSource[] AudioSource;
     public static SoundHandler instance;
+    private bool IsMuted;
+    private bool FirstSwordSwing = false;
 
 
     // Start is called before the first frame update
@@ -31,6 +34,7 @@ public class SoundHandler : MonoBehaviour
     }
     void Start()
     {
+        IsMuted = false;
         SceneManager.activeSceneChanged += OnSceneChange;
         List<AudioSource> t = new List<AudioSource>();
         for (int i = 0; i < soundSource.Length; i++)
@@ -45,6 +49,26 @@ public class SoundHandler : MonoBehaviour
         AssignButtonClick();
         PlaySound(1);
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            StopAllSounds();
+            PlaySound(3);
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            StopAllSounds();
+            PlaySound(2);
+        }
+    }
+    void StopAllSounds()
+    {
+        for (int i = 0; i < AudioSource.Length; i++)
+        {
+            StopSound(i);
+        }
+    }
     void AssignButtonClick()
     {
         Button[] v = GameObject.FindObjectsByType<Button>(FindObjectsSortMode.None);
@@ -53,27 +77,85 @@ public class SoundHandler : MonoBehaviour
             v[i].onClick.AddListener(delegate () { PlaySound(0); });
         }
     }
-    void AssignVolume()
+    void AssignVolume(float vol = -1f, bool onlyMusic = false)
     {
-        for (int i = 0; i < AudioSource.Length; i++)
+        var assign = vol > -1f ? vol : RuntimeVariables.MasterVolume;
+        if (!onlyMusic)
         {
-            AudioSource[i].volume = RuntimeVariables.MasterVolume;
+            for (int i = 0; i < AudioSource.Length; i++)
+            {
+                AudioSource[i].volume = assign;
+            }
         }
-        AudioSource[1].volume = (float)(RuntimeVariables.MasterVolume / 2f);
+        var f = 0.1f;
+        AudioSource[1].volume = (float)(assign * f);
+        AudioSource[2].volume = (float)(assign * f);
+        AudioSource[3].volume = (float)(assign * f);
     }
 
     void OnSceneChange(Scene current, Scene next)
     {
         AssignVolume();
         AssignButtonClick();
+        if (next.name == SceneNames.Level1)
+        {
+            StopSound(1);
+            PlaySound(2);
+        }
+        if (next.name == SceneNames.EndScreen)
+        {
+            StopAllSounds();
+            PlaySound(1);
+        }
     }
 
-    private void Update()
-    {
-
-    }
     public void PlaySound(int id)
     {
         AudioSource[id].Play();
+    }
+    public void StopSound(int id)
+    {
+        AudioSource[id].Stop();
+    }
+    public void MuteUnmute()
+    {
+        Button muteButton = GameObject.FindGameObjectWithTag("MuteButton").GetComponent<Button>();
+        if (IsMuted)
+        {
+            AssignVolume(RuntimeVariables.MasterVolume, true);
+            muteButton.GetComponentInChildren<TextMeshProUGUI>().text = "Mute music";
+        }
+        else
+        {
+            AssignVolume(0.0f, true);
+            muteButton.GetComponentInChildren<TextMeshProUGUI>().text = "Unmute music";
+        }
+        IsMuted = !IsMuted;
+    }
+    public void SwingSword()
+    {
+        int soundtoplay = FirstSwordSwing ? 4 : 5;
+        PlaySound(soundtoplay);
+        FirstSwordSwing = !FirstSwordSwing;
+    }
+    public void EnemyHit()
+    {
+        PlaySound(6);
+    }
+    public void PlayerHit()
+    {
+        PlaySound(7);
+    }
+    public void SpikeHit()
+    {
+        PlaySound(8);
+    }
+    public void GrassStep()
+    {
+        PlaySound(9);
+    }
+    public void CoinPickup()
+    {
+        PlaySound(10);
     }
 }

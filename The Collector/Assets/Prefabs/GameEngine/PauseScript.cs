@@ -32,7 +32,6 @@ public class PauseScript : MonoBehaviour
 
     public void PauseGame()
     {
-        Debug.Log("Pause");
         pauseMenu?.SetActive(true);
         Time.timeScale = 0.0f;
         IsPaused = true;
@@ -40,7 +39,6 @@ public class PauseScript : MonoBehaviour
 
     public void ResumeGame()
     {
-        Debug.Log("Resume");
         pauseMenu?.SetActive(false);
         Time.timeScale = 1.0f;
         IsPaused = false;
