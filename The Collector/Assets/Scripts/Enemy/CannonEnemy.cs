@@ -16,12 +16,14 @@ public class CannonEnemy : MonoBehaviour
     [SerializeField] private bool leftCannon;
     [SerializeField] private bool upCannon;
     [SerializeField] private bool downCannon;
+    [SerializeField] private float initialDelay;
 
 
     private Vector2 playerPos;
     private bool isActive;
     private bool canShoot;
     private float counter = 0f;
+    private float delayCounter = 0f;
     private float speed;
     private float reload;
 
@@ -40,7 +42,11 @@ public class CannonEnemy : MonoBehaviour
         CheckForPlayer();
         if (isActive)
         {
-            Fire();
+            delayCounter -= Time.deltaTime;
+            if (delayCounter < 0)
+            {
+                Fire();
+            }
         }
     }
     void Fire()
@@ -66,6 +72,7 @@ public class CannonEnemy : MonoBehaviour
     }
     void CheckForPlayer()
     {
+        if (!player) return;
         playerPos = player.GetComponent<Transform>().transform.position;
         float dist = Vector2.Distance(transform.position, playerPos);
         isActive = dist < activationRadius;
@@ -80,9 +87,9 @@ public class CannonEnemy : MonoBehaviour
             return Vector3.down;
         return Vector3.right;
     }
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireSphere(transform.position, activationRadius);
-    //}
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, activationRadius);
+    }
 }

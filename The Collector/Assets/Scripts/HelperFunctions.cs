@@ -53,7 +53,7 @@ public class HelperFunctions : MonoBehaviour
     private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.05f, float timeWeight = 200f)
     {
         var timeInMinutes = totalTime / 60f;
-        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 10f * (float)(Math.Max(GetPercentCompletion(), 1f)/100f);
+        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 10f * (float)(Math.Max(GetPercentCompletion(), 1f) / 100f);
     }
 
     public static string SceneToLoad(int level)
@@ -149,7 +149,8 @@ public class HelperFunctions : MonoBehaviour
         PlaytroughVariables.StartTime = DateTime.UtcNow;
         PlaytroughVariables.EndTime = null;
         PlaytroughVariables.LastUpdate = null;
-
+        PlaytroughVariables.DefeatedEnemiesIds = "";
+        PlaytroughVariables.CollectedCoinsIds = "";
 
     }
 }

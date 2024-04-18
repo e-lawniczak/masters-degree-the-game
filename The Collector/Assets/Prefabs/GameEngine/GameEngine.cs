@@ -268,6 +268,8 @@ public class GameEngine : MonoBehaviour
             StartTime = PlaytroughVariables.StartTime,
             EndTime = PlaytroughVariables.EndTime,
             LastUpdate = PlaytroughVariables.LastUpdate,
+            DefeatedEnemiesIds = PlaytroughVariables.DefeatedEnemiesIds,
+            CollectedCoinsIds = PlaytroughVariables.CollectedCoinsIds,
         }
         ;
 
@@ -352,6 +354,8 @@ public class GameEngine : MonoBehaviour
             StartTime = PlaytroughVariables.StartTime.Ticks,
             EndTime = PlaytroughVariables.EndTime.HasValue ? PlaytroughVariables.EndTime.Value.Ticks : 0,
             LastUpdate = DateTime.UtcNow.Ticks,
+            DefeatedEnemiesIds = string.Join(',', RuntimeVariables.defeatedEnemies),
+            CollectedCoinsIds = string.Join(',', RuntimeVariables.collectedCoins),
         };
 
 
@@ -413,7 +417,7 @@ public class GameEngine : MonoBehaviour
             PlaytroughVariables.LevelEnemies_1 = RuntimeVariables.CurrentLevelEnemiesDefeated;
             PlaytroughVariables.LevelCoins_1 = RuntimeVariables.CurrentLevelCoins;
             PlaytroughVariables.LevelDeaths_1 = RuntimeVariables.CurrentLevelDeaths;
-            PlaytroughVariables.LevelEndHp_1 = playerLogic.GetCurrentHp() ;
+            PlaytroughVariables.LevelEndHp_1 = playerLogic.GetCurrentHp();
         }
         else if (RuntimeVariables.CurrentLevel == 2)
         {

@@ -26,20 +26,21 @@ public class RuntimeVariables : MonoBehaviour
     public static int CurrentLevelDeaths = 0;
     public static int CurrentLevelCoins = 0;
     public static int CurrentLevelEnemiesDefeated = 0;
-    public static readonly int TotalCoinsInGame = 9;
-    public static readonly int TotalEnemiesInGame = 2;
+    public static readonly int TotalCoinsInGame = 34;
+    public static readonly int TotalEnemiesInGame = 17;
 
 
     #region DifficultySettings
-    public static readonly float BasicEnemySpeed = 10f;
-    public static readonly int BasicEnemyHp = 1;
+    public static readonly float BasicEnemySpeed = 8f;
+    public static readonly int BasicEnemyHp = 5;
     public static readonly float BasicEnemyRecoil = 65f;
 
     public static readonly float FlyingEnemySpeed = 10f;
     public static readonly float FlyingEnemyLockOnSpeed = 25f;
     public static readonly float FlyingEnemyLockOnWait = 1f;
-    public static readonly float FlyingEnemyLockOnRadius = 15f;
-    
+    public static readonly float FlyingEnemyLockOnRadius = 25f;
+    public static readonly float FlyingEnemyActivationRadius = 25f;
+
     public static readonly float CannonBulletSpeed = 10f;
     public static readonly float CannonBulletReload = 2f;
     public static readonly float CannonBulletLifetime = 5f;

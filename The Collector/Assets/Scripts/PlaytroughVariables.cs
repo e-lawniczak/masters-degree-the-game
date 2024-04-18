@@ -42,6 +42,8 @@ public class PlaytroughVariables : MonoBehaviour
     public static DateTime StartTime = DateTime.UtcNow;
     public static DateTime? EndTime = null;
     public static DateTime? LastUpdate = null;
+    public static string DefeatedEnemiesIds = "";
+    public static string CollectedCoinsIds = "";
 }
 
 public class PlaytroughVariablesInstance
@@ -80,4 +82,6 @@ public class PlaytroughVariablesInstance
     public DateTime StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public DateTime? LastUpdate { get; set; }
+    public string DefeatedEnemiesIds { get; set; }
+    public string CollectedCoinsIds { get; set; }
 }

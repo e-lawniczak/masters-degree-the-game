@@ -70,7 +70,7 @@ public class StartGameHandler : MonoBehaviour
 
         }
     }
- 
+
     //IEnumerator FetchPlaytrough()
     //{
     //    UnityWebRequest req = UnityWebRequest.Get(RuntimeVariables.apiUrl + "/api/playtrough/getPlaytrough/" + _StartGameData.currentPlaytrough.ToString());
@@ -156,6 +156,8 @@ public class StartGameHandler : MonoBehaviour
         public long StartTime;
         public long EndTime;
         public long LastUpdate;
+        public string DefeatedEnemiesIds;
+        public string CollectedCoinsIds;
     }
     [Serializable]
     public class CheckpointData
