@@ -258,7 +258,7 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        
+
         timeSinceAttack += Time.deltaTime;
         if (Input.GetButtonDown(InputButtons.Swing) && timeSinceAttack >= timeBetweenAttack)
         {
@@ -271,7 +271,8 @@ public class PlayerController : MonoBehaviour
             float attackRradius = attackOnX ? attackRadius : attackUp ? upAttackRadius : downAttackRadius;
 
             Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(attackPos, attackRradius, attackableLayer);
-
+            bool spikeHit = false;
+            bool enemyHit = false;
             if (objectsToHit.Length > 0)
             {
                 if (attackOnX)
@@ -284,7 +285,7 @@ public class PlayerController : MonoBehaviour
                     pState.jumpedOnSpikes = true;
                     if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj).ToArray().Length > 0)
                     {
-                        soundHandler.SpikeHit();
+                        spikeHit = true;
                     }
                 }
             }
@@ -293,7 +294,7 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
-                    soundHandler.EnemyHit();
+                    enemyHit = true;
                     if (isDead)
                     {
                         playerLogic.AddPoints(RuntimeVariables.BasicEnemyPoints);
@@ -302,14 +303,26 @@ public class PlayerController : MonoBehaviour
                 if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     bool isDead = objectsToHit[i].GetComponent<FlyingEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
-                    soundHandler.EnemyHit();
+                    enemyHit = true;
                     if (isDead)
                     {
                         playerLogic.AddPoints(RuntimeVariables.FlyingEnemyPoints);
                     }
                 }
-            }
+                if (objectsToHit[i].GetComponent<CannonEnemy>() != null || objectsToHit[i].GetComponent<BulletScript>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    spikeHit = true;
+                }
 
+            }
+            if (spikeHit)
+            {
+                soundHandler.SpikeHit();
+            }
+            else if (enemyHit)
+            {
+                soundHandler.EnemyHit();
+            }
             weapon.GetComponent<WeaponScript>().PerformAnimation(attackOnX, attackUp, attackDown);
             soundHandler.SwingSword();
         }
@@ -318,7 +331,7 @@ public class PlayerController : MonoBehaviour
     {
         float attackRradius = attackRadius;
 
-        Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(rb.position, attackRradius * 2, attackableLayer);
+        Collider2D[] objectsToHit = Physics2D.OverlapCircleAll(rb.position, attackRradius * 2.5f, attackableLayer);
 
         if (objectsToHit.Length > 0)
         {
@@ -329,6 +342,14 @@ public class PlayerController : MonoBehaviour
                     PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
                 }
                 else if (objectsToHit[i].GetComponent<FlyingEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
+                }
+                else if (objectsToHit[i].GetComponent<CannonEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                {
+                    PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
+                }
+                else if (objectsToHit[i].GetComponent<BulletScript>() != null && objectsToHit[i].tag == TagVariables.Enemy)
                 {
                     PlaytroughVariables.TotalEnemyProxTime += Time.deltaTime;
                 }
