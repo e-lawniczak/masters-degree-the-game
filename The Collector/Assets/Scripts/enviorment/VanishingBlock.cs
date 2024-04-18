@@ -15,6 +15,7 @@ public class VanishingBlock : MonoBehaviour
 
     private void Start()
     {
+        platform.SetActive(false);
         currentPlatform = Instantiate(platform);
         currentPlatform.SetActive(true);
         currentPlatform.transform.position = transform.position;

@@ -13,7 +13,7 @@ public class CheckpointScript : MonoBehaviour
             GameEngine ge = gameEngine.GetComponent<GameEngine>();
             if (ge != null)
             {
-                ge.SaveCheckpoint();
+                ge.SaveCheckpoint(transform.position);
             }
         } 
         if (collision.gameObject.tag == LayerVariables.FinishLine)

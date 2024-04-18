@@ -57,7 +57,7 @@ public class GameEngine : MonoBehaviour
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
         _currentLevelEnemiesDefeated = RuntimeVariables.CurrentLevelEnemiesDefeated;
-        SaveCheckpoint();
+        SaveCheckpoint(player.transform.position);
     }
 
     void Update()
@@ -212,14 +212,23 @@ public class GameEngine : MonoBehaviour
         Time.timeScale = 1.0f;
     }
 
-    public void SaveCheckpoint()
+    public void SaveCheckpoint(Vector3 checkpointTransform)
     {
+
         CheckpointVariables.CheckpointLoaded = false;
         CheckpointVariables.CheckpointId = 1;
         CheckpointVariables.Data = null;
         CheckpointVariables.LevelNo = RuntimeVariables.CurrentLevel;
-        CheckpointVariables.PlayerPosX = playerTransform.position.x;
-        CheckpointVariables.PlayerPosY = playerTransform.position.y;
+        if (playerTransform != null)
+        {
+            CheckpointVariables.PlayerPosX = playerTransform.position.x;
+            CheckpointVariables.PlayerPosY = playerTransform.position.y;
+        }
+        else
+        {
+            CheckpointVariables.PlayerPosX = checkpointTransform.x;
+            CheckpointVariables.PlayerPosY = checkpointTransform.y;
+        }
         CheckpointVariables.Health = playerLogic.GetCurrentHp();
 
         CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies.Select(o => o).ToList();
