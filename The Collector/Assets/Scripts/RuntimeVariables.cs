@@ -26,8 +26,8 @@ public class RuntimeVariables : MonoBehaviour
     public static int CurrentLevelDeaths = 0;
     public static int CurrentLevelCoins = 0;
     public static int CurrentLevelEnemiesDefeated = 0;
-    public static readonly int TotalCoinsInGame = 34;
-    public static readonly int TotalEnemiesInGame = 17;
+    public static readonly int TotalCoinsInGame = 52;
+    public static readonly int TotalEnemiesInGame = 23;
 
 
     #region DifficultySettings
