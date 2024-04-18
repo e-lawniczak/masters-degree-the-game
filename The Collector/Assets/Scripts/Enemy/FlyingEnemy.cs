@@ -187,13 +187,13 @@ public class FlyingEnemy : MonoBehaviour
 
         return true;
     }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lockOnRadius);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, activationRadius);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, lockOnRadius);
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, activationRadius);
+    //}
     public int GetId()
     {
         return enemyId;

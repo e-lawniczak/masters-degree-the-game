@@ -32,7 +32,11 @@ public class CannonEnemy : MonoBehaviour
     {
         speed = bulletSpeedOverwrite > 0 ? bulletSpeedOverwrite : bulletSpeed;
         reload = shootDelayOverwrite > 0 ? shootDelayOverwrite : shootDelay;
-        playerPos = player.GetComponent<Transform>().transform.position;
+        if (player != null)
+        {
+            playerPos = player.GetComponent<Transform>().transform.position;
+
+        }
         isActive = false;
         canShoot = true;
     }
@@ -72,7 +76,11 @@ public class CannonEnemy : MonoBehaviour
     }
     void CheckForPlayer()
     {
-        if (!player) return;
+        if (!player)
+        {
+            isActive = true;
+            return;
+        }
         playerPos = player.GetComponent<Transform>().transform.position;
         float dist = Vector2.Distance(transform.position, playerPos);
         isActive = dist < activationRadius;
@@ -87,9 +95,9 @@ public class CannonEnemy : MonoBehaviour
             return Vector3.down;
         return Vector3.right;
     }
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, activationRadius);
-    }
+    //void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, activationRadius);
+    //}
 }
