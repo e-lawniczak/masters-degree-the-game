@@ -214,7 +214,10 @@ public class GameEngine : MonoBehaviour
 
     public void SaveCheckpoint(Vector3 checkpointTransform)
     {
-
+        if(playerLogic == null)
+        {
+            playerLogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
+        }
         CheckpointVariables.CheckpointLoaded = false;
         CheckpointVariables.CheckpointId = 1;
         CheckpointVariables.Data = null;

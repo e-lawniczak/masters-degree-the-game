@@ -31,7 +31,7 @@ public class RuntimeVariables : MonoBehaviour
 
 
     #region DifficultySettings
-    public static readonly float BasicEnemySpeed = 8f;
+    public static readonly float BasicEnemySpeed = 5.4f;
     public static readonly int BasicEnemyHp = 5;
     public static readonly float BasicEnemyRecoil = 65f;
 
