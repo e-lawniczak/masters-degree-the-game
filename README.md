@@ -153,6 +153,31 @@ https://creativecommons.org/licenses/by/4.0/
 
 ---
 
+Foreboding by PeriTune | https://peritune.com/
+
+Music promoted by https://www.chosic.com/free-music/all/
+
+Creative Commons CC BY 4.0
+
+https://creativecommons.org/licenses/by/4.0/
+
+---
+
+ Music: https://www.chosic.com/free-music/all/ 
+
+---
+
+The Epic 2  by Rafael Krux
+
+Link: https://filmmusic.io/song/5384-the-epic-2-
+
+License: http://creativecommons.org/licenses/by/4.0/
+
+Music promoted on https://www.chosic.com/free-music/all/
+
+
+---
+
 Katana sword.wav by crawfordjohnb@bellsouth.net -- https://freesound.org/s/403235/ -- License: Creative Commons 0
 
 ---

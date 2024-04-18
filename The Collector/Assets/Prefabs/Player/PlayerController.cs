@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [Space(5)]
 
     [Header("Attacking")]
-    [SerializeField] private float timeBetweenAttack = 0.2f;
+    [SerializeField] private float timeBetweenAttack = 0.15f;
     [SerializeField] private Transform attackTransform; // this should be a transform childed to the player but to the right of them, where they attack from.
     private float attackRadius = RuntimeVariables.PlayerAttackRadius;
     [SerializeField] private Transform downAttackTransform;//This should be a transform childed below the player, for the down attack.
