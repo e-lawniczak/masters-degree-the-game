@@ -331,6 +331,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Dash()
     {
+        soundHandler.Dash();
         canDash = false;
         pState.dashing = true;
         anim.SetBool(AnimationVariables.IsDashing, true);
