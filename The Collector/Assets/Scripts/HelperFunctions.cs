@@ -50,10 +50,10 @@ public class HelperFunctions : MonoBehaviour
         var timeInMinutes = totalTime / 60f;
         return (float)(pointsWeight * Math.Log10(points) + timeWeight * (1 / Math.Log10((timeInMinutes + 1)))) * 150f;
     }
-    private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.05f, float timeWeight = 200f)
+    private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.15f, float timeWeight = 150f)
     {
         var timeInMinutes = totalTime / 60f;
-        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 10f * (float)(Math.Max(GetPercentCompletion(), 1f) / 100f);
+        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 100f * (float)(Math.Max(GetPercentCompletion(true), 1f));
     }
 
     public static string SceneToLoad(int level)
@@ -78,7 +78,7 @@ public class HelperFunctions : MonoBehaviour
         }
         return sceneToLoad;
     }
-    public static float GetPercentCompletion()
+    public static float GetPercentCompletion(bool getOnlyLevels = false)
     {
         float percentCompletion = 0;
 
@@ -86,10 +86,13 @@ public class HelperFunctions : MonoBehaviour
         percentCompletion += PlaytroughVariables.LevelFinished_2 ? 25 : 0;
         percentCompletion += PlaytroughVariables.LevelFinished_3 ? 25 : 0;
 
+        if (getOnlyLevels)
+            return (float)(percentCompletion / 75f) * 100f;
+
         percentCompletion += (PlaytroughVariables.CoinsCollected);
         percentCompletion += (PlaytroughVariables.EnemiesDefeated);
 
-        percentCompletion = (percentCompletion / ((25 * 3) + RuntimeVariables.TotalCoinsInGame + RuntimeVariables.TotalEnemiesInGame)) * 100;
+        percentCompletion = (float)(percentCompletion / ((25 * 3) + RuntimeVariables.TotalCoinsInGame + RuntimeVariables.TotalEnemiesInGame)) * 100f;
 
 
         return percentCompletion;
