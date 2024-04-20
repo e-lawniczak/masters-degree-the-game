@@ -15,8 +15,8 @@ public class FollowingCamera : MonoBehaviour
     private float distance = 0;
     void Update()
     {
-     
 
-        transform.position = new Vector3(_playerTransform.position.x, _playerTransform.position.y+yOffset, transform.position.z - distance);
+
+        transform.position = new Vector3(_playerTransform.position.x, _playerTransform.position.y + yOffset - 2.5f, transform.position.z - distance);
     }
 }

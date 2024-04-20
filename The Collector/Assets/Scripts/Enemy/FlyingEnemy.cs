@@ -162,10 +162,10 @@ public class FlyingEnemy : MonoBehaviour
     {
         if (isKilled)
         {
-            RuntimeVariables.defeatedEnemies.Add(enemyId);
-            PlaytroughVariables.EnemiesDefeated += 1;
-            RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
         }
+        RuntimeVariables.defeatedEnemies.Add(enemyId);
+        PlaytroughVariables.EnemiesDefeated += 1;
+        RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
         Destroy(gameObject, 0.0f);
     }
 

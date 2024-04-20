@@ -121,7 +121,7 @@ public class PlayerLogic : MonoBehaviour
     private void Die()
     {
         //Destroy(this, 0.0f);
-        _animator.SetBool(AnimationVariables.IsDead, true);
+        _animator.SetTrigger(AnimationVariables.IsDead);
         rb.velocity = Vector3.zero;
         PlaytroughVariables.Deaths += 1;
         RuntimeVariables.CurrentLevelDeaths += 1;
