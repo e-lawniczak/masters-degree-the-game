@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,11 @@ public class PlayerLogic : MonoBehaviour
 {
     public bool IsAlive { get { return _isAlive; } }
 
-    [SerializeField] private CapsuleCollider2D _collider;
+    [SerializeField] private BoxCollider2D _colliderBox;
+    [SerializeField] private PolygonCollider2D _colliderPoly;
     [SerializeField] private GameEngine engine;
+    [SerializeField] private Transform groundTransform;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private int _maxHp = 5;
     private Animator _animator;
     private Rigidbody2D rb;
@@ -24,6 +28,7 @@ public class PlayerLogic : MonoBehaviour
     private int points;
     private float iframeTick = 0.25f;
     private float iframeCount = 0f;
+    private Vector2 lastGroundTouched;
 
     private void Start()
     {
@@ -38,6 +43,7 @@ public class PlayerLogic : MonoBehaviour
             SetHp(RuntimeVariables.CurrentHp);
         }
         soundHandler = GameObject.Find("SoundHandler").GetComponent<SoundHandler>();
+        lastGroundTouched = transform.position;
 
     }
 
@@ -67,16 +73,28 @@ public class PlayerLogic : MonoBehaviour
 
             }
         }
+        SaveLastSafeSpot();
+    }
+
+    private void SaveLastSafeSpot()
+    {
+        var isOnGround = Physics2D.OverlapCircle(groundTransform.position, 0.2f, groundLayer);
+        if (isOnGround != null && isOnGround.tag == TagVariables.SolidGround)
+        {
+            lastGroundTouched = transform.position;
+        }
     }
 
     private void CalculateDamage()
     {
-        if (!_isInvincible && _collider.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards)))
+        if (!_isInvincible && (_colliderBox.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards)) || _colliderPoly.IsTouchingLayers(LayerMask.GetMask(LayerVariables.Hazards))))
         {
             soundHandler.PlayerHit();
             DealDamage(1);
             GiveIframes();
-            Recoil();
+            //Recoil();
+            TeleportToLastGroundTouched();
+
         }
         if (_hp <= 0)
         {
@@ -84,6 +102,12 @@ public class PlayerLogic : MonoBehaviour
             Die();
         }
     }
+
+    private void TeleportToLastGroundTouched()
+    {
+        transform.position = lastGroundTouched;
+    }
+
     public void GetHitByEnemy(GameObject enemy, Vector3 enemyPos)
     {
         if (!_isInvincible)

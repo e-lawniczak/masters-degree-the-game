@@ -245,7 +245,7 @@ Transform:
   m_Children:
   - {fileID: 887802709763974859}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1562123664226585994
 MonoBehaviour:
@@ -1366,6 +1366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6641575696045965807}
+  - component: {fileID: 3483298727702575872}
   - component: {fileID: 5450885603080856340}
   - component: {fileID: 8226093536516783279}
   - component: {fileID: 4395805071437248923}
@@ -1397,6 +1398,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3483298727702575872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7791537487949387158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051ecf2ca64d1484da337cb1d3948b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &5450885603080856340
 CanvasRenderer:
   m_ObjectHideFlags: 0

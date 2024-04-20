@@ -26,8 +26,8 @@ public class RuntimeVariables : MonoBehaviour
     public static int CurrentLevelDeaths = 0;
     public static int CurrentLevelCoins = 0;
     public static int CurrentLevelEnemiesDefeated = 0;
-    public static readonly int TotalCoinsInGame = 52;
-    public static readonly int TotalEnemiesInGame = 23;
+    public static readonly int TotalCoinsInGame = 108;
+    public static readonly int TotalEnemiesInGame = 41;
 
 
     #region DifficultySettings
@@ -50,9 +50,9 @@ public class RuntimeVariables : MonoBehaviour
     public static readonly int BasicEnemyPoints = EnemyPoints + 10;
     public static readonly int FlyingEnemyPoints = EnemyPoints;
 
-    public static readonly float PlayerAttackRadius = 1.15f;
-    public static readonly float PlayerAttackRadiusUp = 1.15f;
-    public static readonly float PlayerAttackRadiusDown = 1.15f;
+    public static readonly float PlayerAttackRadius = 1.25f;
+    public static readonly float PlayerAttackRadiusUp = 1.25f;
+    public static readonly float PlayerAttackRadiusDown = 1.45f;
 
     #endregion
 

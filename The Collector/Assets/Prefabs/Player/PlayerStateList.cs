@@ -20,4 +20,5 @@ public class PlayerStateList : MonoBehaviour
     public bool usingNPC;
     public bool jumpedOnSpikes;
     public bool dashing;
+    public bool canJumpAgain;
 }

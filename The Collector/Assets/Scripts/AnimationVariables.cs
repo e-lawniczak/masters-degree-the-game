@@ -8,4 +8,5 @@
     internal static readonly string IsDead = "IsDead";
     internal static readonly string GameEnded = "GameEnded";
     internal static readonly string IsMoving = "IsMoving";
+    internal static readonly string IsDashing = "IsDashing";
 }

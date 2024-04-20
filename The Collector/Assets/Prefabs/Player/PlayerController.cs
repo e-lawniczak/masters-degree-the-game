@@ -7,34 +7,18 @@ using static HelperFunctions;
 
 public class PlayerController : MonoBehaviour
 {
-    // The script below is a modified verios of the script mentioned in the source
-
-    // script source: https://www.reddit.com/r/Unity2D/comments/arb0tp/hollowknight_style_movement/
-    // https://pastebin.com/X0AytNFR
-
-
-    //Hollow knight movement script for u/bigjew222
-    //Contains jumping, attacking, moving, and recoil mechanics.
-    //everything regarding the animator has been commented out so you can use it if you need to.
-
-    //GAMEOBJECT SETUP
-    //A gameobject with a rigidBody2D, with rotation locked, and a Box collider.
-    //Five Gameobjects childed to it. One just above the collider, one just below the collider, one a distance above, one a distance below,
-    //and one a distance in front.
-    //If this is confusing just read the other comments and create them as they go.
 
     private PlayerStateList pState;
+    public PlayerStateList CurrentPlayerState { get { return pState; } }
 
     [Header("X Axis Movement")]
     [SerializeField] private float walkSpeed = 6f;
+    [SerializeField] private float dashSpeed = 12f;
 
     [Space(5)]
 
     [Header("Y Axis Movement")]
     [SerializeField] private float jumpSpeed = 7f;
-    [SerializeField] private float fallSpeed = 500f;
-    [SerializeField] private float jumpSteps = 5f;
-    [SerializeField] private float jumpThreshold = 5f;
     [Space(5)]
 
     [Header("Attacking")]
@@ -62,14 +46,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [Space(5)]
 
-    [Header("Roof Checking")]
-    [SerializeField] private Transform roofTransform; //This is supposed to be a transform childed to the player just above their collider.
-    [SerializeField] private float roofCheckY = 0.2f;
-    [SerializeField] private float roofCheckX = 1; // You probably want this to be the same as groundCheckX
-    //[SerializeField] private GameEngine engine; 
-    [Space(5)]
+    //dashing
+    private bool canDash = true;
+    private float timeSinceDash = 0;
+    private float dashCooldown = 1.5f;
+    private float dashTime = 0.2f;
 
 
+    private bool isTurnedLeft = true;
     private float timeSinceAttack;
     private float xAxis;
     private float yAxis;
@@ -78,10 +62,6 @@ public class PlayerController : MonoBehaviour
     private int stepsYRecoiled;
     private int stepsJumped = 0;
     private int jumpMoveDivider = 1;
-    private bool canDash = true;
-    private float timeSinceDash = 0;
-    private float dashCooldown = 1.5f;
-    private bool isTurnedLeft = true;
     private Vector3 prevPos;
     private float checkPosTimer = 2f;
     private float counter = 0f;
@@ -110,13 +90,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!playerLogic.IsAlive) return;
+        Attack();
         CheckEnemyInProximity();
         CheckIfStandingStill();
+        AnimationStates();
+        DashUiInfo();
+
+        if (pState.dashing) return;
+
         GetInputs();
+        Jump();
         Flip();
-        Walk(xAxis);
-        Recoil();
-        Attack();
+    }
+    private void FixedUpdate()
+    {
+        if (!playerLogic.IsAlive) return;
+        if (pState.dashing) return;
+        Move();
     }
 
     private void CheckIfStandingStill()
@@ -135,126 +125,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if (!playerLogic.IsAlive) return;
-
-        if (pState.recoilingX == true && stepsXRecoiled < recoilXSteps)
-        {
-            stepsXRecoiled++;
-        }
-        else
-        {
-            StopRecoilX();
-        }
-        if (pState.recoilingY == true && stepsYRecoiled < recoilYSteps)
-        {
-            stepsYRecoiled++;
-        }
-        else
-        {
-            StopRecoilY();
-        }
-        if (Grounded())
-        {
-            StopRecoilY();
-        }
-
-        Jump();
-        Dash();
-    }
-
-    void Jump()
-    {
-        if (pState.jumping)
-        {
-            anim.SetBool(AnimationVariables.IsJumping, true);
-            float jSpeed = pState.jumpedOnSpikes ? jumpSpeed / 2 : jumpSpeed;
-            if (stepsJumped < jumpSteps && !Roofed())
-            {
-                rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jSpeed);
-                //rb.AddForce(new Vector2(0, jSpeed));
-                stepsJumped++;
-            }
-            else
-            {
-                StopJumpSlow();
-                pState.jumpedOnSpikes = false;
-            }
-        }
-
-        //This limits how fast the player can fall
-        //Since platformers generally have increased gravity, you don't want them to fall so fast they clip trough all the floors.
-        if (rb.velocity.y < -Mathf.Abs(fallSpeed))
-        {
-            rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -Mathf.Abs(fallSpeed), Mathf.Infinity));
-        }
-
-    }
-    void Dash()
-    {
-        if (pState.dashing)
-        {
-            //rb.velocity = new Vector2(1000, 0);
-            var force = 50000f;
-            rb.AddForce(new Vector2(isTurnedLeft ? force : -force, 0));
-            pState.dashing = false;
-            canDash = false;
-            soundHandler.Dash();
-        }
-        if (!canDash)
-        {
-            timeSinceDash += Time.deltaTime;
-            if (timeSinceDash >= dashCooldown)
-            {
-                canDash = true;
-                timeSinceDash = 0;
-            }
-        }
-    }
-    private float walkSoundTimer = 0.4f;
-    private float walkSoundCounter;
-    void Walk(float MoveDirection)
-    {
-        //Rigidbody2D rigidbody2D = rb;
-        //float x = MoveDirection * walkSpeed;
-        //Vector2 velocity = rb.velocity;
-        //rigidbody2D.velocity = new Vector2(x, velocity.y);
-        float x = MoveDirection * walkSpeed;
-        //walkSoundCounter += Time.deltaTime;
-        x = Grounded() ? x : x / airMovementMod;
-        if (!pState.recoilingX)
-        {
-            rb.velocity = new Vector2(x, rb.velocity.y);
-
-            if (Mathf.Abs(rb.velocity.x) > 0)
-            {
-                pState.walking = true;
-                anim.SetBool(AnimationVariables.IsMoving, true);
-                //if(walkSoundCounter > walkSoundTimer)
-                //{
-                //soundHandler.GrassStep();
-                //    walkSoundCounter = 0f;
-                //}
-            }
-            else
-            {
-                pState.walking = false;
-                anim.SetBool(AnimationVariables.IsMoving, false);
-            }
-            if (xAxis > 0)
-            {
-                pState.lookingRight = true;
-            }
-            else if (xAxis < 0)
-            {
-                pState.lookingRight = false;
-            }
-
-            //anim.SetBool("Walking", pState.walking);
-        }
-
-    }
 
     void Attack()
     {
@@ -280,9 +150,10 @@ public class PlayerController : MonoBehaviour
                 else
                     pState.recoilingY = true;
 
-                if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj || o.name == LayerVariables.Enemy).ToArray().Length > 0 && attackDown)
+                if (objectsToHit.Select(o => o).Where(o => o.tag == LayerVariables.Hazards || o.tag == LayerVariables.EnemyTag).ToArray().Length > 0 && attackDown)
                 {
                     pState.jumpedOnSpikes = true;
+                    pState.canJumpAgain = true;
                     if (objectsToHit.Select(o => o).Where(o => o.name == LayerVariables.HazardsTriggerObj).ToArray().Length > 0)
                     {
                         spikeHit = true;
@@ -291,7 +162,7 @@ public class PlayerController : MonoBehaviour
             }
             for (int i = 0; i < objectsToHit.Length; i++)
             {
-                if (objectsToHit[i].GetComponent<BasicEnemy>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                if (objectsToHit[i].GetComponent<BasicEnemy>() != null && (objectsToHit[i].tag == TagVariables.Enemy))
                 {
                     bool isDead = objectsToHit[i].GetComponent<BasicEnemy>().GetHit(weapon.GetComponent<WeaponScript>().GetDamage(), transform.position);
                     enemyHit = true;
@@ -309,8 +180,13 @@ public class PlayerController : MonoBehaviour
                         playerLogic.AddPoints(RuntimeVariables.FlyingEnemyPoints);
                     }
                 }
-                if (objectsToHit[i].GetComponent<CannonEnemy>() != null || objectsToHit[i].GetComponent<BulletScript>() != null && objectsToHit[i].tag == TagVariables.Enemy)
+                if ((objectsToHit[i].GetComponent<CannonEnemy>() != null) && objectsToHit[i].tag == TagVariables.Hazards)
                 {
+                    spikeHit = true;
+                }
+                if ((objectsToHit[i].GetComponent<BulletScript>() != null) && objectsToHit[i].tag == TagVariables.Hazards)
+                {
+                    objectsToHit[i].GetComponent<BulletScript>().GetHit();
                     spikeHit = true;
                 }
 
@@ -357,38 +233,73 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-    void Recoil()
+    void AnimationStates()
     {
-        //since this is run after Walk, it takes priority, and effects momentum properly.
-        if (pState.recoilingX)
+        if (pState.jumping)
         {
-            if (pState.lookingRight)
-            {
-                rb.velocity = new Vector2(-recoilXSpeed, 0);
-            }
-            else
-            {
-                rb.velocity = new Vector2(recoilXSpeed, 0);
-            }
+            anim.SetBool(AnimationVariables.IsJumping, true);
         }
-        if (pState.recoilingY)
+        if (!pState.jumping)
         {
-            if (yAxis < 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, recoilYSpeed);
-                //rb.gravityScale = 0;
-            }
-            else
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -recoilYSpeed);
-                //rb.gravityScale = 0;
-            }
-
+            anim.SetBool(AnimationVariables.IsJumping, false);
+            anim.SetTrigger(AnimationVariables.IsGrounded);
+        }
+      
+    }
+    public bool Grounded()
+    {
+        //this does three small raycasts at the specified positions to see if the player is grounded.
+        if (Physics2D.Raycast(groundTransform.position, Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(-groundCheckX, 0), Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(groundCheckX, 0), Vector2.down, groundCheckY, groundLayer))
+        {
+            return true;
         }
         else
         {
-            rb.gravityScale = gravity;
+            return false;
+        }
+    }
+    void Jump()
+    {
+        if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.canJumpAgain))
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            pState.canJumpAgain = false;
+        }
+
+        if (Input.GetButtonUp(InputButtons.Jump) && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+        if (pState.jumpedOnSpikes)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed / 1.2f);
+            pState.jumpedOnSpikes = false;
+        }
+        pState.jumping = !Grounded() || pState.canJumpAgain;
+    }
+    void Move()
+    {
+        if (xAxis != 0)
+        {
+            anim.SetBool(AnimationVariables.IsMoving, true);
+        }
+        else
+        {
+            anim.SetBool(AnimationVariables.IsMoving, false);
+        }
+        rb.velocity = new Vector2(xAxis * walkSpeed, rb.velocity.y);
+    }
+
+
+
+    void GetInputs()
+    {
+        yAxis = Input.GetAxisRaw("Vertical");
+        xAxis = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetButtonDown(InputButtons.Dash) && canDash)
+        {
+            StartCoroutine(Dash());
         }
     }
 
@@ -405,121 +316,36 @@ public class PlayerController : MonoBehaviour
             isTurnedLeft = false;
         }
     }
-
-    void StopJumpQuick()
+    private void DashUiInfo()
     {
-        //Stops The player jump immediately, causing them to start falling as soon as the button is released.
-        stepsJumped = 0;
-        pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, 0);
-    }
-
-    void StopJumpSlow()
-    {
-        //stops the jump but lets the player hang in the air for a while.
-        stepsJumped = 0;
-        pState.jumping = false;
-        rb.velocity = new Vector2(rb.velocity.x / airMovementMod, jumpSpeed);
-
-    }
-
-    void StopRecoilX()
-    {
-        stepsXRecoiled = 0;
-        pState.recoilingX = false;
-    }
-
-    void StopRecoilY()
-    {
-        stepsYRecoiled = 0;
-        pState.recoilingY = false;
-    }
-
-    public bool Grounded()
-    {
-        //this does three small raycasts at the specified positions to see if the player is grounded.
-        if (Physics2D.Raycast(groundTransform.position, Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(-groundCheckX, 0), Vector2.down, groundCheckY, groundLayer) || Physics2D.Raycast(groundTransform.position + new Vector3(groundCheckX, 0), Vector2.down, groundCheckY, groundLayer))
+        if(!canDash)
         {
-            anim.SetBool(AnimationVariables.IsJumping, false);
-            anim.SetTrigger(AnimationVariables.IsGrounded);
-            return true;
-        }
-        else
-        {
-            return false;
+            timeSinceDash += Time.deltaTime;
+            if(timeSinceDash >= dashCooldown)
+            {
+                timeSinceDash = 0;
+            }
         }
     }
 
-    public bool Roofed()
+
+    IEnumerator Dash()
     {
-        //This does the same thing as grounded but checks if the players head is hitting the roof instead.
-        //Used for canceling the jump.
-        if (Physics2D.Raycast(roofTransform.position, Vector2.up, roofCheckY, groundLayer) || Physics2D.Raycast(roofTransform.position + new Vector3(roofCheckX, 0), Vector2.up, roofCheckY, groundLayer) || Physics2D.Raycast(roofTransform.position + new Vector3(roofCheckX, 0), Vector2.up, roofCheckY, groundLayer))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+        canDash = false;
+        pState.dashing = true;
+        anim.SetBool(AnimationVariables.IsDashing, true);
+        float originalGrav = rb.gravityScale;
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
+        yield return new WaitForSeconds(dashTime);
+        anim.SetBool(AnimationVariables.IsDashing, false);
+        rb.gravityScale = originalGrav;
+        pState.dashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
 
-    void GetInputs()
-    {
-        //WASD/Joystick
-        yAxis = Input.GetAxis("Vertical");
-        xAxis = Input.GetAxis("Horizontal");
-        float treshold = 0.1f;
 
-        //This is essentially just sensitivity.
-        if (yAxis > treshold)
-        {
-            yAxis = 1;
-        }
-        else if (yAxis < -treshold)
-        {
-            yAxis = -1;
-        }
-        else
-        {
-            yAxis = 0;
-        }
 
-        if (xAxis > treshold)
-        {
-            xAxis = 1;
-        }
-        else if (xAxis < -treshold)
-        {
-            xAxis = -1;
-        }
-        else
-        {
-            xAxis = 0;
-        }
-
-        //anim.SetBool("Grounded", Grounded());
-        //anim.SetFloat("YVelocity", rb.velocity.y);
-
-        //Jumping
-        if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.jumpedOnSpikes))
-        {
-            pState.jumping = true;
-        }
-
-        if (!Input.GetButton(InputButtons.Jump) && stepsJumped < jumpSteps && stepsJumped > jumpThreshold && pState.jumping)
-        {
-            StopJumpQuick();
-        }
-        else if (!Input.GetButton(InputButtons.Jump) && stepsJumped < jumpThreshold && pState.jumping)
-        {
-            StopJumpSlow();
-        }
-
-        if (Input.GetButton(InputButtons.Dash) && canDash)
-        {
-            pState.dashing = true;
-        }
     }
 
     void OnDrawGizmos()
@@ -534,8 +360,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawLine(groundTransform.position + new Vector3(-groundCheckX, 0), groundTransform.position + new Vector3(-groundCheckX, -groundCheckY));
         Gizmos.DrawLine(groundTransform.position + new Vector3(groundCheckX, 0), groundTransform.position + new Vector3(groundCheckX, -groundCheckY));
 
-        Gizmos.DrawLine(roofTransform.position, roofTransform.position + new Vector3(0, roofCheckY));
-        Gizmos.DrawLine(roofTransform.position + new Vector3(-roofCheckX, 0), roofTransform.position + new Vector3(-roofCheckX, roofCheckY));
-        Gizmos.DrawLine(roofTransform.position + new Vector3(roofCheckX, 0), roofTransform.position + new Vector3(roofCheckX, roofCheckY));
+
     }
 }

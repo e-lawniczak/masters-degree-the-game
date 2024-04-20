@@ -23,7 +23,7 @@ public class PlayerUI : MonoBehaviour
 
         for (int i = 0; i < hps.Length; i++)
         {
-            hps[i].transform.position = new Vector3(hps[i].transform.position.x + 65, hps[i].transform.position.y, hps[i].transform.position.z);
+            //hps[i].transform.position = new Vector3(hps[i].transform.position.x + 65, hps[i].transform.position.y, hps[i].transform.position.z);
         }
         dashImg.enabled = true;
         dashInfo = playerLogic.GetCanDash();
@@ -42,12 +42,12 @@ public class PlayerUI : MonoBehaviour
         }
         pointsText.text = string.Format("Points: {0}", PlaytroughVariables.TotalPoints);
         timeText.text = string.Format("{0}", PlaytroughVariables.TotalTime.ToString("F3").Replace(',', '.'));
-    }
-    private void FixedUpdate()
-    {
         dashInfo = playerLogic.GetCanDash();
         float mult = dashInfo.canDash ? 1 : (dashInfo.currentCd / dashInfo.dashCd);
         dashImg.rectTransform.sizeDelta = new Vector2(700f * mult, 100);
+    }
+    private void FixedUpdate()
+    {
     }
 
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,4 +50,8 @@ public class BulletScript : MonoBehaviour
 
     }
 
+    internal void GetHit()
+    {
+        Die();
+    }
 }

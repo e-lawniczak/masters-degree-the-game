@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - FinishLine
   - MuteButton
+  - SolidGround
   layers:
   - Default
   - TransparentFX
