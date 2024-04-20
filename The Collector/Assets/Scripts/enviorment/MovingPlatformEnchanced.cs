@@ -1,18 +1,87 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using static UnityEngine.GraphicsBuffer;
 
 public class MovingPlatformEnchanced : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Transform platform;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform endPoint;
+    [SerializeField] private float speed = 1.5f;
+
+
+    private int dir = 1;
+
+    PlayerController playerController;
+    Rigidbody2D rb;
+    Vector2 moveDirection;
+    Vector2 targetPos;
+
+    private void Awake()
     {
-        
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void Start()
+    {
+        targetPos = CurrentTarget();
+        GetDirection();
+    }
+    private void Update()
+    {
+        //transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+
+        float dist = (targetPos - (Vector2)(transform.position)).magnitude;
+        if (dist <= 0.2f)
+        {
+            dir *= -1;
+            targetPos = CurrentTarget();
+            GetDirection();
+        }
+    }
+    private void FixedUpdate()
+    {
+        rb.velocity = moveDirection * speed;
     }
 
-    // Update is called once per frame
-    void Update()
+    void GetDirection()
     {
-        
+        moveDirection = (targetPos - (Vector2)transform.position).normalized;
+    }
+    Vector2 CurrentTarget()
+    {
+        if (dir == 1)
+        {
+            return startPoint.position;
+        }
+        else
+        {
+            return endPoint.position;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((collision.CompareTag("Player")))
+        {
+            playerController.isOnPlatform = true;
+            playerController.platformRb = rb;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if ((collision.CompareTag("Player")))
+        {
+            playerController.isOnPlatform = false;
+        }
+    }
+
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(platform.position, startPoint.position);
+        Gizmos.DrawLine(platform.position, endPoint.position);
     }
 }

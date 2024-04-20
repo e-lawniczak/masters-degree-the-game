@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
     private PlayerLogic playerLogic;
     private SoundHandler soundHandler;
 
+    public Rigidbody2D platformRb { get; set; }
+    public bool isOnPlatform { get; set; }
+
     // Use this for initialization
     void Start()
     {
@@ -107,11 +110,14 @@ public class PlayerController : MonoBehaviour
         if (!playerLogic.IsAlive) return;
         if (pState.dashing) return;
         Move();
+        HandlePlatforms();
     }
+
+   
 
     private void CheckIfStandingStill()
     {
-        counter += Time.deltaTime;
+        //counter += Time.deltaTime;
         if (counter >= checkPosTimer)
         {
             if (rb.position.Equals(prevPos))
@@ -262,17 +268,17 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.canJumpAgain))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed );
             pState.canJumpAgain = false;
         }
 
         if (Input.GetButtonUp(InputButtons.Jump) && rb.velocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y  * 0.5f);
         }
         if (pState.jumpedOnSpikes)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed / 1.2f);
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed  / 1.2f);
             pState.jumpedOnSpikes = false;
         }
         pState.jumping = !Grounded() || pState.canJumpAgain;
@@ -287,10 +293,22 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool(AnimationVariables.IsMoving, false);
         }
-        rb.velocity = new Vector2(xAxis * walkSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(xAxis * walkSpeed , rb.velocity.y);
     }
 
+    private void HandlePlatforms()
+    {
+        if (isOnPlatform)
+        {
+            rb.velocity = new Vector2(rb.velocity.x + platformRb.velocity.x, rb.velocity.y);
 
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+
+        }
+    }
 
     void GetInputs()
     {
@@ -337,7 +355,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool(AnimationVariables.IsDashing, true);
         float originalGrav = rb.gravityScale;
         rb.gravityScale = 0;
-        rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
+        rb.velocity = new Vector2(transform.localScale.x * dashSpeed , 0f);
         yield return new WaitForSeconds(dashTime);
         anim.SetBool(AnimationVariables.IsDashing, false);
         rb.gravityScale = originalGrav;
