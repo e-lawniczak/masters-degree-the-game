@@ -123,7 +123,7 @@ public class MetricsScript : MonoBehaviour
         (
             new TMP_Dropdown.OptionData[] {
                 new TMP_Dropdown.OptionData { text = "Not experienced (Not playing games at all)"},
-                new TMP_Dropdown.OptionData { text = "Somewhat experienced (Have played/Playing one or multiple games from time to time)"},
+                new TMP_Dropdown.OptionData { text = "Somewhat experienced (Have played/playing one or multiple games from time to time)"},
                 new TMP_Dropdown.OptionData { text = "Experienced (Have played/playing one or multiple games on weekly basis)"},
                 new TMP_Dropdown.OptionData { text = "Very experienced (Have played/playing one or mulptiple games on daily basis)"},
             }
