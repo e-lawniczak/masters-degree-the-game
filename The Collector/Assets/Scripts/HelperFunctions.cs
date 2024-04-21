@@ -60,7 +60,7 @@ public class HelperFunctions : MonoBehaviour
         var timeInMinutes = totalTime / 60f;
         return (float)(
             (float)points +
-            (float)(20000f * (1f / Math.Max(1f, totalTime))) +
+            (float)(5000f * (1f / Math.Max(1f, totalTime))) +
             (float)(100f * Math.Max(0f, GetPercentCompletion(true))) +
             (float)(1000f * (float)(RuntimeVariables.CurrentHp / 7f))
             );

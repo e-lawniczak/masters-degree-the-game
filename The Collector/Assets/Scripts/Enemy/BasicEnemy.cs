@@ -65,6 +65,10 @@ public class BasicEnemy : MonoBehaviour
 
             pl.GetHitByEnemy(this.gameObject, this.transform.position);
         }
+        if(collision.rigidbody && collision.collider.tag == LayerVariables.EnemyTag)
+        {
+            Flip();
+        }
     }
 
     void Move()
