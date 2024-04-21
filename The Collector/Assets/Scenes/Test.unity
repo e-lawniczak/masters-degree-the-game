@@ -5504,6 +5504,10 @@ PrefabInstance:
       propertyPath: engine
       value: 
       objectReference: {fileID: 822998501}
+    - target: {fileID: 5938247119908421908, guid: 9449ff9bd791d8348969e70aeb258bd0, type: 3}
+      propertyPath: groundCheckX
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6232171888980325083, guid: 9449ff9bd791d8348969e70aeb258bd0, type: 3}
       propertyPath: m_RootOrder
       value: 3

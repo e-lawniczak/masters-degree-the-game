@@ -12,7 +12,7 @@ public class CheckpointScript : MonoBehaviour
         {
             int v = -1;
             bool x = Int32.TryParse(collision.name, out v);
-            if (x)
+            if (x && RuntimeVariables.CheckpointsVisited.IndexOf(v) == -1)
                 RuntimeVariables.CheckpointsVisited.Add(v);
             var gameEngine = GameObject.Find("GameEngine");
             GameEngine ge = gameEngine.GetComponent<GameEngine>();
@@ -25,7 +25,7 @@ public class CheckpointScript : MonoBehaviour
         {
             int v = -1;
             bool x = Int32.TryParse(collision.name, out v);
-            if (x)
+            if (x && RuntimeVariables.CheckpointsVisited.IndexOf(v) == -1)
                 RuntimeVariables.CheckpointsVisited.Add(v);
             var gameEngine = GameObject.Find("GameEngine");
             GameEngine ge = gameEngine.GetComponent<GameEngine>();

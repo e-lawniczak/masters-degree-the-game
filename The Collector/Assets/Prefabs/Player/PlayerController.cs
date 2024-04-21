@@ -353,6 +353,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Dash()
     {
+        //playerLogic.SetDashFrames(true);
+        //playerLogic.Setinvincible(true);
         soundHandler.Dash();
         canDash = false;
         pState.dashing = true;
@@ -362,6 +364,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
         yield return new WaitForSeconds(dashTime);
         anim.SetBool(AnimationVariables.IsDashing, false);
+        //playerLogic.SetDashFrames(false);
+        //playerLogic.Setinvincible(false);
         rb.gravityScale = originalGrav;
         pState.dashing = false;
         yield return new WaitForSeconds(dashCooldown);

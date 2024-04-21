@@ -29,6 +29,7 @@ public class PlayerLogic : MonoBehaviour
     private float iframeTick = 0.25f;
     private float iframeCount = 0f;
     private Vector2 lastGroundTouched;
+    private bool dashFrames = false;
 
     private void Start()
     {
@@ -54,7 +55,7 @@ public class PlayerLogic : MonoBehaviour
         {
             CalculateDamage();
         }
-        if (_isInvincible)
+        if (_isInvincible && !dashFrames)
         {
             _count += Time.deltaTime;
             iframeCount += Time.deltaTime;
@@ -170,5 +171,13 @@ public class PlayerLogic : MonoBehaviour
     internal void AddHealth(int v)
     {
         _hp += v;
+    }
+    public void SetDashFrames(bool v)
+    {
+        dashFrames = v;
+    }
+    public void Setinvincible(bool v)
+    {
+        _isInvincible = v;
     }
 }
