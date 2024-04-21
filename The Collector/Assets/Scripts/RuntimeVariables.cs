@@ -29,6 +29,8 @@ public class RuntimeVariables : MonoBehaviour
     internal static bool isLoading = false;
     public static readonly int TotalCoinsInGame = 108;
     public static readonly int TotalEnemiesInGame = 41;
+    public static int TotalCheckpoints = 16;
+    public static List<int> CheckpointsVisited = new List<int>();
 
 
 
@@ -38,12 +40,12 @@ public class RuntimeVariables : MonoBehaviour
     public static readonly float BasicEnemyRecoil = 85f;
 
     public static readonly float FlyingEnemySpeed = 10f;
-    public static readonly float FlyingEnemyLockOnSpeed = 35f;
-    public static readonly float FlyingEnemyLockOnWait = 1f;
+    public static readonly float FlyingEnemyLockOnSpeed = 45f;
+    public static readonly float FlyingEnemyLockOnWait = 0.5f;
     public static readonly float FlyingEnemyFirstLockOnWait = 0.1f;
     public static readonly float FlyingEnemyLockOnOffset = 0f;
     public static readonly float FlyingEnemyLockOnRadius = 15f;
-    public static readonly float FlyingEnemyActivationRadius = 45f;
+    public static readonly float FlyingEnemyActivationRadius = 35f;
 
     public static readonly int CoinPoints = 25;
     public static readonly float CannonBulletSpeed = 10f;

@@ -10,6 +10,7 @@ TagManager:
   - FinishLine
   - MuteButton
   - SolidGround
+  - Coin
   layers:
   - Default
   - TransparentFX

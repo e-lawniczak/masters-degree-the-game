@@ -432,6 +432,7 @@ public class GameEngine : MonoBehaviour
 
     internal void LevelComplete()
     {
+        Debug.Log(HelperFunctions.GetPercentCompletionSimple());
         RuntimeVariables.isLoading = true;
         levelFinished = true;
         if (RuntimeVariables.CurrentLevel == 1)

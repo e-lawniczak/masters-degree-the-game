@@ -8,4 +8,5 @@
     internal static readonly string Player = "Player";
     internal static readonly string Checkpoint = "Checkpoint";
     internal static readonly string FinishLine = "FinishLine";
+    internal static readonly string Coin = "Coin";
 }

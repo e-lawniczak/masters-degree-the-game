@@ -9,7 +9,8 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] private int enemyId;
     private float speed = RuntimeVariables.FlyingEnemySpeed;
     private float lockOnSpeed = RuntimeVariables.FlyingEnemyLockOnSpeed;
-    [SerializeField] private float activationRadiusOverwrite = -1f;
+    [SerializeField] private float activationRadiusOverride = -1;
+    [SerializeField] private float lockOnRadiusOverride = -1;
     private float activationRadius = RuntimeVariables.FlyingEnemyActivationRadius;
     private float lockOnRadius = RuntimeVariables.FlyingEnemyLockOnRadius;
     private float lockOnWait = RuntimeVariables.FlyingEnemyLockOnWait;
@@ -21,6 +22,7 @@ public class FlyingEnemy : MonoBehaviour
     private bool wasFirstLocked = false;
 
     private Rigidbody2D rb;
+    private Rigidbody2D playerRb;
     private PolygonCollider2D bc;
 
     [SerializeField] private bool goingLeft, goingRight;
@@ -52,15 +54,14 @@ public class FlyingEnemy : MonoBehaviour
             return;
         }
         playerPos = player.GetComponent<Transform>().position;
+        playerRb = player.GetComponent<Rigidbody2D>();
         xAxis = 1;
         isActive = false;
         isDying = false;
         lockOnPos = null;
         lockOnWaitOriginal = lockOnWait;
-        if(activationRadiusOverwrite > 0)
-        {
-            activationRadius = activationRadiusOverwrite;
-        }
+        activationRadius = activationRadiusOverride > 0 ? activationRadiusOverride : activationRadius;
+        lockOnRadius = lockOnRadiusOverride > 0 ? lockOnRadiusOverride : lockOnRadius;
         Flip();
     }
 
@@ -113,7 +114,8 @@ public class FlyingEnemy : MonoBehaviour
     void LockOn()
     {
         playerPos = player.GetComponent<Transform>().position;
-        var targetPos = new Vector2(playerPos.x + (lockOnOffset), playerPos.y - lockOnOffset);
+        var velMod = 5f;
+        var targetPos = new Vector2(playerPos.x + (playerRb.velocity.x / velMod), playerPos.y + (playerRb.velocity.y / velMod));
         float dist = Vector2.Distance(transform.position, playerPos);
         if (dist < lockOnRadius && !lockOnPos.HasValue)
         {
@@ -141,13 +143,11 @@ public class FlyingEnemy : MonoBehaviour
 
     void Move()
     {
-        var lockTimer = wasFirstLocked ? firstLockOnWait : lockOnWait;
-        wasFirstLocked = true;
-        if (lockOnPos.HasValue && lockTimer > 0)
+        if (lockOnPos.HasValue && lockOnWait > 0)
         {
-            lockTimer -= Time.deltaTime;
+            lockOnWait -= Time.deltaTime;
         }
-        if (lockOnPos.HasValue && lockTimer <= 0)
+        if (lockOnPos.HasValue && lockOnWait <= 0)
         {
             rb.MovePosition(Vector2.MoveTowards(transform.position, lockOnPos.Value, Time.deltaTime * lockOnSpeed));
         }
@@ -164,7 +164,7 @@ public class FlyingEnemy : MonoBehaviour
         if (lockOnPos.HasValue && (Vector2)transform.position == lockOnPos.Value)
         {
             lockOnPos = null;
-            lockTimer = lockOnWaitOriginal;
+            lockOnWait = lockOnWaitOriginal;
         }
     }
     void Die(bool isKilled = false)

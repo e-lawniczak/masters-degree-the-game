@@ -2074,7 +2074,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221673405813676065, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_Name
-      value: CheckPoint
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4500503322475002411, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_RootOrder
@@ -2338,7 +2338,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221673405813676065, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_Name
-      value: CheckPoint (1)
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4500503322475002411, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_RootOrder
@@ -3556,7 +3556,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221673405813676065, guid: c8e4e95bfc935ae4d8b624fc59dcb6a6, type: 3}
       propertyPath: m_Name
-      value: FinishLine
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 4500503322475002411, guid: c8e4e95bfc935ae4d8b624fc59dcb6a6, type: 3}
       propertyPath: m_RootOrder
@@ -48769,21 +48769,21 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 174, y: 57, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 4
-      m_TileSpriteIndex: 4
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 1
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   - first: {x: 189, y: 57, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 3
       m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 1
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 174, y: 58, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 0
       m_TileColorIndex: 1
       m_TileObjectToInstantiateIndex: 65535
@@ -50422,7 +50422,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221673405813676065, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_Name
-      value: CheckPoint (2)
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4500503322475002411, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_RootOrder
@@ -50747,7 +50747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2221673405813676065, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_Name
-      value: CheckPoint (3)
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4500503322475002411, guid: d4768eb3dd4623e468f9b9905c2e9aaa, type: 3}
       propertyPath: m_RootOrder

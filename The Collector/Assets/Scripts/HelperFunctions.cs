@@ -60,10 +60,17 @@ public class HelperFunctions : MonoBehaviour
         var timeInMinutes = totalTime / 60f;
         return (float)(
             (float)points +
-            (float)(5000f * (1f / Math.Max(1f, totalTime))) +
-            (float)(100f * Math.Max(0f, GetPercentCompletion(true))) +
-            (float)(1000f * (float)(RuntimeVariables.CurrentHp / 7f))
+            (float)(2000f * (1f / Math.Max(1f, totalTime))) +
+            (float)(5000f * Math.Max(0f, GetPercentCompletionSimple(true))) +
+            (float)(2000f * (float)(RuntimeVariables.CurrentHp / 7f))
             );
+    }
+    public static float GetPercentCompletionSimple(bool getOnlyLevels = false)
+    {
+        float percentCompletion = 0;
+
+        percentCompletion = (float)((float)RuntimeVariables.CheckpointsVisited.Count / (float)RuntimeVariables.TotalCheckpoints);
+        return percentCompletion;
     }
     public static float GetPercentCompletion(bool getOnlyLevels = false)
     {
