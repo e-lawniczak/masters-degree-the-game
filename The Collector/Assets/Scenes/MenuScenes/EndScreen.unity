@@ -1279,7 +1279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 43.794}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 480, y: -32}
+  m_AnchoredPosition: {x: 465.8, y: -47}
   m_SizeDelta: {x: 650, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1684205478
@@ -1302,7 +1302,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Please fill in the survey if you'd like :)<br>click to copy the link
+  m_text: Please fill in the survey if you'd like :)<br>click to copy the link<br>it's
+    also don in the description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 684fb6679bc9eab4cac6f042913e10bb, type: 2}
   m_sharedMaterial: {fileID: -4674016763414241341, guid: 684fb6679bc9eab4cac6f042913e10bb, type: 2}
