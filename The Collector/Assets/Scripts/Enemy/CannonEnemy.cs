@@ -74,6 +74,15 @@ public class CannonEnemy : MonoBehaviour
             }
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.rigidbody && collision.rigidbody.name == LayerVariables.Player)
+        {
+            var pl = collision.collider.GetComponent<PlayerLogic>();
+
+            pl.GetHitByEnemy(this.gameObject, this.transform.position);
+        }
+    }
     void CheckForPlayer()
     {
         if (!player)

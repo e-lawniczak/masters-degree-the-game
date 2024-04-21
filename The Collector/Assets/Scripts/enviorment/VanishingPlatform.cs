@@ -5,9 +5,9 @@ using UnityEngine;
 public class VanishingPlatform : MonoBehaviour
 {
     [SerializeField] private GameObject parentObject;
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.collider.tag == LayerVariables.Player)
+        if (other.tag == LayerVariables.Player)
         {
             parentObject.GetComponent<VanishingBlock>().platformTouched = true;
         }

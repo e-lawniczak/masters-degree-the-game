@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
         HandlePlatforms();
     }
 
-   
+
 
     private void CheckIfStandingStill()
     {
@@ -250,7 +250,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool(AnimationVariables.IsJumping, false);
             anim.SetTrigger(AnimationVariables.IsGrounded);
         }
-      
+
     }
     public bool Grounded()
     {
@@ -268,18 +268,22 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.canJumpAgain))
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed );
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             pState.canJumpAgain = false;
         }
 
         if (Input.GetButtonUp(InputButtons.Jump) && rb.velocity.y > 0f)
         {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y  * 0.5f);
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
         if (pState.jumpedOnSpikes)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed  / 1.2f);
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed / 1.2f);
             pState.jumpedOnSpikes = false;
+        }
+        if (Grounded())
+        {
+            pState.canJumpAgain = false;
         }
         pState.jumping = !Grounded() || pState.canJumpAgain;
     }
@@ -293,7 +297,7 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool(AnimationVariables.IsMoving, false);
         }
-        rb.velocity = new Vector2(xAxis * walkSpeed , rb.velocity.y);
+        rb.velocity = new Vector2(xAxis * walkSpeed, rb.velocity.y);
     }
 
     private void HandlePlatforms()
@@ -336,10 +340,10 @@ public class PlayerController : MonoBehaviour
     }
     private void DashUiInfo()
     {
-        if(!canDash)
+        if (!canDash)
         {
             timeSinceDash += Time.deltaTime;
-            if(timeSinceDash >= dashCooldown)
+            if (timeSinceDash >= dashCooldown)
             {
                 timeSinceDash = 0;
             }
@@ -355,7 +359,7 @@ public class PlayerController : MonoBehaviour
         anim.SetBool(AnimationVariables.IsDashing, true);
         float originalGrav = rb.gravityScale;
         rb.gravityScale = 0;
-        rb.velocity = new Vector2(transform.localScale.x * dashSpeed , 0f);
+        rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0f);
         yield return new WaitForSeconds(dashTime);
         anim.SetBool(AnimationVariables.IsDashing, false);
         rb.gravityScale = originalGrav;

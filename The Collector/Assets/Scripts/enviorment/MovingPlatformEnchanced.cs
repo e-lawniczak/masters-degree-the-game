@@ -13,6 +13,7 @@ public class MovingPlatformEnchanced : MonoBehaviour
 
 
     private int dir = 1;
+    private float maxDistance;
 
     PlayerController playerController;
     Rigidbody2D rb;
@@ -27,19 +28,24 @@ public class MovingPlatformEnchanced : MonoBehaviour
     private void Start()
     {
         targetPos = CurrentTarget();
+        maxDistance = Vector2.Distance(startPoint.position, endPoint.position);
         GetDirection();
     }
     private void Update()
     {
         //transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-
         float dist = (targetPos - (Vector2)(transform.position)).magnitude;
-        if (dist <= 0.2f)
+        float distanceToTarget = Vector2.Distance(transform.position, targetPos);
+        if (dist <= 0.2f || distanceToTarget > maxDistance + 0.5f)
         {
-            dir *= -1;
-            targetPos = CurrentTarget();
-            GetDirection();
+            ChangeDirection();
         }
+    }
+    public void ChangeDirection()
+    {
+        dir *= -1;
+        targetPos = CurrentTarget();
+        GetDirection();
     }
     private void FixedUpdate()
     {
@@ -77,6 +83,8 @@ public class MovingPlatformEnchanced : MonoBehaviour
             playerController.isOnPlatform = false;
         }
     }
+
+   
 
 
     private void OnDrawGizmos()

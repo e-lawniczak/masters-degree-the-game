@@ -9,13 +9,16 @@ public class FlyingEnemy : MonoBehaviour
     [SerializeField] private int enemyId;
     private float speed = RuntimeVariables.FlyingEnemySpeed;
     private float lockOnSpeed = RuntimeVariables.FlyingEnemyLockOnSpeed;
-    [SerializeField] private float activationRadius = 25f;
+    [SerializeField] private float activationRadiusOverwrite = -1f;
+    private float activationRadius = RuntimeVariables.FlyingEnemyActivationRadius;
     private float lockOnRadius = RuntimeVariables.FlyingEnemyLockOnRadius;
     private float lockOnWait = RuntimeVariables.FlyingEnemyLockOnWait;
     [SerializeField] private float timeToDie = 3f;
-    [SerializeField] private float lockOnOffset = 1f;
+    [SerializeField] private float lockOnOffset = RuntimeVariables.FlyingEnemyLockOnOffset;
     [SerializeField] GameObject player;
 
+    private float firstLockOnWait = RuntimeVariables.FlyingEnemyFirstLockOnWait;
+    private bool wasFirstLocked = false;
 
     private Rigidbody2D rb;
     private PolygonCollider2D bc;
@@ -54,6 +57,10 @@ public class FlyingEnemy : MonoBehaviour
         isDying = false;
         lockOnPos = null;
         lockOnWaitOriginal = lockOnWait;
+        if(activationRadiusOverwrite > 0)
+        {
+            activationRadius = activationRadiusOverwrite;
+        }
         Flip();
     }
 
@@ -90,7 +97,7 @@ public class FlyingEnemy : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!isActive && goingLeft) return;
+        if (!isActive) return;
         LockOn();
         Move();
     }
@@ -106,7 +113,7 @@ public class FlyingEnemy : MonoBehaviour
     void LockOn()
     {
         playerPos = player.GetComponent<Transform>().position;
-        var targetPos = new Vector2(playerPos.x + (goingRight ? lockOnOffset : -lockOnOffset), playerPos.y - lockOnOffset);
+        var targetPos = new Vector2(playerPos.x + (lockOnOffset), playerPos.y - lockOnOffset);
         float dist = Vector2.Distance(transform.position, playerPos);
         if (dist < lockOnRadius && !lockOnPos.HasValue)
         {
@@ -134,11 +141,13 @@ public class FlyingEnemy : MonoBehaviour
 
     void Move()
     {
-        if (lockOnPos.HasValue && lockOnWait > 0)
+        var lockTimer = wasFirstLocked ? firstLockOnWait : lockOnWait;
+        wasFirstLocked = true;
+        if (lockOnPos.HasValue && lockTimer > 0)
         {
-            lockOnWait -= Time.deltaTime;
+            lockTimer -= Time.deltaTime;
         }
-        if (lockOnPos.HasValue && lockOnWait <= 0)
+        if (lockOnPos.HasValue && lockTimer <= 0)
         {
             rb.MovePosition(Vector2.MoveTowards(transform.position, lockOnPos.Value, Time.deltaTime * lockOnSpeed));
         }
@@ -155,7 +164,7 @@ public class FlyingEnemy : MonoBehaviour
         if (lockOnPos.HasValue && (Vector2)transform.position == lockOnPos.Value)
         {
             lockOnPos = null;
-            lockOnWait = lockOnWaitOriginal;
+            lockTimer = lockOnWaitOriginal;
         }
     }
     void Die(bool isKilled = false)
@@ -187,13 +196,13 @@ public class FlyingEnemy : MonoBehaviour
 
         return true;
     }
-    //void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, lockOnRadius);
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawWireSphere(transform.position, activationRadius);
-    //}
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, lockOnRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, activationRadius);
+    }
     public int GetId()
     {
         return enemyId;

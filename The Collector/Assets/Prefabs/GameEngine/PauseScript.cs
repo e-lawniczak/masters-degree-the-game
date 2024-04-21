@@ -19,7 +19,7 @@ public class PauseScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!IsPaused)
+            if (!IsPaused && !RuntimeVariables.isLoading)
             {
                 PauseGame();
             }

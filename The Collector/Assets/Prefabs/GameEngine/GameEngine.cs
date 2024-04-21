@@ -26,6 +26,7 @@ public class GameEngine : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1.0f;
         if (RuntimeVariables.PlayerId == -1 || RuntimeVariables.PlayerJwtToken == "") return;
         var player = GameObject.Find("Player");
         if (player == null)
@@ -100,11 +101,13 @@ public class GameEngine : MonoBehaviour
     private float playerDeadTimer = 1f;
     private float playerDeadCounter = 0f;
 
+
     void CheckIfPlayerAlive()
     {
         if (!playerLogic.IsAlive)
         {
             playerDeadCounter += Time.deltaTime;
+            RuntimeVariables.isLoading = true;
             if (playerDeadCounter > playerDeadTimer)
             {
                 if (RuntimeVariables.IsControlGroup && CheckpointVariables.CheckpointId > 0)
@@ -134,6 +137,10 @@ public class GameEngine : MonoBehaviour
 
     public void LoadFromCheckpoint()
     {
+        Debug.Log(RuntimeVariables.isLoading);
+        RuntimeVariables.isLoading = true;
+        Debug.Log(RuntimeVariables.isLoading);
+
         var level = CheckpointVariables.LevelNo;
         PlaytroughVariables.PlaytroughId = CheckpointVariables.pvi.PlaytroughId;
         //PlaytroughVariables.TotalTime = CheckpointVariables.pvi.TotalTime;
@@ -209,12 +216,13 @@ public class GameEngine : MonoBehaviour
         CheckpointVariables.CheckpointLoaded = true;
         string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
         SceneManager.LoadScene(sceneToLoad);
+        RuntimeVariables.isLoading = false;
         Time.timeScale = 1.0f;
     }
 
     public void SaveCheckpoint(Vector3 checkpointTransform)
     {
-        if(playerLogic == null)
+        if (playerLogic == null)
         {
             playerLogic = GameObject.Find("Player").GetComponent<PlayerLogic>();
         }
@@ -324,6 +332,8 @@ public class GameEngine : MonoBehaviour
                     SceneManager.LoadScene(HelperFunctions.SceneToLoad(RuntimeVariables.CurrentLevel));
 
                 }
+                RuntimeVariables.isLoading = false;
+
             }
 
         }
@@ -411,7 +421,9 @@ public class GameEngine : MonoBehaviour
     #region Start and End 
     private void EndGame()
     {
+        RuntimeVariables.isLoading = true;
         SceneManager.LoadScene(SceneNames.EndScreen);
+        RuntimeVariables.isLoading = false;
     }
     public void MuteSound()
     {
@@ -420,6 +432,7 @@ public class GameEngine : MonoBehaviour
 
     internal void LevelComplete()
     {
+        RuntimeVariables.isLoading = true;
         levelFinished = true;
         if (RuntimeVariables.CurrentLevel == 1)
         {
@@ -430,6 +443,7 @@ public class GameEngine : MonoBehaviour
             PlaytroughVariables.LevelCoins_1 = RuntimeVariables.CurrentLevelCoins;
             PlaytroughVariables.LevelDeaths_1 = RuntimeVariables.CurrentLevelDeaths;
             PlaytroughVariables.LevelEndHp_1 = playerLogic.GetCurrentHp();
+            playerLogic.AddHealth(1);
         }
         else if (RuntimeVariables.CurrentLevel == 2)
         {
@@ -440,6 +454,7 @@ public class GameEngine : MonoBehaviour
             PlaytroughVariables.LevelCoins_2 = RuntimeVariables.CurrentLevelCoins;
             PlaytroughVariables.LevelDeaths_2 = RuntimeVariables.CurrentLevelDeaths;
             PlaytroughVariables.LevelEndHp_2 = playerLogic.GetCurrentHp();
+            playerLogic.AddHealth(1);
         }
         else
         {

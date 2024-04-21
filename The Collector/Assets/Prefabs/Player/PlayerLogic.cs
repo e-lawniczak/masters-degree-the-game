@@ -78,12 +78,13 @@ public class PlayerLogic : MonoBehaviour
 
     private void SaveLastSafeSpot()
     {
-        var isOnGround = Physics2D.OverlapCircle(groundTransform.position, 0.2f, groundLayer);
+        var isOnGround = Physics2D.OverlapCircle(groundTransform.position, 0.06f, groundLayer);
         if (isOnGround != null && isOnGround.tag == TagVariables.SolidGround)
         {
             lastGroundTouched = transform.position;
         }
     }
+   
 
     private void CalculateDamage()
     {
@@ -166,6 +167,8 @@ public class PlayerLogic : MonoBehaviour
         return points;
     }
 
-
-
+    internal void AddHealth(int v)
+    {
+        _hp += v;
+    }
 }
