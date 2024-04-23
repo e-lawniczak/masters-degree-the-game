@@ -264,17 +264,42 @@ public class PlayerController : MonoBehaviour
             return false;
         }
     }
+    private float coyoteTimer = 0.2f;
+    private float coyoteCounter;
+    private float jumpBufferTimer = 0.2f;
+    private float jumpBufferCounter;
     void Jump()
     {
-        if (Input.GetButtonDown(InputButtons.Jump) && (Grounded() || pState.canJumpAgain))
+
+        if (Grounded())
+        {
+            coyoteCounter = coyoteTimer;
+        }
+        else
+        {
+            coyoteCounter -= Time.deltaTime;
+        }
+
+        if (Input.GetButtonDown(InputButtons.Jump))
+        {
+            jumpBufferCounter = jumpBufferTimer;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
+
+        if (jumpBufferCounter > 0f && (coyoteCounter > 0f || pState.canJumpAgain))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             pState.canJumpAgain = false;
+            jumpBufferCounter = 0f;
         }
 
         if (Input.GetButtonUp(InputButtons.Jump) && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            coyoteCounter = 0f;
         }
         if (pState.jumpedOnSpikes)
         {

@@ -30,7 +30,7 @@ The Itch.io, which is used to host the game may collect additional data such as 
 
 3. Purpose of data colelction
    
-The data collected will be further processed to answer the questions regarding the influence ofprmadeath mechanic in games. Processed data will be used to analyze the problem and create various graphs looking for corelations and patterns in player behaviour. The diploma may be then published under the university. 
+The data collected will be further processed to answer the questions regarding the influence of prmadeath mechanic in games. Processed data will be used to analyze the problem and create various graphs looking for corelations and patterns in player behaviour. The diploma may be then published under the university. 
 
 Data will also be used to create contribution leaderboard that will be included at the end of diploma to credit some of the experiment participants.
 
