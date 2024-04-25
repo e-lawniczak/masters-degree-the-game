@@ -137,6 +137,7 @@ public class GameEngine : MonoBehaviour
 
     public void LoadFromCheckpoint()
     {
+        if (!RuntimeVariables.IsControlGroup) return;
         Debug.Log(RuntimeVariables.isLoading);
         RuntimeVariables.isLoading = true;
         Debug.Log(RuntimeVariables.isLoading);
