@@ -58,18 +58,21 @@ public class HelperFunctions : MonoBehaviour
     private static float ScoreFuncSimplest(int points, float totalTime, float pointsWeight = 0.15f, float timeWeight = 150f)
     {
         var timeInMinutes = totalTime / 60f;
-        return (float)(
-            (float)points +
-            (float)(8000f * (1f / Math.Max(1f, totalTime)) * (Math.Max(0f, GetPercentCompletionSimple(true)) / 100f)) +
-            (float)(8000f * Math.Max(0f, GetPercentCompletionSimple(true))) +
-            (float)(3500f * (float)(RuntimeVariables.CurrentHp / 7f))
-            );
+        float p1 = points;
+        float p2 = 8000f * (Math.Max(0f, GetPercentCompletionSimple(true)) / 100f) / Math.Max(1f, totalTime);
+        float p3 = 8000f * (float)(Math.Max(0f, GetPercentCompletionSimple(true)) / 100f);
+        float p4 = RuntimeVariables.GameFinished ? 3500f * (float)(RuntimeVariables.CurrentHp / 7f) : 0;
+        //Debug.Log("P1: " + p1);
+        //Debug.Log("P2: " + p2);
+        //Debug.Log("P3: " + p3);
+        //Debug.Log("P4: " + p4);
+        return p1 + p2 + p3 + p4;
     }
     public static float GetPercentCompletionSimple(bool getOnlyLevels = false)
     {
         float percentCompletion = 0;
 
-        percentCompletion = (float)((float)RuntimeVariables.CheckpointsVisited.Count / (float)RuntimeVariables.TotalCheckpoints);
+        percentCompletion = (float)((float)RuntimeVariables.CheckpointsVisited.Count / (float)RuntimeVariables.TotalCheckpoints) * 100f;
         return percentCompletion;
     }
     public static float GetPercentCompletion(bool getOnlyLevels = false)

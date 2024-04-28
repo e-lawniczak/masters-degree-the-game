@@ -430,6 +430,7 @@ public class GameEngine : MonoBehaviour
     private void EndGame()
     {
         RuntimeVariables.isLoading = true;
+        RuntimeVariables.GameFinished = true;
         SceneManager.LoadScene(SceneNames.EndScreen);
         RuntimeVariables.isLoading = false;
     }
@@ -484,6 +485,10 @@ public class GameEngine : MonoBehaviour
         StartCoroutine(UpdatePlaytrough());
     }
 
+    public int GetPlayerCurrentHp()
+    {
+        return playerLogic.GetCurrentHp();
+    }
 
     #endregion
 

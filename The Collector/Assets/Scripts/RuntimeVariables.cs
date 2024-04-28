@@ -62,6 +62,8 @@ public class RuntimeVariables : MonoBehaviour
     public static readonly float PlayerAttackRadiusUp = 1.25f;
     public static readonly float PlayerAttackRadiusDown = 1.45f;
 
+    public static bool GameFinished = false;
+
     #endregion
 
 

@@ -18,14 +18,14 @@ public class coin_script : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.name == LayerVariables.Player)
+        if (collision.name == LayerVariables.Player && collision.GetType() == typeof(UnityEngine.BoxCollider2D))
         {
             collision.gameObject.GetComponent<PlayerLogic>().AddPoints(RuntimeVariables.CoinPoints);
             PlaytroughVariables.CoinsCollected += 1;
             RuntimeVariables.CurrentLevelCoins += 1;
             RuntimeVariables.collectedCoins.Add(coinId);
             soundHandler.CoinPickup();
-            Destroy(this.gameObject);
+            Destroy(gameObject, 0.0f);
         }
     }
     public int GetId()

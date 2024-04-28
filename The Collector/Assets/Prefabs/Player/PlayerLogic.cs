@@ -45,7 +45,6 @@ public class PlayerLogic : MonoBehaviour
         }
         soundHandler = GameObject.Find("SoundHandler").GetComponent<SoundHandler>();
         lastGroundTouched = transform.position;
-
     }
 
     void Update()
@@ -55,6 +54,7 @@ public class PlayerLogic : MonoBehaviour
         {
             CalculateDamage();
         }
+        RuntimeVariables.CurrentHp = _hp;
         if (_isInvincible && !dashFrames)
         {
             _count += Time.deltaTime;

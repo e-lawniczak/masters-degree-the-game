@@ -88,7 +88,7 @@ public class BasicEnemy : MonoBehaviour
         RuntimeVariables.defeatedEnemies.Add(enemyId);
         PlaytroughVariables.EnemiesDefeated += 1;
         RuntimeVariables.CurrentLevelEnemiesDefeated += 1;
-        Destroy(gameObject, 0.0f);
+        Destroy(this.gameObject, 0.0f);
     }
 
     void Recoil()
