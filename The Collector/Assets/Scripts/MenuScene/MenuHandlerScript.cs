@@ -194,7 +194,6 @@ public class MenuHandlerScript : MonoBehaviour
         public string email;
         public bool isControlGroup;
         public bool firstLogin;
-        public int? currentPlaytrough;
         public int attempts;
         public int deaths;
         public int highScore;

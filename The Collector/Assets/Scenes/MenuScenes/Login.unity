@@ -338,7 +338,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: By logging in you agree to be a part of scientific experiment as well as
-    accepting the Terms of Use.
+    accepting the Terms of Use and Privacy Policy
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}
   m_sharedMaterial: {fileID: -4674016763414241341, guid: 644d940b067c62c4b88e4b08573509f9, type: 2}

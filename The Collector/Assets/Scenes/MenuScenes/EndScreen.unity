@@ -1302,8 +1302,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Please fill in the survey if you'd like :)<br>click to copy the link<br>it's
-    also don in the description
+  m_text: Please fill in the survey if you'd like :)<br>https://tinyurl.com/clothSurvey<br>it's
+    also down in the description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 684fb6679bc9eab4cac6f042913e10bb, type: 2}
   m_sharedMaterial: {fileID: -4674016763414241341, guid: 684fb6679bc9eab4cac6f042913e10bb, type: 2}
