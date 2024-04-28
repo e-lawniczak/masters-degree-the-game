@@ -16,10 +16,12 @@ public class CheckpointScript : MonoBehaviour
                 RuntimeVariables.CheckpointsVisited.Add(v);
             var gameEngine = GameObject.Find("GameEngine");
             GameEngine ge = gameEngine.GetComponent<GameEngine>();
-            if (ge != null && RuntimeVariables.IsControlGroup)
+            if (ge != null && (RuntimeVariables.IsControlGroup || RuntimeVariables.CanNowSaveGame))
             {
                 ge.SaveCheckpoint(transform.position);
             }
+            Debug.Log(RuntimeVariables.CheckpointsVisited);
+            Debug.Log(RuntimeVariables.CheckpointsVisited.Count);
         }
         if (collision.gameObject.tag == LayerVariables.FinishLine)
         {

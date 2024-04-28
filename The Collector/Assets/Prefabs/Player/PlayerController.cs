@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
     private int stepsJumped = 0;
     private int jumpMoveDivider = 1;
     private Vector3 prevPos;
-    private float checkPosTimer = 2f;
+    private float checkPosTimer = 0.3f;
     private float counter = 0f;
     public DashInfo DashInfo { get { return new DashInfo { dashCd = dashCooldown, currentCd = timeSinceDash, canDash = canDash }; } }
 

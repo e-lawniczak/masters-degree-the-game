@@ -18,6 +18,8 @@ public class RuntimeVariables : MonoBehaviour
     public static bool GameStarted = false;
     public static readonly string apiUrl = "https://erykmgr.thinq.pl";
     public static bool IsControlGroup = true;
+    public static bool CanNowSaveGame = false;
+    public static int PlayerAttempts = -1;
     public static int HighScore = 0;
     public static int CurrentLevel = 1;
     public static int CurrentHp = -1;

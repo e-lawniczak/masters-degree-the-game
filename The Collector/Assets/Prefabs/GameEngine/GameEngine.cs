@@ -110,7 +110,7 @@ public class GameEngine : MonoBehaviour
             RuntimeVariables.isLoading = true;
             if (playerDeadCounter > playerDeadTimer)
             {
-                if (RuntimeVariables.IsControlGroup && CheckpointVariables.CheckpointId > 0)
+                if ((RuntimeVariables.IsControlGroup || RuntimeVariables.CanNowSaveGame) && CheckpointVariables.CheckpointId > 0)
                 {
                     LoadFromCheckpoint();
                 }
@@ -132,15 +132,21 @@ public class GameEngine : MonoBehaviour
         StartCoroutine(UpdatePlaytrough());
         EndGame();
     }
+    public void EndRunOnModeChange()
+    {
+        PlaytroughVariables.IsFinished = false;
+        PlaytroughVariables.EndTime = DateTime.UtcNow;
+
+        StartCoroutine(UpdatePlaytrough());
+        EndGame();
+    }
 
     //79a9da
 
     public void LoadFromCheckpoint()
     {
-        if (!RuntimeVariables.IsControlGroup) return;
-        Debug.Log(RuntimeVariables.isLoading);
+        if (!RuntimeVariables.IsControlGroup && !RuntimeVariables.CanNowSaveGame) return;
         RuntimeVariables.isLoading = true;
-        Debug.Log(RuntimeVariables.isLoading);
 
         var level = CheckpointVariables.LevelNo;
         PlaytroughVariables.PlaytroughId = CheckpointVariables.pvi.PlaytroughId;
@@ -212,7 +218,7 @@ public class GameEngine : MonoBehaviour
         RuntimeVariables.CurrentLevelCoins = CheckpointVariables.CurrentLevelCoins;
         RuntimeVariables.CurrentLevelEnemiesDefeated = CheckpointVariables.CurrentLevelEnemiesDefeated;
 
-
+        RuntimeVariables.CurrentHp = CheckpointVariables.Health;
         playerLogic.SetHp(CheckpointVariables.Health);
         CheckpointVariables.CheckpointLoaded = true;
         string sceneToLoad = HelperFunctions.SceneToLoad(CheckpointVariables.LevelNo);
@@ -242,6 +248,7 @@ public class GameEngine : MonoBehaviour
             CheckpointVariables.PlayerPosY = checkpointTransform.y;
         }
         CheckpointVariables.Health = playerLogic.GetCurrentHp();
+
 
         CheckpointVariables.DefeatedEnemiesIds = RuntimeVariables.defeatedEnemies.Select(o => o).ToList();
         CheckpointVariables.CollectedCoinsIds = RuntimeVariables.collectedCoins.Select(o => o).ToList();

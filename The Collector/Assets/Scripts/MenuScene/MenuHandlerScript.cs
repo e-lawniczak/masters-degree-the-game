@@ -111,6 +111,8 @@ public class MenuHandlerScript : MonoBehaviour
         {
             Stats = JsonUtility.FromJson<StatResponse>(req.downloadHandler.text);
             RuntimeVariables.HighScore = Stats.highScore;
+            RuntimeVariables.CanNowSaveGame = Stats.canNowSaveGame;
+            RuntimeVariables.PlayerAttempts = Stats.attempts;
             SetStats();
         }
     }
@@ -194,6 +196,7 @@ public class MenuHandlerScript : MonoBehaviour
         public string email;
         public bool isControlGroup;
         public bool firstLogin;
+        public bool canNowSaveGame;
         public int attempts;
         public int deaths;
         public int highScore;

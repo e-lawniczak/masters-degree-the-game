@@ -66,7 +66,9 @@ public class StartGameHandler : MonoBehaviour
             _StartGameData = JsonUtility.FromJson<StartGameData>(req.downloadHandler.text);
             RuntimeVariables.IsControlGroup = _StartGameData.isControlGroup;
             PlaytroughVariables.PlaytroughId = _StartGameData.currentPlaytrough.HasValue ? _StartGameData.currentPlaytrough.Value : -1;
+
             RuntimeVariables.HighScore = _StartGameData.highScore;
+            RuntimeVariables.CanNowSaveGame = _StartGameData.canNowSaveGame;
 
         }
     }
@@ -116,6 +118,7 @@ public class StartGameHandler : MonoBehaviour
         public int? currentPlaytrough;
         public int highScore;
         public bool isControlGroup;
+        public bool canNowSaveGame;
     }
     [Serializable]
     public class PlaytroughData
