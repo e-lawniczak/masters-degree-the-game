@@ -814,8 +814,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -1858,8 +1862,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -2792,8 +2800,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -2983,8 +2995,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -3720,6 +3736,10 @@ PrefabInstance:
     - target: {fileID: 3344667337249235411, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
       propertyPath: rightCannon
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3344667337249235411, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
+      propertyPath: activationRadius
+      value: 40.2
       objectReference: {fileID: 0}
     - target: {fileID: 4883712956505866487, guid: 31d3bbab7643dc64bb1c55eb88745c10, type: 3}
       propertyPath: m_RootOrder
@@ -126534,8 +126554,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -127119,8 +127143,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -129325,8 +129353,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder
@@ -130154,8 +130186,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
+      propertyPath: respawnTime
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1266334376249569447, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: timeToVanish
-      value: 1
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 1689574191238196919, guid: 8414af984781eb14eaf3538c69c3cb42, type: 3}
       propertyPath: m_RootOrder

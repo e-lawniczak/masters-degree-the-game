@@ -17,7 +17,7 @@ public class GameEngine : MonoBehaviour
     private Transform playerTransform;
     private readonly float globalUpdateInterval = 10f;
     private float counter = 0f;
-    private bool levelFinished = false;
+    public bool levelFinished;
 
     private int _currentLevelPoints = 0;
     private int _currentLevelCoins = 0;
@@ -53,8 +53,7 @@ public class GameEngine : MonoBehaviour
             RuntimeVariables.GameStarted = true;
         }
 
-
-
+        levelFinished = false;
         _currentLevelPoints = RuntimeVariables.CurrentLevelPoints;
         _currentLevelCoins = RuntimeVariables.CurrentLevelCoins;
         _currentLevelEnemiesDefeated = RuntimeVariables.CurrentLevelEnemiesDefeated;
@@ -430,7 +429,6 @@ public class GameEngine : MonoBehaviour
     private void EndGame()
     {
         RuntimeVariables.isLoading = true;
-        RuntimeVariables.GameFinished = true;
         SceneManager.LoadScene(SceneNames.EndScreen);
         RuntimeVariables.isLoading = false;
     }
@@ -478,6 +476,7 @@ public class GameEngine : MonoBehaviour
         if (RuntimeVariables.CurrentLevel == 3)
         {
             RuntimeVariables.GameWon = true;
+            RuntimeVariables.GameFinished = true;
             PlaytroughVariables.IsFinished = true;
             PlaytroughVariables.EndTime = DateTime.UtcNow;
         }

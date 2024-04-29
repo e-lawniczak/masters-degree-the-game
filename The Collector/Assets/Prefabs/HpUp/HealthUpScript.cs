@@ -11,7 +11,7 @@ public class HealthUpScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<PlayerLogic>() != null)
+        if (collision.gameObject.GetComponent<PlayerLogic>() != null && collision.name == LayerVariables.Player && collision.GetType() == typeof(UnityEngine.BoxCollider2D))
         {
             collision.gameObject.GetComponent<PlayerLogic>().AddHealth(1);
             soundHandler.CoinPickup();

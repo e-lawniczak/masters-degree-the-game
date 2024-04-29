@@ -14,7 +14,7 @@ public class ChangeMode : MonoBehaviour
     void Start()
     {
         gameEngine = GetComponent<GameEngine>();
-        if (RuntimeVariables.PlayerAttempts > 9 && RuntimeVariables.CurrentLevel == 1 && !RuntimeVariables.CanNowSaveGame && !RuntimeVariables.IsControlGroup)
+        if (RuntimeVariables.PlayerAttempts > 6 && RuntimeVariables.CurrentLevel == 1 && !RuntimeVariables.CanNowSaveGame && !RuntimeVariables.IsControlGroup)
         {
             changeModeScreen.SetActive(true);
         }

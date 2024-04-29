@@ -40,21 +40,7 @@ public class HelperFunctions : MonoBehaviour
 
         return score;
     }
-    private static float ScoreFuncExp(int points, float totalTime, float timeWeight = 15f)
-    {
-        var timeInMinutes = totalTime / 60f;
-        return (float)(points * (1 - Math.Exp(-(timeInMinutes / timeWeight))));
-    }
-    private static float ScoreFuncWeights(int points, float totalTime, float pointsWeight = 15f, float timeWeight = 9f)
-    {
-        var timeInMinutes = totalTime / 60f;
-        return (float)(pointsWeight * Math.Log10(points) + timeWeight * (1 / Math.Log10((timeInMinutes + 1)))) * 150f;
-    }
-    private static float ScoreFuncSimple(int points, float totalTime, float pointsWeight = 0.15f, float timeWeight = 150f)
-    {
-        var timeInMinutes = totalTime / 60f;
-        return (float)((pointsWeight * points) + (timeWeight * (1 / (timeInMinutes + 1)))) * 100f * (float)(Math.Max(GetPercentCompletion(true), 1f));
-    }
+   
     private static float ScoreFuncSimplest(int points, float totalTime, float pointsWeight = 0.15f, float timeWeight = 150f)
     {
         var timeInMinutes = totalTime / 60f;

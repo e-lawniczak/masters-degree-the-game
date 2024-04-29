@@ -30,9 +30,10 @@ public class CheckpointScript : MonoBehaviour
                 RuntimeVariables.CheckpointsVisited.Add(v);
             var gameEngine = GameObject.Find("GameEngine");
             GameEngine ge = gameEngine.GetComponent<GameEngine>();
-            if (ge != null)
+            if (ge != null && ge.levelFinished == false)
             {
                 ge.LevelComplete();
+                Destroy(collision.gameObject, 0.0f);
             }
         }
 
