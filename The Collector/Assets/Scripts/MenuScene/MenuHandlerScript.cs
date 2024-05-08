@@ -159,7 +159,10 @@ public class MenuHandlerScript : MonoBehaviour
             {
                 Debug.LogError(req.downloadHandler.text);
                 Error = req.downloadHandler.text;
-                Debug.LogError(req.error);
+                if(Error == "Wrong user name or password")
+                {
+                    Error = "Wrong password or username is already taken";
+                }
                 SetErrorMsg(Error);
             }
             else
