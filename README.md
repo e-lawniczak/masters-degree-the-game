@@ -1,4 +1,4 @@
-# Dilligence: The Cloth's Journey
+# Cloth: Misadventures of Us
 
 This game was made for the purposes of my master's thesis: The influence of permadeath mechanic on gameplay experience and interaction with the environment.
 
@@ -7,6 +7,8 @@ The game is about preserving in face of adversity. Journey filled with obstacles
 Cloth: Misadventures of Us is a 2D platformer. It's short and concise. I intended to incorporate multiple paths to this linear game to allow players choose their own path. Each obstacle can be overcome int more than one way. 
 
 ## Copyright notes & credits
+
+Not all of the sounds listed were used in game.
 
 ### Music & Sounds
 Retro Sounds (1.0)
