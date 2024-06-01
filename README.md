@@ -10,6 +10,8 @@ Cloth: Misadventures of Us is a 2D platformer. It's short and concise. I intende
 
 Not all of the sounds listed were used in game.
 
+[Link to the game](https://oxygen-enjoyer.itch.io/cloth-misadventures-of-us)
+
 ### Music & Sounds
 Retro Sounds (1.0)
 
