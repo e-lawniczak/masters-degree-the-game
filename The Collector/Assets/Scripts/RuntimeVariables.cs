@@ -16,7 +16,7 @@ public class RuntimeVariables : MonoBehaviour
     public static List<int> collectedCoins = new List<int>();
     public static bool GameWon = false;
     public static bool GameStarted = false;
-    public static readonly string apiUrl = "https://erykmgr.thinq.pl";
+    public static readonly string apiUrl = "https://backend.api.url";
     public static bool IsControlGroup = true;
     public static bool CanNowSaveGame = false;
     public static int PlayerAttempts = -1;
